@@ -23,9 +23,7 @@ class BrowserDialog extends ComfyDialog {
         },
       }, [
         $el("div", {
-          $: (e) => (this.textElement = e),
-          style: {
-            height: "inherit",
+          $: (e) => (this.textElement = e), style: { height: "inherit",
           },
         }),
         ...this.createButtons(),
@@ -84,7 +82,7 @@ app.registerExtension({
         textContent: "Browser",
         onclick: () => {
           browserDialog.show($el("iframe", {
-            src: browserUrl,
+            src: browserUrl + "?timestamp=" + Date.now(),
             style: {
               width: "100%",
               height: "inherit",

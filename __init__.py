@@ -26,6 +26,7 @@ def get_target_folder_files(folder_path: str):
         return None
 
     folder_listing = os.scandir(target_path)
+    folder_listing = sorted(folder_listing, key=lambda f: f.stat().st_ctime, reverse=True)
     for item in folder_listing:
         if not os.path.exists(item.path):
             continue
