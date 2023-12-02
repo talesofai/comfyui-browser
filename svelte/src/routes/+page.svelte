@@ -6,9 +6,13 @@
   export let data: any;
   const { comfyUrl } = data;
 
+  let comfyApp: any;
   let files: Array<any> = [];
 
   onMount(async () => {
+  //@ts-ignore
+    comfyApp = window.top.comfyApp || comfyUrl; //comfyUrl is for local debug
+
     const res = await fetch(comfyUrl + '/browser/files');
     const ret = await res.json();
 
@@ -35,20 +39,29 @@
       }
     });
   });
+
+  async function onClickLoad(file: any) {
+    const res = await fetch(file.url);
+    const blob = await res.blob();
+    const fileObj = new File([blob], file.name, {
+      type: res.headers.get('Content-Type') || '',
+    });
+    await comfyApp.handleFile(fileObj);
+  }
 </script>
 
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
   {#each files as file}
-    {#if ['image', 'video'].includes(file.fileType) }
+    {#if ['image', 'video'].includes(file.fileType)}
       <div class="browser-item">
         <div class="flex items-center">
-          {#if file.fileType === 'image' }
+          {#if file.fileType === 'image'}
             <img
               class=""
               src={file.url}
               alt={file.name} />
           {/if}
-          {#if file.fileType === 'video' }
+          {#if file.fileType === 'video'}
             <video
               class="object-contain pb-0.5 border-0.5 border-black"
               src={file.url}
@@ -64,6 +77,13 @@
         <p>{file.name}</p>
         <p>{file.formattedDatetime}</p>
         <p>{file.formattedSize}</p>
+
+        {#if comfyApp}
+          <button
+            class="btn btn-ghost"
+            on:click={async () => await onClickLoad(file)}
+          >Load</button>
+        {/if}
       </div>
     {/if}
   {/each}

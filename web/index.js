@@ -91,5 +91,7 @@ app.registerExtension({
         },
       })
     );
+
+    window.comfyApp = app;
   },
 });
