@@ -119,19 +119,27 @@ async def api_update_collection(request):
     new_filename = json_data['filename'] or filename
     notes = json_data['notes']
 
+    old_file_path = os.path.join(collections_path, folder_path, filename)
+    new_file_path = os.path.join(collections_path, folder_path, new_filename)
+
+    if not os.path.exists(old_file_path):
+        return web.Response(status=404)
+
     if filename != new_filename:
         shutil.move(
-            os.path.join(collections_path, filename),
-            os.path.join(collections_path, new_filename)
+            old_file_path,
+            new_file_path
         )
 
     if notes:
         extra = {
             "notes": notes
         }
-        info_filename = get_info_filename(new_filename)
-        with open(os.path.join(collections_path, info_filename), "w") as outfile:
+        info_file_path = get_info_filename(new_file_path)
+        with open(info_file_path, "w") as outfile:
             json.dump(extra, outfile)
+
+    return web.Response(status=201)
 
 
 @routes.get("/browser/collections")
