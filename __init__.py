@@ -1,6 +1,7 @@
 import os
 from aiohttp import web
 from typing import TypedDict, List
+import shutil
 
 import server
 import folder_paths
@@ -73,6 +74,24 @@ async def api_files_folder(request):
     return web.json_response({
         'files': files
     })
+
+# filename, folder_path
+@routes.post("/browser/collections")
+async def api_add_to_collections(request):
+    json_data = await request.json()
+    filename = json_data['filename']
+    folder_path = json_data['folder_path'] or ''
+    collections_path = os.path.join(browser_path, 'collections')
+    if not os.path.exists(collections_path):
+        os.mkdir(collections_path)
+
+    source_file_path = os.path.join(output_path, folder_path, filename)
+    if not os.path.exists(source_file_path):
+        return web.Response(status=404)
+
+    shutil.copy(source_file_path, collections_path)
+
+    return web.Response(status=201)
 
 routes.static(
     '/browser/',
