@@ -59,7 +59,7 @@
     }
 
     const documentHeight = document.documentElement.scrollHeight;
-    const scrollPosition = window.innerHeight + window.pageYOffset;
+    const scrollPosition = window.innerHeight + window.scrollY;
     if (scrollPosition >= documentHeight) {
       showCursor += 10;
     }
@@ -71,25 +71,27 @@
   {#each files.slice(0, showCursor) as file}
     {#if ['image', 'video'].includes(file.fileType)}
       <div class="browser-item">
-        <div class="flex items-center">
-          {#if file.fileType === 'image'}
-            <img
-              class=""
-              src={file.url}
-              alt={file.name} />
-          {/if}
-          {#if file.fileType === 'video'}
-            <video
-              class="object-contain pb-0.5 border-0.5 border-black"
-              src={file.url}
-              loop={true}
-              autoplay={true}
-              muted={true}
-            >
-              <track kind="captions" />
-            </video>
-          {/if}
-        </div>
+        <a href={file.url} target="_blank">
+          <div class="flex items-center">
+            {#if file.fileType === 'image'}
+              <img
+                class=""
+                src={file.url}
+                alt={file.name} />
+            {/if}
+            {#if file.fileType === 'video'}
+              <video
+                class="object-contain pb-0.5 border-0.5 border-black"
+                src={file.url}
+                loop={true}
+                autoplay={true}
+                muted={true}
+              >
+                <track kind="captions" />
+              </video>
+            {/if}
+          </div>
+        </a>
 
         <p>{file.name}</p>
         <p>{file.formattedDatetime}</p>
