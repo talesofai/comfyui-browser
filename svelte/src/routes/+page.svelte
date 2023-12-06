@@ -8,6 +8,7 @@
 
   let comfyApp: any;
   let files: Array<any> = [];
+  let showCursor = 10;
 
   onMount(async () => {
   //@ts-ignore
@@ -38,6 +39,9 @@
         f['formattedSize'] = Math.round(f['bytes'] / 1024) + ' KB';
       }
     });
+
+
+    window.addEventListener('scroll', onScroll);
   });
 
   async function onClickLoad(file: any) {
@@ -48,10 +52,23 @@
     });
     await comfyApp.handleFile(fileObj);
   }
+
+  function onScroll() {
+    if (showCursor >= files.length) {
+      return;
+    }
+
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollPosition = window.innerHeight + window.pageYOffset;
+    if (scrollPosition >= documentHeight) {
+      showCursor += 10;
+    }
+  }
 </script>
 
-<div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
-  {#each files as file}
+<div
+  class="grid grid-cols-4 lg:grid-cols-6 gap-2">
+  {#each files.slice(0, showCursor) as file}
     {#if ['image', 'video'].includes(file.fileType)}
       <div class="browser-item">
         <div class="flex items-center">
