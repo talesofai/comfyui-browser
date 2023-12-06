@@ -174,7 +174,7 @@ async def api_add_to_collections(request):
 
 
 routes.static(
-    '/browser/',
+    '/browser/web',
     os.path.join(browser_path, 'web/build')
 )
 

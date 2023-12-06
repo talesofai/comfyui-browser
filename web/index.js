@@ -1,7 +1,7 @@
 import { app } from "../../scripts/app.js";
 import { $el, ComfyDialog } from "../../scripts/ui.js";
 
-const browserUrl = "./browser/index.html";
+const browserUrl = "./browser/web/index.html";
 
 class BrowserDialog extends ComfyDialog {
   constructor() {
