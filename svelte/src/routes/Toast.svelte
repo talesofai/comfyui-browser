@@ -6,7 +6,7 @@
 
 {#if showToast}
   <div class="toast toast-center" >
-    <div class="alert alert-{toastSuccess ? 'success' : 'error'}">
+    <div class="alert {toastSuccess ? 'alert-success' : 'alert-error'}">
       <span>{toastText}</span>
     </div>
   </div>

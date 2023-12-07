@@ -69,6 +69,10 @@
   async function updateFilename(e: Event, file: any) {
     //@ts-ignore
     const value = e.target.value;
+    if (value === file.name) {
+      return;
+    }
+
     const ret = await updateFile(file, {
       filename: value,
       notes: file.notes || '',
@@ -87,6 +91,10 @@
   async function updateFileNotes(e: Event, file: any) {
     //@ts-ignore
     const value = e.target.value;
+    if (value == file.notes) {
+      return;
+    }
+
     const ret = await updateFile(file, {
       filename: file.name,
       notes: value,
