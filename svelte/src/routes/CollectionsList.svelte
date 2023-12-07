@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fetchFiles, onScroll } from './utils';
+  import MediaShow from "./MediaShow.svelte";
 
   export let comfyUrl: string;
 
@@ -23,5 +24,8 @@
 
 <div>
   {#each files.slice(0, showCursor) as file}
+    <div>
+      <MediaShow {file} />
+    </div>
   {/each}
 </div>

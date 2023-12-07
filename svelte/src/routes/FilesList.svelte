@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fetchFiles, onScroll } from './utils';
+  import MediaShow from "./MediaShow.svelte";
 
   export let comfyUrl: string;
 
@@ -79,27 +80,9 @@
   {#each files.slice(0, showCursor) as file}
     {#if ['image', 'video'].includes(file.fileType)}
       <div class="browser-item">
-        <a href={file.url} target="_blank">
-          <div class="flex items-center">
-            {#if file.fileType === 'image'}
-              <img
-                class=""
-                src={file.url}
-                alt={file.name} />
-            {/if}
-            {#if file.fileType === 'video'}
-              <video
-                class="object-contain pb-0.5 border-0.5 border-black"
-                src={file.url}
-                loop={true}
-                autoplay={true}
-                muted={true}
-              >
-                <track kind="captions" />
-              </video>
-            {/if}
-          </div>
-        </a>
+        <div class="flex items-center">
+          <MediaShow {file} />
+        </div>
 
         <p>{file.name}</p>
         <p>{file.formattedDatetime}</p>

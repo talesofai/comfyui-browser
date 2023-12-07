@@ -11,11 +11,15 @@ export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string
     if (['png', 'webp', 'jpeg', 'jpg', 'gif'].includes(extname)) {
       f['fileType'] = 'image';
     }
-    if (['mp4', 'webm'].includes(extname)) {
+    if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(extname)) {
       f['fileType'] = 'video';
     }
 
-    f['url'] = `${comfyUrl}/view?filename=${f.name}`;
+    if (type === 'collections') {
+      f['url'] = `${comfyUrl}/browser/collections/view?filename=${f.name}`;
+    } else {
+      f['url'] = `${comfyUrl}/view?filename=${f.name}`;
+    }
 
     const d = dayjs.unix(f.created_at);
     f['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
