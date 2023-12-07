@@ -193,9 +193,9 @@ async def api_view_collection(request):
     content_type = 'application/json'
     file_extension = os.path.splitext(filename)[1].lower()
     if file_extension in image_extensions:
-        content_type = f'image/{file_extension}'
+        content_type = f'image/{file_extension[1:]}'
     if file_extension in video_extensions:
-        content_type = f'video/{file_extension}'
+        content_type = f'video/{file_extension[1:]}'
 
     return web.Response(
         body=media_file,
