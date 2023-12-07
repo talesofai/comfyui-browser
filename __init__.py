@@ -1,6 +1,6 @@
 import json
 import os
-from aiohttp import web
+from aiohttp import request, web
 from typing import TypedDict, List
 import shutil
 
@@ -21,8 +21,14 @@ output_path = os.path.join(comfy_path, 'output')
 browser_path = os.path.dirname(__file__)
 collections_path = os.path.join(browser_path, 'collections')
 
+image_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+video_extensions = ['mp4', 'mov', 'avi', 'webm', 'mkv']
+
 # type = 'output' or 'collections'
 def get_target_folder_files(folder_path: str, type: str = 'output'):
+    if '..' in folder_path:
+        return None
+
     parent_path = output_path
     if type == 'collections':
         parent_path = collections_path
@@ -64,9 +70,12 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
 def get_info_filename(filename):
     return os.path.splitext(filename)[0] + ".info"
 
+
+# folder_path
 @routes.get("/browser/files")
-async def api_get_files_root(_):
-    files = get_target_folder_files('')
+async def api_get_files_root(request):
+    folder_path = request.query.get('folder_path', '')
+    files = get_target_folder_files(folder_path)
 
     if files == None:
         return web.Response(status=404)
@@ -76,18 +85,7 @@ async def api_get_files_root(_):
     })
 
 
-@routes.get("/browser/files/{folder_path}")
-async def api_get_files_folder(request):
-    files = get_target_folder_files(request.match_info['folder_path'])
-
-    if files == None:
-        return web.Response(status=404)
-
-    return web.json_response({
-        'files': files
-    })
-
-
+# filename, folder_path, type
 @routes.delete("/browser/files")
 async def api_delete_file(request):
     json_data = await request.json()
@@ -113,7 +111,7 @@ async def api_delete_file(request):
 @routes.put("/browser/collections/{filename}")
 async def api_update_collection(request):
     json_data = await request.json()
-    filename = request.match_info["filename"]
+    filename = request.match_info.get("filename", None)
     folder_path = json_data['folder_path'] or ''
 
     new_filename = json_data['filename'] or filename
@@ -153,6 +151,34 @@ async def api_get_collections(_):
         'files': files
     })
 
+# filename, folder_path
+@routes.get("/browser/collections/view")
+async def api_view_collection(request):
+    folder_path = request.query.get("folder_path", '')
+    filename = request.query.get("filename", None)
+    if not filename:
+        return web.Response(status=404)
+
+    file_path = os.path.join(collections_path, folder_path, filename)
+
+    if not os.path.exists(file_path):
+        return web.Response(status=404)
+
+    with open(file_path, 'rb') as f:
+        media_file = f.read()
+
+    content_type = 'application/json'
+    file_extension = filename.split('.')[-1].lower()
+    if file_extension in image_extensions:
+        content_type = f'image/{file_extension}'
+    if file_extension in video_extensions:
+        content_type = f'video/{file_extension}'
+
+    return web.Response(
+        body=media_file,
+        content_type=content_type,
+        headers={"Content-Disposition": f"filename=\"{filename}\""}
+    )
 
 # filename, folder_path
 @routes.post("/browser/collections")
