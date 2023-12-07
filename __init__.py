@@ -13,6 +13,7 @@ class FileInfoDict(TypedDict):
     bytes: int
     created_at: float
     folder_path: str
+    notes: str
 
 routes = server.PromptServer.instance.routes
 
@@ -21,8 +22,8 @@ output_path = os.path.join(comfy_path, 'output')
 browser_path = os.path.dirname(__file__)
 collections_path = os.path.join(browser_path, 'collections')
 
-image_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp']
-video_extensions = ['mp4', 'mov', 'avi', 'webm', 'mkv']
+image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
 
 # type = 'output' or 'collections'
 def get_target_folder_files(folder_path: str, type: str = 'output'):
@@ -45,8 +46,18 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
         if not os.path.exists(item.path):
             continue
         name = os.path.basename(item.path)
+        ext = os.path.splitext(name)[1].lower()
+        if not (item.is_dir() or ext in image_extensions or ext in video_extensions):
+            continue
+
         created_at = item.stat().st_ctime
         if item.is_file():
+            info_file_path = get_info_filename(item.path)
+            info_data = {}
+            if os.path.exists(info_file_path):
+                with open(info_file_path, 'r') as f:
+                    info_data = json.load(f)
+
             bytes = item.stat().st_size
             files.append({
                 "type": "file",
@@ -54,6 +65,7 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
                 "bytes": bytes,
                 "created_at": created_at,
                 "folder_path": folder_path,
+                "notes": info_data.get("notes", "")
             })
         elif item.is_dir():
             files.append({
@@ -62,13 +74,14 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
                 "bytes": 0,
                 "created_at": created_at,
                 "folder_path": folder_path,
+                "notes": ""
             })
 
     return files
 
 
 def get_info_filename(filename):
-    return os.path.splitext(filename)[0] + ".info"
+    return os.path.splitext(filename)[0] + "_info.json"
 
 
 # folder_path
@@ -100,6 +113,9 @@ async def api_delete_file(request):
         return web.json_response(status=404)
 
     os.remove(target_path)
+    info_file_path = get_info_filename(target_path)
+    if os.path.exists(info_file_path):
+        os.remove(info_file_path)
 
     info_filename = get_info_filename(target_path)
     if os.path.exists(info_filename):
@@ -128,6 +144,13 @@ async def api_update_collection(request):
             old_file_path,
             new_file_path
         )
+        old_info_file_path = get_info_filename(old_file_path)
+        if os.path.exists(old_info_file_path):
+            new_info_file_path = get_info_filename(new_file_path)
+            shutil.move(
+                old_info_file_path,
+                new_info_file_path
+            )
 
     if notes:
         extra = {
@@ -168,7 +191,7 @@ async def api_view_collection(request):
         media_file = f.read()
 
     content_type = 'application/json'
-    file_extension = filename.split('.')[-1].lower()
+    file_extension = os.path.splitext(filename)[1].lower()
     if file_extension in image_extensions:
         content_type = f'image/{file_extension}'
     if file_extension in video_extensions:

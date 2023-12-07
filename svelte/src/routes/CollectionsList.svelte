@@ -144,6 +144,7 @@
           cols="30"
           rows="4"
           on:blur={(e) => updateFileNotes(e, file)}
+          value={file.notes}
         />
       </div>
     </li>
