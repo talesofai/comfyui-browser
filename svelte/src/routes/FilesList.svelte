@@ -1,12 +1,23 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { fetchFiles, onScroll } from './utils';
 
-  export let comfyApp: any;
-  export let files: Array<any> = [];
+  export let comfyUrl: string;
+
+  let comfyApp: any;
+  let files: Array<any> = [];
   let showCursor = 20;
+  let showToast = false;
+  let toastSuccess = true;
+  let toastText = '';
 
-  onMount(() => {
-    window.addEventListener('scroll', onScroll);
+  onMount(async () => {
+    //@ts-ignore
+    comfyApp = window.top.comfyApp || comfyUrl; //comfyUrl is for local debug
+
+    files = await fetchFiles('files', comfyUrl);
+
+    window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
   });
 
   async function onClickLoad(file: any) {
@@ -18,21 +29,53 @@
     await comfyApp.handleFile(fileObj);
   }
 
-  function onScroll() {
-    if (showCursor >= files.length) {
+  async function onCollect(file: any) {
+    const res = await fetch(comfyUrl + '/browser/collections', {
+      method: 'POST',
+      body: JSON.stringify({
+        filename: file.name,
+        folder_path: file.folder_path,
+      }),
+    });
+
+    toastSuccess = res.ok;
+    if (toastSuccess) {
+      toastText = 'Added to collections';
+    } else {
+      toastText = 'Failed to add to collections. Please check the ComfyUI server.';
+    }
+    showToast = true;
+    setTimeout(() => showToast = false, 2000);
+  }
+
+  async function onDelete(file: any) {
+    const ret = confirm('You will delete this file? ' + file.name);
+    if (!ret) {
       return;
     }
 
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollPosition = window.innerHeight + window.scrollY;
-    if (scrollPosition >= documentHeight) {
-      showCursor += 10;
+    const res = await fetch(comfyUrl + '/browser/files', {
+      method: 'DELETE',
+      body: JSON.stringify({
+        type: 'files',
+        filename: file.name,
+        folder_path: file.folder_path,
+      }),
+    });
+
+    toastSuccess = res.ok;
+    if (toastSuccess) {
+      toastText = 'Deleted the file ' + file.name;
+    } else {
+      toastText = 'Failed to delete the file. Please check the ComfyUI server.';
     }
+    showToast = true;
+    setTimeout(() => showToast = false, 2000);
+    files = files.filter(f => f != file);
   }
 </script>
 
-<div
-  class="grid grid-cols-4 lg:grid-cols-6 gap-2">
+<div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
   {#each files.slice(0, showCursor) as file}
     {#if ['image', 'video'].includes(file.fileType)}
       <div class="browser-item">
@@ -67,11 +110,27 @@
             class="btn btn-ghost"
             on:click={async () => await onClickLoad(file)}
           >Load</button>
+          <button
+            class="btn btn-ghost"
+            on:click={async () => await onCollect(file)}
+          >Collect</button>
+          <button
+            class="btn btn-ghost"
+            on:click={async () => await onDelete(file)}
+          >Delete</button>
         {/if}
       </div>
     {/if}
   {/each}
 </div>
+
+{#if showToast}
+  <div class="toast toast-center" >
+    <div class="alert alert-{toastSuccess ? 'success' : 'error'}">
+      <span>{toastText}</span>
+    </div>
+  </div>
+{/if}
 
 <style lang="postcss">
   .browser-item {
