@@ -80,7 +80,7 @@
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
   {#each files.slice(0, showCursor) as file}
     {#if ['image', 'video'].includes(file.fileType)}
-      <div class="browser-item">
+      <div class="border-2">
         <div class="flex items-center">
           <MediaShow {file} styleClass="" />
         </div>
@@ -109,9 +109,3 @@
 </div>
 
 <Toast {showToast} {toastSuccess} {toastText} />
-
-<style lang="postcss">
-  .browser-item {
-    @apply border-2;
-  }
-</style>

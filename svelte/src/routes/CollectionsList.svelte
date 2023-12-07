@@ -88,6 +88,7 @@
     showToast = true;
     setTimeout(() => showToast = false, 2000);
   }
+
   async function updateFileNotes(e: Event, file: any) {
     //@ts-ignore
     const value = e.target.value;
