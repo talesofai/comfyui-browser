@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { fetchFiles, onScroll } from './utils';
   import MediaShow from "./MediaShow.svelte";
+  import Toast from "./Toast.svelte";
 
   export let comfyUrl: string;
 
@@ -81,7 +82,7 @@
     {#if ['image', 'video'].includes(file.fileType)}
       <div class="browser-item">
         <div class="flex items-center">
-          <MediaShow {file} />
+          <MediaShow {file} styleClass="" />
         </div>
 
         <p>{file.name}</p>
@@ -107,13 +108,7 @@
   {/each}
 </div>
 
-{#if showToast}
-  <div class="toast toast-center" >
-    <div class="alert alert-{toastSuccess ? 'success' : 'error'}">
-      <span>{toastText}</span>
-    </div>
-  </div>
-{/if}
+<Toast {showToast} {toastSuccess} {toastText} />
 
 <style lang="postcss">
   .browser-item {

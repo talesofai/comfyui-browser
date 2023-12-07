@@ -35,15 +35,15 @@ export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string
 }
 
 export function onScroll(showCursor: number, filesLen: number) {
-    if (showCursor >= filesLen) {
-      return showCursor;
-    }
-
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollPosition = window.innerHeight + window.scrollY;
-    if (scrollPosition >= documentHeight) {
-      return showCursor + 10;
-    }
-
+  if (showCursor >= filesLen) {
     return showCursor;
   }
+
+  const documentHeight = document.documentElement.scrollHeight;
+  const scrollPosition = window.innerHeight + window.scrollY;
+  if (scrollPosition >= documentHeight) {
+    return showCursor + 10;
+  }
+
+  return showCursor;
+}
