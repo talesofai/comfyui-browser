@@ -85,7 +85,7 @@
           <MediaShow {file} styleClass="w-full h-36" />
         </div>
 
-        <p class="font-bold max-h-12 leading-6 .no-scrollbar overflow-auto">{file.name}</p>
+        <p class="font-bold max-h-12 leading-6 overflow-auto">{file.name}</p>
         <p class="text-gray-500">{file.formattedDatetime}</p>
         <p class="text-gray-500">{file.formattedSize}</p>
 
