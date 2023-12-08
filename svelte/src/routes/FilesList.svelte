@@ -15,7 +15,7 @@
 
   onMount(async () => {
     //@ts-ignore
-    comfyApp = window.top.comfyApp || comfyUrl; //comfyUrl is for local debug
+    comfyApp = window.top.comfyApp;
 
     files = await fetchFiles('files', comfyUrl);
 
@@ -77,32 +77,34 @@
   }
 </script>
 
-<div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
+<div class="grid grid-cols-4 lg:grid-cols-6 gap-2 bg-base-300">
   {#each files.slice(0, showCursor) as file}
     {#if ['image', 'video'].includes(file.fileType)}
-      <div class="border-2">
+      <div class="bg-base-100">
         <div class="flex items-center">
-          <MediaShow {file} styleClass="" />
+          <MediaShow {file} styleClass="w-full h-36" />
         </div>
 
-        <p>{file.name}</p>
-        <p>{file.formattedDatetime}</p>
-        <p>{file.formattedSize}</p>
+        <p class="font-bold max-h-12 leading-6 .no-scrollbar overflow-auto">{file.name}</p>
+        <p class="text-gray-500">{file.formattedDatetime}</p>
+        <p class="text-gray-500">{file.formattedSize}</p>
 
-        {#if comfyApp}
+        <div class="">
+          {#if comfyApp}
+            <button
+              class="btn btn-link btn-sm p-0 no-underline text-accent"
+              on:click={async () => await onClickLoad(file)}
+            >Load</button>
+          {/if}
           <button
-            class="btn btn-ghost"
-            on:click={async () => await onClickLoad(file)}
-          >Load</button>
-          <button
-            class="btn btn-ghost"
+            class="btn btn-link btn-sm p-0 no-underline text-accent"
             on:click={async () => await onCollect(file)}
           >Collect</button>
           <button
-            class="btn btn-ghost"
+            class="btn btn-link btn-sm p-0 no-underline text-error"
             on:click={async () => await onDelete(file)}
           >Delete</button>
-        {/if}
+        </div>
       </div>
     {/if}
   {/each}

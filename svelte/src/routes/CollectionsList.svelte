@@ -15,7 +15,7 @@
 
   onMount(async () => {
     //@ts-ignore
-    comfyApp = window.top.comfyApp || comfyUrl; //comfyUrl is for local debug
+    comfyApp = window.top.comfyApp;
 
     files = await fetchFiles('collections', comfyUrl);
 
@@ -113,14 +113,14 @@
   }
 </script>
 
-<ul class="space-y-2">
+<ul class="space-y-2 bg-base-300">
   {#each files.slice(0, showCursor) as file}
-    <li class="flex h-32 border-2">
-      <MediaShow {file} styleClass="w-32 h-full flex justify-center items-center" />
-      <div class="space-y-2">
+    <li class="flex h-36 border-0 space-x-4 bg-base-100">
+      <MediaShow {file} styleClass="w-36" />
+      <div class="space-y-2 w-72">
         <input
           type="text"
-          class="font-semibold"
+          class="input-bordered font-bold w-full bg-base-100"
           on:blur={(e) => updateFilename(e, file)}
           value={file.name}
         />
@@ -128,23 +128,28 @@
           {file.formattedDatetime} | {file.formattedSize}
         </p>
 
-        <button
-          class="btn btn-ghost"
-          on:click={async () => await onClickLoad(file)}
-        >Load</button>
-        <button
-          class="btn btn-ghost"
-          on:click={async () => await onDelete(file)}
-        >Remove</button>
+        <div>
+          {#if comfyApp}
+            <button
+              class="btn btn-link btn-sm p-0 no-underline text-accent"
+              on:click={async () => await onClickLoad(file)}
+            >Load</button>
+          {/if}
+          <button
+            class="btn btn-link btn-sm p-0 no-underline text-error"
+            on:click={async () => await onDelete(file)}
+          >Remove</button>
+        </div>
       </div>
 
       <div>
-        <p>Notes:</p>
         <textarea
           name="notes"
-          cols="30"
+          cols="40"
           rows="4"
+          placeholder="write some memos..."
           on:blur={(e) => updateFileNotes(e, file)}
+          class="resize-none textarea"
           value={file.notes}
         />
       </div>

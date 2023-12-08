@@ -8,17 +8,18 @@
   <a
     href={file.url}
     target="_blank"
-    style="max-height: inherit; max-width: inherit;"
+    style="height: inherit; width: inherit;"
   >
     {#if file.fileType === 'image'}
       <img
-        class=""
+        class="h-full w-full object-contain"
+        loading="lazy"
         src={file.url}
         alt={file.name} />
     {/if}
     {#if file.fileType === 'video'}
       <video
-        class="object-contain pb-0.5 border-0.5 border-black"
+        class="h-full w-full object-contain pb-0.5 border-0.5 border-black"
         src={file.url}
         loop={true}
         autoplay={true}
