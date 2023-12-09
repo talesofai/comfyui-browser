@@ -3,6 +3,7 @@ import os
 from aiohttp import request, web
 from typing import TypedDict, List
 import shutil
+import time
 
 import server
 import folder_paths
@@ -217,7 +218,13 @@ async def api_add_to_collections(request):
     if not os.path.exists(source_file_path):
         return web.Response(status=404)
 
-    shutil.copy(source_file_path, collections_path)
+    name, ext = os.path.splitext(filename)
+    new_filepath = os.path.join(
+        collections_path,
+        f'{name}_{int(time.time())}{ext}'
+    )
+
+    shutil.copy(source_file_path, new_filepath)
 
     return web.Response(status=201)
 
