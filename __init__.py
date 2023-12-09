@@ -286,6 +286,11 @@ async def api_add_to_collections(request):
 
     return web.Response(status=201)
 
+@routes.get("/browser/config")
+async def api_get_browser_config(_):
+    config = get_config()
+
+    return web.json_response(config)
 
 # git_repo
 @routes.put("/browser/config")
