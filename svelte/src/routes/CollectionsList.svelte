@@ -11,9 +11,7 @@
   let config: any = {};
   let configGitRepo = '';
   let showCursor = 20;
-  let showToast = false;
-  let toastSuccess = true;
-  let toastText = '';
+  let toast: Toast;
 
   onMount(async () => {
     //@ts-ignore
@@ -39,15 +37,11 @@
      method: 'POST',
     });
 
-    toastSuccess = res.ok;
-    if (toastSuccess) {
-      toastText = 'Synced';
-    } else {
-      toastText = 'Failed to sync. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
-
+    toast.show(
+      res.ok,
+      'Synced',
+      'Failed to sync. Please check the ComfyUI server.'
+    );
     btn.disabled = false;
     btn.innerHTML = 'Sync';
     files = await fetchFiles('collections', comfyUrl);
@@ -61,14 +55,11 @@
       }),
     });
 
-    toastSuccess = res.ok;
-    if (toastSuccess) {
-      toastText = 'Updated config';
-    } else {
-      toastText = 'Failed to update config. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
+    toast.show(
+      res.ok,
+      'Updated config',
+      'Failed to update config. Please check the ComfyUI server.'
+    );
   }
 
   async function onClickLoad(file: any) {
@@ -95,14 +86,11 @@
       }),
     });
 
-    toastSuccess = res.ok;
-    if (toastSuccess) {
-      toastText = 'Deleted the file ' + file.name;
-    } else {
-      toastText = 'Failed to delete the file. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
+    toast.show(
+      res.ok,
+      'Deleted the file ' + file.name,
+      'Failed to delete the file. Please check the ComfyUI server.'
+    );
     files = files.filter(f => f != file);
   }
 
@@ -128,14 +116,11 @@
       folder_path: file.folder_path,
     });
 
-    toastSuccess = ret;
-    if (toastSuccess) {
-      toastText = 'Updated';
-    } else {
-      toastText = 'Failed to update. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
+    toast.show(
+      ret,
+      'Updated',
+      'Failed to update. Please check the ComfyUI server.'
+    );
   }
 
   async function updateFileNotes(e: Event, file: any) {
@@ -151,14 +136,11 @@
       folder_path: file.folder_path,
     });
 
-    toastSuccess = ret;
-    if (toastSuccess) {
-      toastText = 'Updated';
-    } else {
-      toastText = 'Failed to Update. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
+    toast.show(
+      ret,
+      'Updated',
+      'Failed to update. Please check the ComfyUI server.'
+    );
   }
 </script>
 
@@ -229,4 +211,4 @@
   {/each}
 </ul>
 
-<Toast {showToast} {toastSuccess} {toastText} />
+<Toast bind:this={toast} />

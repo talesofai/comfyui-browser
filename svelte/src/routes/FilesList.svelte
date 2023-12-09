@@ -9,9 +9,7 @@
   let comfyApp: any;
   let files: Array<any> = [];
   let showCursor = 20;
-  let showToast = false;
-  let toastSuccess = true;
-  let toastText = '';
+  let toast: Toast;
 
   onMount(async () => {
     //@ts-ignore
@@ -40,14 +38,11 @@
       }),
     });
 
-    toastSuccess = res.ok;
-    if (toastSuccess) {
-      toastText = 'Added to collections';
-    } else {
-      toastText = 'Failed to add to collections. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
+    toast.show(
+      res.ok,
+      'Added to collections',
+      'Failed to add to collections. Please check the ComfyUI server.'
+    );
   }
 
   async function onDelete(file: any) {
@@ -65,14 +60,11 @@
       }),
     });
 
-    toastSuccess = res.ok;
-    if (toastSuccess) {
-      toastText = 'Deleted the file ' + file.name;
-    } else {
-      toastText = 'Failed to delete the file. Please check the ComfyUI server.';
-    }
-    showToast = true;
-    setTimeout(() => showToast = false, 2000);
+    toast.show(
+      res.ok,
+      'Deleted the file ' + file.name,
+      'Failed to delete the file. Please check the ComfyUI server.'
+    );
     files = files.filter(f => f != file);
   }
 </script>
@@ -110,4 +102,4 @@
   {/each}
 </div>
 
-<Toast {showToast} {toastSuccess} {toastText} />
+<Toast bind:this={toast} />

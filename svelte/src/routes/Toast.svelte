@@ -1,7 +1,18 @@
-<script>
+<script lang="ts">
   export let showToast = false;
   export let toastSuccess = true;
   export let toastText = '';
+
+  export function show(
+    isSuccess: boolean,
+    successText: string,
+    failText: string,
+    duration = 2000
+  ) {
+    toastText = isSuccess ? successText : failText;
+    showToast = true;
+    setTimeout(() => showToast = false, duration);
+  }
 </script>
 
 {#if showToast}
