@@ -8,6 +8,8 @@
 
   let comfyApp: any;
   let files: Array<any> = [];
+  let config: any = {};
+  let configGitRepo = '';
   let showCursor = 20;
   let showToast = false;
   let toastSuccess = true;
@@ -18,9 +20,56 @@
     comfyApp = window.top.comfyApp;
 
     files = await fetchFiles('collections', comfyUrl);
+    config = await fetchConfig() || {};
+    configGitRepo = config?.git_repo;
 
     window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
   });
+
+  async function fetchConfig() {
+    const res = await fetch(comfyUrl + '/browser/config');
+    return await res.json();
+  }
+
+  async function onClickSyncCollections(e: Event) {
+    const btn = e.target as HTMLButtonElement;
+    btn.disabled = true;
+    btn.innerHTML = 'Syncing...';
+    const res = await fetch(comfyUrl + '/browser/collections/sync', {
+     method: 'POST',
+    });
+
+    toastSuccess = res.ok;
+    if (toastSuccess) {
+      toastText = 'Synced';
+    } else {
+      toastText = 'Failed to sync. Please check the ComfyUI server.';
+    }
+    showToast = true;
+    setTimeout(() => showToast = false, 2000);
+
+    btn.disabled = false;
+    btn.innerHTML = 'Sync';
+    files = await fetchFiles('collections', comfyUrl);
+  }
+
+  async function onClickSaveConfig() {
+    const res = await fetch(comfyUrl + '/browser/config', {
+      method: 'PUT',
+      body: JSON.stringify({
+        git_repo: configGitRepo,
+      }),
+    });
+
+    toastSuccess = res.ok;
+    if (toastSuccess) {
+      toastText = 'Updated config';
+    } else {
+      toastText = 'Failed to update config. Please check the ComfyUI server.';
+    }
+    showToast = true;
+    setTimeout(() => showToast = false, 2000);
+  }
 
   async function onClickLoad(file: any) {
     const res = await fetch(file.url);
@@ -83,7 +132,7 @@
     if (toastSuccess) {
       toastText = 'Updated';
     } else {
-      toastText = 'Failed to Update. Please check the ComfyUI server.';
+      toastText = 'Failed to update. Please check the ComfyUI server.';
     }
     showToast = true;
     setTimeout(() => showToast = false, 2000);
@@ -112,6 +161,29 @@
     setTimeout(() => showToast = false, 2000);
   }
 </script>
+
+<div>
+  <input
+    type="text"
+    placeholder="Input your git repository address"
+    bind:value={configGitRepo}
+    class="input input-bordered w-full max-w-lg"
+  />
+  {#if configGitRepo != config?.git_repo}
+    <button
+      class="btn btn-outline btn-accent"
+      on:click={onClickSaveConfig}
+    >
+      Save
+    </button>
+  {/if}
+  <button
+    class="btn btn-outline btn-accent"
+    on:click={onClickSyncCollections}
+  >
+    Sync
+  </button>
+</div>
 
 <ul class="space-y-2 bg-base-300">
   {#each files.slice(0, showCursor) as file}
