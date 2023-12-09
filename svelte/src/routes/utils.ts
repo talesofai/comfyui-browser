@@ -7,7 +7,7 @@ export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string
   let files = ret.files;
   files.forEach((f: any) => {
     const extname = f.name.split('.').pop().toLowerCase();
-    f['fileType'] = 'unknown';
+    f['fileType'] = 'json';
     if (['png', 'webp', 'jpeg', 'jpg', 'gif'].includes(extname)) {
       f['fileType'] = 'image';
     }

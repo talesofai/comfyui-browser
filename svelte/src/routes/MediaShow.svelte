@@ -10,6 +10,13 @@
     target="_blank"
     style="height: inherit; width: inherit;"
   >
+    {#if file.fileType === 'json'}
+      <div class="w-full h-full flex items-center justify-center">
+        <span class="font-bold text-xl">
+          JSON
+        </span>
+      </div>
+    {/if}
     {#if file.fileType === 'image'}
       <img
         class="h-full w-full object-contain"
