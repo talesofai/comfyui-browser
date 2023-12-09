@@ -4,6 +4,7 @@ from aiohttp import request, web
 from typing import TypedDict, List
 import shutil
 import time
+import subprocess
 
 import server
 import folder_paths
@@ -22,9 +23,13 @@ comfy_path = os.path.dirname(folder_paths.__file__)
 output_path = os.path.join(comfy_path, 'output')
 browser_path = os.path.dirname(__file__)
 collections_path = os.path.join(browser_path, 'collections')
+config_path = os.path.join(browser_path, 'config.json')
+
+git_remote_name = 'origin'
 
 image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
+
 
 # type = 'output' or 'collections'
 def get_target_folder_files(folder_path: str, type: str = 'output'):
@@ -46,9 +51,12 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
     for item in folder_listing:
         if not os.path.exists(item.path):
             continue
+
         name = os.path.basename(item.path)
         ext = os.path.splitext(name)[1].lower()
-        if not (item.is_dir() or ext in image_extensions or ext in video_extensions):
+        if name == '' or item.is_dir():
+            continue
+        if not (ext in image_extensions or ext in video_extensions):
             continue
 
         created_at = item.stat().st_ctime
@@ -84,6 +92,53 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
 def get_info_filename(filename):
     return os.path.splitext(filename)[0] + "_info.json"
 
+
+def run_cmd(cmd, run_path, log_code=True, log_message=True):
+    log(f'running: {cmd}')
+    ret = subprocess.run(
+        f'cd {run_path} && {cmd}',
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        encoding="UTF-8"
+    )
+    if log_code:
+        if ret.returncode == 0:
+            log('successed')
+        else:
+            log('failed')
+    if log_message:
+        if (len(ret.stdout) > 0 or len(ret.stderr) > 0):
+            log(ret.stdout + ret.stderr)
+
+    return ret
+
+
+def get_config():
+    if not os.path.exists(config_path):
+        return {}
+
+    with open(config_path, 'r') as f:
+        return json.load(f)
+
+def set_config(config):
+    with open(config_path, 'w') as f:
+        json.dump(config, f)
+
+def git_set_remote_url(remote_url, run_path = collections_path):
+    return run_cmd(
+        f'git remote | grep -w {git_remote_name} && \
+        git remote set-url {git_remote_name} {remote_url} || \
+        git remote add {git_remote_name} {remote_url}',
+        run_path
+    )
+
+def git_init(run_path = collections_path):
+    if not os.path.exists(os.path.join(run_path, '.git')):
+        run_cmd('git init', collections_path)
+
+def log(message):
+    print('[comfyui-browser] ' + message)
 
 # folder_path
 @routes.get("/browser/files")
@@ -129,9 +184,9 @@ async def api_delete_file(request):
 async def api_update_collection(request):
     json_data = await request.json()
     filename = request.match_info.get("filename", None)
-    folder_path = json_data['folder_path'] or ''
+    folder_path = json_data.get('folder_path', '')
 
-    new_filename = json_data['filename'] or filename
+    new_filename = json_data.get('filename', filename)
     notes = json_data['notes']
 
     old_file_path = os.path.join(collections_path, folder_path, filename)
@@ -208,8 +263,11 @@ async def api_view_collection(request):
 @routes.post("/browser/collections")
 async def api_add_to_collections(request):
     json_data = await request.json()
-    filename = json_data['filename']
-    folder_path = json_data['folder_path'] or ''
+    filename = json_data.get('filename')
+    if not filename:
+        return web.Response(status=404)
+
+    folder_path = json_data.get('folder_path', '')
 
     if not os.path.exists(collections_path):
         os.mkdir(collections_path)
@@ -228,6 +286,84 @@ async def api_add_to_collections(request):
 
     return web.Response(status=201)
 
+
+# git_repo
+@routes.put("/browser/config")
+async def api_update_browser_config(request):
+    json_data = await request.json()
+    config = get_config()
+    git_repo = json_data.get('git_repo', config.get('git_repo'))
+
+    git_init()
+
+    if git_repo == '':
+        ret = run_cmd(f'git remote remove {git_remote_name}', collections_path)
+        if not ret.returncode == 0:
+            return web.json_response(
+                { 'message': ret.stderr },
+                status=500,
+            )
+
+        set_config({ 'git_repo': git_repo })
+        return web.Response(status=200)
+
+    ret = git_set_remote_url(git_repo)
+    if not ret.returncode == 0:
+        return web.json_response(
+            { 'message': ret.stderr },
+            status=500,
+        )
+
+    set_config({ 'git_repo': git_repo })
+    return web.Response(status=200)
+
+@routes.post("/browser/collections/sync")
+async def api_sync_my_collections(_):
+    if not os.path.exists(config_path):
+        return web.Response(status=404)
+
+    config = get_config()
+    git_repo = config.get('git_repo')
+    if not git_repo:
+        return web.Response(status=404)
+
+    git_init()
+
+    cmd = 'git status -s'
+    ret = run_cmd(cmd, collections_path)
+    if len(ret.stdout) > 0:
+        cmd = f'git add . && git commit -m "sync by comfyui-browser at {int(time.time())}"'
+        ret = run_cmd(cmd, collections_path)
+        if not ret.returncode == 0:
+            return web.json_response(
+                { 'message': "\n".join([ret.stdout, ret.stderr]) },
+                status=500,
+            )
+
+    cmd = f'git fetch {git_remote_name} -v'
+    ret = run_cmd(cmd, collections_path)
+    if not ret.returncode == 0:
+        return web.json_response(
+            { 'message': "\n".join([ret.stdout, ret.stderr]) },
+            status=500,
+        )
+
+    cmd = 'git branch --show-current'
+    ret = run_cmd(cmd, collections_path)
+    branch = ret.stdout.replace('\n', '')
+
+    cmd = f'git merge {git_remote_name}/{branch}'
+    ret = run_cmd(cmd, collections_path, log_code=False)
+
+    cmd = f'git push {git_remote_name} {branch}'
+    ret = run_cmd(cmd, collections_path)
+    if not ret.returncode == 0:
+        return web.json_response(
+            { 'message': "\n".join([ret.stdout, ret.stderr]) },
+            status=500,
+        )
+
+    return web.Response(status=200)
 
 routes.static(
     '/browser/web',
