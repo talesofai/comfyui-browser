@@ -30,7 +30,7 @@ git_remote_name = 'origin'
 image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
 
-info_file_suffix = '_info.json'
+info_file_suffix = '.info'
 
 
 # type = 'output' or 'collections'
@@ -59,8 +59,6 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
         if name == '' or item.is_dir():
             continue
         if not (ext in (image_extensions + video_extensions + ['.json'])):
-            continue
-        if target_path[-10:] == info_file_suffix:
             continue
 
         created_at = item.stat().st_ctime
