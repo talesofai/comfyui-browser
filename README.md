@@ -14,9 +14,9 @@ You can sync your workflows to a remote Git repository and use them everywhere.
 
 ## Preview
 
-<img width="1024" alt="image" src="https://github.com/tzwm/comfyui-browser/assets/828837/913b0b4d-6f85-41fe-849a-624e92c9fab2">
+![e08f52dacabad159519d0d0efb87de9d7118e17dd08f8064cb90b2d59a9278da](https://github.com/tzwm/comfyui-browser/assets/828837/46c03aec-1047-4890-8d28-509448a14e02)
 
-<img width="1024" alt="image" src="https://github.com/tzwm/comfyui-browser/assets/828837/016797de-3d9a-4cf3-9388-66a37b26a55b">
+![6362bea4c745d845728f4885fd3fe5092f15dcc00e0f01790fe843e1cdf4777e](https://github.com/tzwm/comfyui-browser/assets/828837/41b793c3-05eb-447e-8f14-993187a2c906)
 
 [comfyui_browser_demo_simple_231210.webm](https://github.com/tzwm/comfyui-browser/assets/828837/1eb67a5c-a40d-4b34-af78-687c05478639)
 
