@@ -8,7 +8,7 @@ You can sync your workflows to a remote Git repository and use them everywhere.
 
 - Browse and manage your images/videos/workflows in the output folder.
 - Add your workflows to the collection so that you can switch and manage them more easily.
-- Sync your collection everywhere by Git.
+- Sync your collection anywhere by Git.
 - [DOING] Clone public workflow by Git and load them more easily.
 
 
@@ -36,6 +36,9 @@ Clone this repo into the `custom_nodes` folder and restart the ComfyUI.
 cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 ```
 
+## Notes
+
+- Your collections are stored in the `ComfyUI/custom_nodes/comfyui-browser/collections`.
 
 ## TODO
 
