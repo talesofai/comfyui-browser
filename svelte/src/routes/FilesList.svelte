@@ -13,7 +13,7 @@
 
   onMount(async () => {
     //@ts-ignore
-    comfyApp = window.top.comfyApp;
+    comfyApp = window.top.app;
 
     files = await fetchFiles('files', comfyUrl);
 
