@@ -143,6 +143,10 @@ def git_init(run_path = collections_path):
 def log(message):
     print('[comfyui-browser] ' + message)
 
+def add_uuid_to_filename(filename):
+    name, ext = os.path.splitext(filename)
+    return f'{name}_{int(time.time())}{ext}'
+
 # folder_path
 @routes.get("/browser/files")
 async def api_get_files_root(request):
@@ -279,13 +283,31 @@ async def api_add_to_collections(request):
     if not os.path.exists(source_file_path):
         return web.Response(status=404)
 
-    name, ext = os.path.splitext(filename)
     new_filepath = os.path.join(
         collections_path,
-        f'{name}_{int(time.time())}{ext}'
+        add_uuid_to_filename(filename)
     )
 
     shutil.copy(source_file_path, new_filepath)
+
+    return web.Response(status=201)
+
+# filename, content
+@routes.post("/browser/collections/workflows")
+async def api_create_new_workflow(request):
+    json_data = await request.json()
+    filename = json_data.get('filename')
+    content = json_data.get('content')
+
+    if not (filename and content):
+        return web.Response(status=404)
+
+    new_filepath = os.path.join(
+        collections_path,
+        add_uuid_to_filename(filename)
+    )
+    with open(new_filepath, 'w') as f:
+        f.write(content)
 
     return web.Response(status=201)
 
