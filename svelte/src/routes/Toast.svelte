@@ -9,6 +9,7 @@
     failText: string,
     duration = 2000
   ) {
+    toastSuccess = isSuccess;
     toastText = isSuccess ? successText : failText;
     showToast = true;
     setTimeout(() => showToast = false, duration);

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fetchFiles, onScroll } from './utils';
+  import { fetchFiles, onLoadWorkflow, onScroll } from './utils';
   import MediaShow from "./MediaShow.svelte";
   import Toast from "./Toast.svelte";
 
@@ -15,7 +15,7 @@
 
   onMount(async () => {
     //@ts-ignore
-    comfyApp = window.top.comfyApp;
+    comfyApp = window.top.app;
 
     files = await fetchFiles('collections', comfyUrl);
     config = await fetchConfig() || {};
@@ -60,15 +60,6 @@
       'Updated config',
       'Failed to update config. Please check the ComfyUI server.'
     );
-  }
-
-  async function onClickLoad(file: any) {
-    const res = await fetch(file.url);
-    const blob = await res.blob();
-    const fileObj = new File([blob], file.name, {
-      type: res.headers.get('Content-Type') || '',
-    });
-    await comfyApp.handleFile(fileObj);
   }
 
   async function onDelete(file: any) {
@@ -186,7 +177,7 @@
           {#if comfyApp}
             <button
               class="btn btn-link btn-sm p-0 no-underline text-accent"
-              on:click={async () => await onClickLoad(file)}
+              on:click={async () => await onLoadWorkflow(file, comfyApp, toast)}
             >Load</button>
           {/if}
           <button

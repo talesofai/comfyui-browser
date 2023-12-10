@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fetchFiles, onScroll } from './utils';
+  import { fetchFiles, onScroll, onLoadWorkflow } from './utils';
   import MediaShow from "./MediaShow.svelte";
   import Toast from "./Toast.svelte";
 
@@ -19,15 +19,6 @@
 
     window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
   });
-
-  async function onClickLoad(file: any) {
-    const res = await fetch(file.url);
-    const blob = await res.blob();
-    const fileObj = new File([blob], file.name, {
-      type: res.headers.get('Content-Type') || '',
-    });
-    await comfyApp.handleFile(fileObj);
-  }
 
   async function onCollect(file: any) {
     const res = await fetch(comfyUrl + '/browser/collections', {
@@ -85,7 +76,7 @@
           {#if comfyApp}
             <button
               class="btn btn-link btn-sm p-0 no-underline text-accent"
-              on:click={async () => await onClickLoad(file)}
+              on:click={async () => await onLoadWorkflow(file, comfyApp, toast)}
             >Load</button>
           {/if}
           <button

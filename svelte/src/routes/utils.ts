@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import type Toast from './Toast.svelte';
 
 export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string) {
   const res = await fetch(comfyUrl + '/browser/' + type);
@@ -46,4 +47,23 @@ export function onScroll(showCursor: number, filesLen: number) {
   }
 
   return showCursor;
+}
+
+export async function onLoadWorkflow(file: any, comfyApp: any, toast: Toast) {
+  const res = await fetch(file.url);
+  const blob = await res.blob();
+  const fileObj = new File([blob], file.name, {
+    type: res.headers.get('Content-Type') || '',
+  });
+  const f = comfyApp.loadGraphData.bind(comfyApp);
+  comfyApp.loadGraphData = async function(graphData: any) {
+    const modal = window.top?.document.getElementById('comfy-browser-dialog');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+    await f(graphData);
+  }
+  await comfyApp.handleFile(fileObj);
+
+  toast.show(false, 'Loaded', 'No workflow found here', 1000);
 }
