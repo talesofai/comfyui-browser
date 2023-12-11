@@ -125,12 +125,12 @@ def set_config(config):
         json.dump(config, f)
 
 def git_set_remote_url(remote_url, run_path = collections_path):
-    return run_cmd(
-        f'git remote | grep -w {git_remote_name} && \
-        git remote set-url {git_remote_name} {remote_url} || \
-        git remote add {git_remote_name} {remote_url}',
-        run_path
-    )
+    ret = run_cmd('git remote', run_path)
+
+    if git_remote_name in ret.stdout.split('\n'):
+        return run_cmd(f'git remote set-url {git_remote_name} {remote_url}', run_path)
+    else:
+        return run_cmd(f'git remote add {git_remote_name} {remote_url}', run_path)
 
 def git_init(run_path = collections_path):
     if not os.path.exists(os.path.join(run_path, '.git')):
