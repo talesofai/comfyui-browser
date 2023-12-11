@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.3.0 - 2023-12-11
+
+- Support subfolder for output and collection
+
 ## v1.2.0 - 2023-12-10
 
 - Can collect current graph to Collections as a workflow.json
