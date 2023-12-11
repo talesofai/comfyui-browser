@@ -1,34 +1,64 @@
 import dayjs from 'dayjs';
 import type Toast from './Toast.svelte';
 
+function processFile(file: any, type: 'files' | 'collections', comfyUrl: string) {
+  const extname = file.name.split('.').pop().toLowerCase();
+  file['fileType'] = 'json';
+  if (['png', 'webp', 'jpeg', 'jpg', 'gif'].includes(extname)) {
+    file['fileType'] = 'image';
+  }
+  if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(extname)) {
+    file['fileType'] = 'video';
+  }
+
+  if (type === 'collections') {
+    file['url'] = `${comfyUrl}/browser/collections/view?filename=${file.name}&folder_path=${file.folder_path}`;
+  } else {
+    file['url'] = `${comfyUrl}/view?filename=${file.name}&subfolder=${file.folder_path}`;
+  }
+
+  const d = dayjs.unix(file.created_at);
+  file['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
+
+  if (file['bytes'] / 1024 / 1024 > 1) {
+    file['formattedSize'] = (file['bytes'] / 1024 / 1024).toFixed(2) + ' MB';
+  } else {
+    file['formattedSize'] = Math.round(file['bytes'] / 1024) + ' KB';
+  }
+  return file;
+}
+
+function processDir(dir: any) {
+  dir['fileType'] = 'dir';
+
+  const newFolderPath = dir.folder_path ? `${dir.folder_path}/${dir.name}` : dir.name;
+  let url = new URL(window.location.href);
+  url.searchParams.set('folder_path', newFolderPath);
+  dir['url'] = url.href;
+
+  const d = dayjs.unix(dir.created_at);
+  dir['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
+
+  dir['formattedSize'] = '0 KB';
+  return dir;
+}
+
 export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string) {
-  const res = await fetch(comfyUrl + '/browser/' + type);
+  const urlParams = new URLSearchParams(window.location.search);
+  const folderPath = urlParams.get('folder_path');
+  let url = comfyUrl + '/browser/' + type;
+  if (folderPath) {
+    url = url + `?folder_path=${folderPath}`;
+  }
+  const res = await fetch(url);
   const ret = await res.json();
 
   let files = ret.files;
   files.forEach((f: any) => {
-    const extname = f.name.split('.').pop().toLowerCase();
-    f['fileType'] = 'json';
-    if (['png', 'webp', 'jpeg', 'jpg', 'gif'].includes(extname)) {
-      f['fileType'] = 'image';
-    }
-    if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(extname)) {
-      f['fileType'] = 'video';
-    }
-
-    if (type === 'collections') {
-      f['url'] = `${comfyUrl}/browser/collections/view?filename=${f.name}`;
+    if (f.type === 'dir') {
+      f = processDir(f);
     } else {
-      f['url'] = `${comfyUrl}/view?filename=${f.name}`;
-    }
-
-    const d = dayjs.unix(f.created_at);
-    f['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
-
-    if (f['bytes'] / 1024 / 1024 > 1) {
-      f['formattedSize'] = (f['bytes'] / 1024 / 1024).toFixed(2) + ' MB';
-    } else {
-      f['formattedSize'] = Math.round(f['bytes'] / 1024) + ' KB';
+      f = processFile(f, type, comfyUrl);
     }
   });
 

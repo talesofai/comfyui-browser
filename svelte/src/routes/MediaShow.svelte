@@ -7,9 +7,16 @@
 <div class={styleClass}>
   <a
     href={file.url}
-    target="_blank"
+    target={file.type === 'dir' ? "_self" : "_blank"}
     style="height: inherit; width: inherit;"
   >
+    {#if file.type === 'dir'}
+      <div class="w-full h-full flex items-center justify-center">
+        <span class="font-bold text-xl">
+          Folder
+        </span>
+      </div>
+    {/if}
     {#if file.fileType === 'json'}
       <div class="w-full h-full flex items-center justify-center">
         <span class="font-bold text-xl">

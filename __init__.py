@@ -61,13 +61,12 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
                 continue
 
         created_at = item.stat().st_ctime
+        info_file_path = get_info_filename(item.path)
+        info_data = {}
+        if os.path.exists(info_file_path):
+            with open(info_file_path, 'r') as f:
+                info_data = json.load(f)
         if item.is_file():
-            info_file_path = get_info_filename(item.path)
-            info_data = {}
-            if os.path.exists(info_file_path):
-                with open(info_file_path, 'r') as f:
-                    info_data = json.load(f)
-
             bytes = item.stat().st_size
             files.append({
                 "type": "file",
@@ -84,7 +83,7 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
                 "bytes": 0,
                 "created_at": created_at,
                 "folder_path": folder_path,
-                "notes": ""
+                "notes": info_data.get("notes", "")
             })
 
     return files
@@ -224,8 +223,9 @@ async def api_update_collection(request):
 
 
 @routes.get("/browser/collections")
-async def api_get_collections(_):
-    files = get_target_folder_files('', 'collections')
+async def api_get_collections(request):
+    folder_path = request.query.get('folder_path', '')
+    files = get_target_folder_files(folder_path, 'collections')
 
     if files == None:
         return web.Response(status=404)

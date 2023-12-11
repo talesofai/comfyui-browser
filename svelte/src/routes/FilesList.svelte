@@ -62,7 +62,7 @@
 
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2 bg-base-300">
   {#each files.slice(0, showCursor) as file}
-    {#if ['image', 'video'].includes(file.fileType)}
+    {#if ['dir', 'image', 'video', 'json'].includes(file.fileType)}
       <div class="bg-base-100">
         <div class="flex items-center">
           <MediaShow {file} styleClass="w-full h-36" />

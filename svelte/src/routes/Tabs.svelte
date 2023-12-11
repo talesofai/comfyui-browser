@@ -5,8 +5,12 @@
     return tab === activeTab ? 'tab-active' : '';
   }
 
-  function onClickTab(tab: string) {
-    activeTab = tab;
+  async function onClickTab(tab: string) {
+    let url = new URL(window.location.href);
+    url.searchParams.delete('folder_path');
+    url.searchParams.set('tab', tab);
+    window.location.href = url.toString();
+    //activeTab = tab;
   }
 </script>
 
