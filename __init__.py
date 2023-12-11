@@ -19,8 +19,6 @@ class FileInfoDict(TypedDict):
 
 routes = server.PromptServer.instance.routes
 
-comfy_path = os.path.dirname(folder_paths.__file__)
-output_path = os.path.join(comfy_path, 'output')
 browser_path = os.path.dirname(__file__)
 collections_path = os.path.join(browser_path, 'collections')
 config_path = os.path.join(browser_path, 'config.json')
@@ -38,7 +36,7 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
     if '..' in folder_path:
         return None
 
-    parent_path = output_path
+    parent_path = folder_paths.output_directory
     if type == 'collections':
         parent_path = collections_path
 
@@ -165,7 +163,7 @@ async def api_delete_file(request):
     json_data = await request.json()
     filename = json_data['filename']
     folder_path = json_data['folder_path'] or ''
-    parent_path = output_path
+    parent_path = folder_paths.output_directory
     if json_data['type'] == 'collections':
         parent_path = collections_path
 
@@ -277,7 +275,7 @@ async def api_add_to_collections(request):
     if not os.path.exists(collections_path):
         os.mkdir(collections_path)
 
-    source_file_path = os.path.join(output_path, folder_path, filename)
+    source_file_path = os.path.join(folder_paths.output_directory, folder_path, filename)
     if not os.path.exists(source_file_path):
         return web.Response(status=404)
 
