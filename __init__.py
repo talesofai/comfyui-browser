@@ -1,10 +1,12 @@
 import json
 import os
+from os import path
 from aiohttp import request, web
 from typing import TypedDict, List
 import shutil
 import time
 import subprocess
+import re
 
 import server
 import folder_paths
@@ -19,9 +21,10 @@ class FileInfoDict(TypedDict):
 
 routes = server.PromptServer.instance.routes
 
-browser_path = os.path.dirname(__file__)
-collections_path = os.path.join(browser_path, 'collections')
-config_path = os.path.join(browser_path, 'config.json')
+browser_path = path.dirname(__file__)
+collections_path = path.join(browser_path, 'collections')
+config_path = path.join(browser_path, 'config.json')
+sources_path = path.join(browser_path, 'sources')
 
 git_remote_name = 'origin'
 
@@ -41,19 +44,19 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
         parent_path = collections_path
 
     files: List[FileInfoDict] = []
-    target_path = os.path.join(parent_path, folder_path)
+    target_path = path.join(parent_path, folder_path)
 
-    if not os.path.exists(target_path):
+    if not path.exists(target_path):
         return None
 
     folder_listing = os.scandir(target_path)
     folder_listing = sorted(folder_listing, key=lambda f: (f.is_file(), -f.stat().st_ctime))
     for item in folder_listing:
-        if not os.path.exists(item.path):
+        if not path.exists(item.path):
             continue
 
-        name = os.path.basename(item.path)
-        ext = os.path.splitext(name)[1].lower()
+        name = path.basename(item.path)
+        ext = path.splitext(name)[1].lower()
         if name == '' or name[0] == '.':
             continue
         if item.is_file():
@@ -63,7 +66,7 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
         created_at = item.stat().st_ctime
         info_file_path = get_info_filename(item.path)
         info_data = {}
-        if os.path.exists(info_file_path):
+        if path.exists(info_file_path):
             with open(info_file_path, 'r') as f:
                 info_data = json.load(f)
         if item.is_file():
@@ -90,7 +93,7 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
 
 
 def get_info_filename(filename):
-    return os.path.splitext(filename)[0] + info_file_suffix
+    return path.splitext(filename)[0] + info_file_suffix
 
 def run_cmd(cmd, run_path, log_code=True, log_message=True):
     log(f'running: {cmd}')
@@ -114,7 +117,7 @@ def run_cmd(cmd, run_path, log_code=True, log_message=True):
 
 
 def get_config():
-    if not os.path.exists(config_path):
+    if not path.exists(config_path):
         return {}
 
     with open(config_path, 'r') as f:
@@ -133,14 +136,14 @@ def git_set_remote_url(remote_url, run_path = collections_path):
         return run_cmd(f'git remote add {git_remote_name} {remote_url}', run_path)
 
 def git_init(run_path = collections_path):
-    if not os.path.exists(os.path.join(run_path, '.git')):
+    if not path.exists(path.join(run_path, '.git')):
         run_cmd('git init', collections_path)
 
 def log(message):
     print('[comfyui-browser] ' + message)
 
 def add_uuid_to_filename(filename):
-    name, ext = os.path.splitext(filename)
+    name, ext = path.splitext(filename)
     return f'{name}_{int(time.time())}{ext}'
 
 # folder_path
@@ -167,17 +170,17 @@ async def api_delete_file(request):
     if json_data['type'] == 'collections':
         parent_path = collections_path
 
-    target_path = os.path.join(parent_path, folder_path, filename)
-    if not os.path.exists(target_path):
+    target_path = path.join(parent_path, folder_path, filename)
+    if not path.exists(target_path):
         return web.json_response(status=404)
 
     os.remove(target_path)
     info_file_path = get_info_filename(target_path)
-    if os.path.exists(info_file_path):
+    if path.exists(info_file_path):
         os.remove(info_file_path)
 
     info_filename = get_info_filename(target_path)
-    if os.path.exists(info_filename):
+    if path.exists(info_filename):
         os.remove(info_filename)
 
     return web.Response(status=201)
@@ -192,10 +195,10 @@ async def api_update_collection(request):
     new_filename = json_data.get('filename', filename)
     notes = json_data['notes']
 
-    old_file_path = os.path.join(collections_path, folder_path, filename)
-    new_file_path = os.path.join(collections_path, folder_path, new_filename)
+    old_file_path = path.join(collections_path, folder_path, filename)
+    new_file_path = path.join(collections_path, folder_path, new_filename)
 
-    if not os.path.exists(old_file_path):
+    if not path.exists(old_file_path):
         return web.Response(status=404)
 
     if filename != new_filename:
@@ -204,7 +207,7 @@ async def api_update_collection(request):
             new_file_path
         )
         old_info_file_path = get_info_filename(old_file_path)
-        if os.path.exists(old_info_file_path):
+        if path.exists(old_info_file_path):
             new_info_file_path = get_info_filename(new_file_path)
             shutil.move(
                 old_info_file_path,
@@ -242,16 +245,16 @@ async def api_view_collection(request):
     if not filename:
         return web.Response(status=404)
 
-    file_path = os.path.join(collections_path, folder_path, filename)
+    file_path = path.join(collections_path, folder_path, filename)
 
-    if not os.path.exists(file_path):
+    if not path.exists(file_path):
         return web.Response(status=404)
 
     with open(file_path, 'rb') as f:
         media_file = f.read()
 
     content_type = 'application/json'
-    file_extension = os.path.splitext(filename)[1].lower()
+    file_extension = path.splitext(filename)[1].lower()
     if file_extension in image_extensions:
         content_type = f'image/{file_extension[1:]}'
     if file_extension in video_extensions:
@@ -273,14 +276,14 @@ async def api_add_to_collections(request):
 
     folder_path = json_data.get('folder_path', '')
 
-    if not os.path.exists(collections_path):
+    if not path.exists(collections_path):
         os.mkdir(collections_path)
 
-    source_file_path = os.path.join(folder_paths.output_directory, folder_path, filename)
-    if not os.path.exists(source_file_path):
+    source_file_path = path.join(folder_paths.output_directory, folder_path, filename)
+    if not path.exists(source_file_path):
         return web.Response(status=404)
 
-    new_filepath = os.path.join(
+    new_filepath = path.join(
         collections_path,
         add_uuid_to_filename(filename)
     )
@@ -299,7 +302,7 @@ async def api_create_new_workflow(request):
     if not (filename and content):
         return web.Response(status=404)
 
-    new_filepath = os.path.join(
+    new_filepath = path.join(
         collections_path,
         add_uuid_to_filename(filename)
     )
@@ -346,7 +349,7 @@ async def api_update_browser_config(request):
 
 @routes.post("/browser/collections/sync")
 async def api_sync_my_collections(_):
-    if not os.path.exists(config_path):
+    if not path.exists(config_path):
         return web.Response(status=404)
 
     config = get_config()
@@ -392,9 +395,105 @@ async def api_sync_my_collections(_):
 
     return web.Response(status=200)
 
+@routes.get("/browser/sources")
+async def api_get_sources(_):
+    if not path.exists(sources_path):
+        return web.json_response({
+            'sources': []
+        })
+
+    sources = []
+    source_list = os.scandir(sources_path)
+    source_list = sorted(source_list, key=lambda f: (-f.stat().st_ctime))
+    for item in source_list:
+        if not path.exists(item.path):
+            continue
+
+        if item.is_file():
+            continue
+
+        cmd = f'git remote get-url {git_remote_name}'
+        ret = run_cmd(cmd, path.join(item.path), log_message=False)
+        if not (ret.returncode == 0 and len(ret.stdout) > 0):
+            continue
+
+        url = ret.stdout.split('\n')[0]
+        name = path.basename(item.path)
+        created_at = item.stat().st_ctime
+        sources.append({
+            "name": name,
+            "created_at": created_at,
+            "url": url
+        })
+
+    return web.json_response({
+        'sources': sources
+    })
+
+# repo_url
+@routes.post("/browser/sources")
+async def api_create_source(request):
+    json_data = await request.json()
+    repo_url = json_data['repo_url']
+
+    if not repo_url:
+        return web.Response(status=400)
+
+    pattern = r'[\:\/]([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)(\.git)?'
+    ret = re.search(pattern, repo_url)
+    author = ret.group(1)
+    name = ret.group(2)
+    if not (author and name):
+        return web.Response(status=400, text='wrong url')
+
+    cmd = f'git clone --depth 1 {repo_url} {author}-{name}'
+    ret = run_cmd(cmd, sources_path)
+    if ret.returncode != 0:
+        return web.Response(status=400, text=ret.stdout + ret.stderr)
+
+    return web.Response(status=201)
+
+
+# name
+@routes.delete("/browser/sources/{name}")
+async def api_delete_source(request):
+    name = request.match_info.get('name', None)
+
+    if not name:
+        return web.Response(status=401)
+    if not path.exists(path.join(sources_path, name)):
+        return web.Response(status=404)
+
+    cmd = f'rm -rf {name}'
+    ret = run_cmd(cmd, sources_path)
+
+    if ret.returncode == 0:
+        return web.Response(status=200)
+    else:
+        return web.Response(status=400, text=ret.stdout + ret.stderr)
+
+# name
+@routes.post("/browser/sources/sync/{name}")
+async def api_sync_source(request):
+    name = request.match_info.get('name', None)
+
+    if not name:
+        return web.Response(status=401)
+    if not path.exists(path.join(sources_path, name)):
+        return web.Response(status=404)
+
+    cmd = f'git pull'
+    ret = run_cmd(cmd, path.join(sources_path, name))
+
+    if ret.returncode == 0:
+        return web.Response(status=200)
+    else:
+        return web.Response(status=400, text=ret.stdout + ret.stderr)
+
+
 routes.static(
     '/browser/web',
-    os.path.join(browser_path, 'web/build')
+    path.join(browser_path, 'web/build')
 )
 
 WEB_DIRECTORY = "web"
