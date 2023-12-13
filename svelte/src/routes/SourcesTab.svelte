@@ -56,7 +56,7 @@
   }
 
   function openEditModal() {
-    sourceEditModal.show();
+    sourceEditModal.showModal();
   }
 
   async function addSource() {
