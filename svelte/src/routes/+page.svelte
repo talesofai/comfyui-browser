@@ -1,29 +1,22 @@
 <script lang="ts">
   import Tabs from './Tabs.svelte';
-  import FilesList from "./FilesList.svelte";
-  import CollectionsList from './CollectionsList.svelte';
-  import { onMount } from 'svelte';
+  import FilesTab from "./FilesTab.svelte";
+  import CollectionsTab from './CollectionsTab.svelte';
+  import SourcesTab from './SourcesTab.svelte';
 
   // @type {import('./$types').PageData}
   export let data: any;
   const { comfyUrl } = data;
 
-  const tabList = ['collections', 'files'];
   let activeTab = 'outputs';
-
-  onMount(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentTab = urlParams.get('tab');
-    if (currentTab && tabList.includes(currentTab)) {
-      activeTab = currentTab;
-    }
-  });
 </script>
 
 <Tabs bind:activeTab={activeTab} />
 
 {#if activeTab === 'collections'}
-  <CollectionsList {comfyUrl} />
+  <CollectionsTab {comfyUrl} />
+{:else if activeTab === 'outputs'}
+  <FilesTab {comfyUrl} />
 {:else}
-  <FilesList {comfyUrl} />
+  <SourcesTab {comfyUrl} />
 {/if}

@@ -1,7 +1,13 @@
 import dayjs from 'dayjs';
 import type Toast from './Toast.svelte';
 
-function processFile(file: any, type: 'files' | 'collections', comfyUrl: string) {
+export type FOLDER_TYPES = 'outputs' | 'collections' | 'sources';
+
+function processFile(
+  file: any,
+  folderType: FOLDER_TYPES,
+  comfyUrl: string,
+) {
   const extname = file.name.split('.').pop().toLowerCase();
   file['fileType'] = 'json';
   if (['png', 'webp', 'jpeg', 'jpg', 'gif'].includes(extname)) {
@@ -11,11 +17,7 @@ function processFile(file: any, type: 'files' | 'collections', comfyUrl: string)
     file['fileType'] = 'video';
   }
 
-  if (type === 'collections') {
-    file['url'] = `${comfyUrl}/browser/collections/view?filename=${file.name}&folder_path=${file.folder_path}`;
-  } else {
-    file['url'] = `${comfyUrl}/view?filename=${file.name}&subfolder=${file.folder_path}`;
-  }
+  file['url'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${file.name}&folder_path=${file.folder_path}`;
 
   const d = dayjs.unix(file.created_at);
   file['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
@@ -32,9 +34,7 @@ function processDir(dir: any) {
   dir['fileType'] = 'dir';
 
   const newFolderPath = dir.folder_path ? `${dir.folder_path}/${dir.name}` : dir.name;
-  let url = new URL(window.location.href);
-  url.searchParams.set('folder_path', newFolderPath);
-  dir['url'] = url.href;
+  dir['path'] = newFolderPath;
 
   const d = dayjs.unix(dir.created_at);
   dir['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
@@ -43,13 +43,16 @@ function processDir(dir: any) {
   return dir;
 }
 
-export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string) {
-  const urlParams = new URLSearchParams(window.location.search);
-  const folderPath = urlParams.get('folder_path');
-  let url = comfyUrl + '/browser/' + type;
+export async function fetchFiles(
+  folderType: FOLDER_TYPES,
+  comfyUrl: string,
+  folderPath?: string,
+) {
+  let url = comfyUrl + '/browser/files?folder_type=' + folderType;
   if (folderPath) {
-    url = url + `?folder_path=${folderPath}`;
+    url = url + `&folder_path=${folderPath}&`;
   }
+
   const res = await fetch(url);
   const ret = await res.json();
 
@@ -58,7 +61,7 @@ export async function fetchFiles(type: 'files' | 'collections', comfyUrl: string
     if (f.type === 'dir') {
       f = processDir(f);
     } else {
-      f = processFile(f, type, comfyUrl);
+      f = processFile(f, folderType, comfyUrl);
     }
   });
 

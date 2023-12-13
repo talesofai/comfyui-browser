@@ -6,11 +6,7 @@
   }
 
   async function onClickTab(tab: string) {
-    let url = new URL(window.location.href);
-    url.searchParams.delete('folder_path');
-    url.searchParams.set('tab', tab);
-    window.location.href = url.toString();
-    //activeTab = tab;
+    activeTab = tab;
   }
 </script>
 
@@ -28,5 +24,12 @@
     on:click={() => onClickTab('collections')}
   >
     Collections
+  </button>
+  <button
+    role="tab"
+    class="tab {activeTabClass('sources')}"
+    on:click={() => onClickTab('sources')}
+  >
+    Sources
   </button>
 </div>

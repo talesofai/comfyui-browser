@@ -1,22 +1,30 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fetchFiles, onScroll, onLoadWorkflow } from './utils';
+  import { onLoadWorkflow, onScroll, fetchFiles } from './utils';
+  import type { FOLDER_TYPES } from './utils';
   import MediaShow from "./MediaShow.svelte";
-  import Toast from "./Toast.svelte";
+  import type Toast from "./Toast.svelte";
 
   export let comfyUrl: string;
+  export let folderType: FOLDER_TYPES;
+  export let toast: Toast;
+  export let folderPath: string = '';
+  $: if (folderPath) {
+    fetchFiles(folderType, comfyUrl, folderPath)
+    .then(res => {
+      files = res;
+    });
+  }
 
   let comfyApp: any;
   let files: Array<any> = [];
   let showCursor = 20;
-  let toast: Toast;
 
   onMount(async () => {
     //@ts-ignore
     comfyApp = window.top.app;
 
-    files = await fetchFiles('files', comfyUrl);
-
+    files = await fetchFiles(folderType, comfyUrl, folderPath);
     window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
   });
 
@@ -58,6 +66,10 @@
     );
     files = files.filter(f => f != file);
   }
+
+  async function onClickDir(dir: any) {
+    folderPath = dir.path;
+  }
 </script>
 
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2 bg-base-300">
@@ -65,7 +77,11 @@
     {#if ['dir', 'image', 'video', 'json'].includes(file.fileType)}
       <div class="bg-base-100">
         <div class="flex items-center">
-          <MediaShow {file} styleClass="w-full h-36" />
+          <MediaShow
+            file={file}
+            styleClass="w-full h-36"
+            onClickDir={onClickDir}
+          />
         </div>
 
         <p class="font-bold max-h-12 leading-6 overflow-auto">{file.name}</p>
@@ -92,5 +108,3 @@
     {/if}
   {/each}
 </div>
-
-<Toast bind:this={toast} />

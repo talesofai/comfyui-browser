@@ -6,18 +6,28 @@
 
   export let comfyUrl: string;
 
+  const folderType = 'collections';
+
   let comfyApp: any;
   let files: Array<any> = [];
   let config: any = {};
   let configGitRepo = '';
   let showCursor = 20;
   let toast: Toast;
+  let folderPath: string = '';
+  $: if (folderPath) {
+    fetchFiles(folderType, comfyUrl, folderPath)
+    .then(res => {
+      files = res;
+    });
+  }
+
 
   onMount(async () => {
     //@ts-ignore
     comfyApp = window.top.app;
 
-    files = await fetchFiles('collections', comfyUrl);
+    files = await fetchFiles(folderType, comfyUrl);
     config = await fetchConfig() || {};
     configGitRepo = config?.git_repo;
 
@@ -44,7 +54,9 @@
     );
     btn.disabled = false;
     btn.innerHTML = 'Sync';
-    files = await fetchFiles('collections', comfyUrl);
+
+    folderPath = '';
+    files = await fetchFiles(folderType, comfyUrl);
   }
 
   async function onClickSaveConfig() {
@@ -133,6 +145,10 @@
       'Failed to update. Please check the ComfyUI server.'
     );
   }
+
+  async function onClickDir(dir: any) {
+    folderPath = dir.path;
+  }
 </script>
 
 <div>
@@ -161,7 +177,11 @@
 <ul class="space-y-2 bg-base-300">
   {#each files.slice(0, showCursor) as file}
     <li class="flex h-36 border-0 space-x-4 bg-base-100">
-      <MediaShow {file} styleClass="w-36" />
+      <MediaShow
+        file={file}
+        styleClass="w-36"
+        onClickDir={onClickDir}
+      />
       <div class="space-y-2 w-72">
         <input
           type="text"

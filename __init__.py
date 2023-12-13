@@ -33,16 +33,22 @@ video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
 
 info_file_suffix = '.info'
 
+# folder_type = 'outputs', 'collections', 'sources'
+def get_parent_path(folder_type: str):
+    if folder_type == 'collections':
+        return collections_path
+    if folder_type == 'sources':
+        return sources_path
 
-# type = 'output' or 'collections'
-def get_target_folder_files(folder_path: str, type: str = 'output'):
+    # outputs
+    return folder_paths.output_directory
+
+# folder_type = 'outputs', 'collections', 'sources'
+def get_target_folder_files(folder_path: str, folder_type: str = 'outputs'):
     if '..' in folder_path:
         return None
 
-    parent_path = folder_paths.output_directory
-    if type == 'collections':
-        parent_path = collections_path
-
+    parent_path = get_parent_path(folder_type)
     files: List[FileInfoDict] = []
     target_path = path.join(parent_path, folder_path)
 
@@ -95,8 +101,10 @@ def get_target_folder_files(folder_path: str, type: str = 'output'):
 def get_info_filename(filename):
     return path.splitext(filename)[0] + info_file_suffix
 
-def run_cmd(cmd, run_path, log_code=True, log_message=True):
-    log(f'running: {cmd}')
+def run_cmd(cmd, run_path, log_cmd=True, log_code=True, log_message=True):
+    if log_cmd:
+        log(f'running: {cmd}')
+
     ret = subprocess.run(
         f'cd {run_path} && {cmd}',
         shell=True,
@@ -146,11 +154,12 @@ def add_uuid_to_filename(filename):
     name, ext = path.splitext(filename)
     return f'{name}_{int(time.time())}{ext}'
 
-# folder_path
+# folder_path, folder_type
 @routes.get("/browser/files")
 async def api_get_files_root(request):
     folder_path = request.query.get('folder_path', '')
-    files = get_target_folder_files(folder_path)
+    folder_type = request.query.get('folder_type', 'outputs')
+    files = get_target_folder_files(folder_path, folder_type=folder_type)
 
     if files == None:
         return web.Response(status=404)
@@ -160,14 +169,14 @@ async def api_get_files_root(request):
     })
 
 
-# filename, folder_path, type
+# filename, folder_path, folder_type
 @routes.delete("/browser/files")
 async def api_delete_file(request):
     json_data = await request.json()
     filename = json_data['filename']
     folder_path = json_data['folder_path'] or ''
     parent_path = folder_paths.output_directory
-    if json_data['type'] == 'collections':
+    if json_data['folder_type'] == 'collections':
         parent_path = collections_path
 
     target_path = path.join(parent_path, folder_path, filename)
@@ -237,15 +246,17 @@ async def api_get_collections(request):
         'files': files
     })
 
-# filename, folder_path
-@routes.get("/browser/collections/view")
-async def api_view_collection(request):
-    folder_path = request.query.get("folder_path", '')
+# filename, folder_path, folder_type
+@routes.get("/browser/files/view")
+async def api_view_file(request):
+    folder_type = request.query.get("folder_type", "outputs")
+    folder_path = request.query.get("folder_path", "")
     filename = request.query.get("filename", None)
     if not filename:
         return web.Response(status=404)
 
-    file_path = path.join(collections_path, folder_path, filename)
+    parent_path = get_parent_path(folder_type)
+    file_path = path.join(parent_path, folder_path, filename)
 
     if not path.exists(file_path):
         return web.Response(status=404)
@@ -413,7 +424,7 @@ async def api_get_sources(_):
             continue
 
         cmd = f'git remote get-url {git_remote_name}'
-        ret = run_cmd(cmd, path.join(item.path), log_message=False)
+        ret = run_cmd(cmd, path.join(item.path), log_cmd=False, log_code=False, log_message=False)
         if not (ret.returncode == 0 and len(ret.stdout) > 0):
             continue
 
