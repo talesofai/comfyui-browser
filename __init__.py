@@ -1,5 +1,5 @@
 import json
-import os
+import os, stat, errno
 from os import path
 from aiohttp import request, web
 from typing import TypedDict, List
@@ -153,6 +153,14 @@ def log(message):
 def add_uuid_to_filename(filename):
     name, ext = path.splitext(filename)
     return f'{name}_{int(time.time())}{ext}'
+
+def handle_remove_readonly(func, path, exc):
+    excvalue = exc[1]
+    if excvalue.errno == errno.EACCES:
+        os.chmod(path, stat.S_IRWXU | stat.S_IRWXG | stat.S_IRWXO)  # 0777
+        func(path)
+    else:
+        raise
 
 # folder_path, folder_type
 @routes.get("/browser/files")
@@ -478,7 +486,7 @@ async def api_delete_source(request):
     if not path.exists(target_path):
         return web.Response(status=404)
 
-    shutil.rmtree(target_path)
+    shutil.rmtree(target_path, onerror=handle_remove_readonly)
     return web.Response(status=200)
 
 # name
