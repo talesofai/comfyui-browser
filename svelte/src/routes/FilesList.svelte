@@ -109,3 +109,11 @@
     {/if}
   {/each}
 </div>
+
+{#if files.length === 0}
+  <div class="w-full h-full flex items-center justify-center">
+    <span class="font-bold text-4xl">
+      It's empty here.
+    </span>
+  </div>
+{/if}
