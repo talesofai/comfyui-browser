@@ -473,16 +473,13 @@ async def api_delete_source(request):
 
     if not name:
         return web.Response(status=401)
-    if not path.exists(path.join(sources_path, name)):
+
+    target_path = path.join(sources_path, name)
+    if not path.exists(target_path):
         return web.Response(status=404)
 
-    cmd = f'rm -rf {name}'
-    ret = run_cmd(cmd, sources_path)
-
-    if ret.returncode == 0:
-        return web.Response(status=200)
-    else:
-        return web.Response(status=400, text=ret.stdout + ret.stderr)
+    shutil.rmtree(target_path)
+    return web.Response(status=200)
 
 # name
 @routes.post("/browser/sources/sync/{name}")
