@@ -13,12 +13,22 @@
     fetchFiles(folderType, comfyUrl, folderPath)
     .then(res => {
       files = res;
+      loaded = true;
     });
+  }
+
+  $: try {
+    searchRegex = new RegExp(searchQuery.toLowerCase());
+  } catch {
+    searchRegex =  new RegExp('');
   }
 
   let comfyApp: any;
   let files: Array<any> = [];
+  let loaded: boolean = false;
   let showCursor = 20;
+  let searchQuery = '';
+  let searchRegex = new RegExp('');
 
   onMount(async () => {
     //@ts-ignore
@@ -82,19 +92,26 @@
   }
 </script>
 
-<div class="max-w-full text-sm breadcrumbs">
-  <ul>
+<div class="max-w-full text-sm breadcrumbs flex flex-row ml-4">
+  <ul class="basis-3/4">
     <li><button on:click={() => onClickPath(-1)}>Root</button></li>
     {#each (folderPath || '').split('/') as path, index}
       <li><button on:click={() => onClickPath(index)}>{path}</button></li>
     {/each}
   </ul>
+
+  <input
+    type="text"
+    placeholder="Filter by filename"
+    bind:value={searchQuery}
+    class="input input-bordered w-full h-full rounded-none border-slate-600 text-sm basis-1/4"
+  />
 </div>
 
-<div class="grid grid-cols-4 lg:grid-cols-6 gap-2 bg-base-300">
-  {#each files.slice(0, showCursor) as file}
+<div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
+  {#each files.filter(f => searchRegex.test(f.name.toLowerCase())).slice(0, showCursor) as file}
     {#if ['dir', 'image', 'video', 'json'].includes(file.fileType)}
-      <div class="bg-base-100">
+      <div class="bg-base-100 p-2 bg-base-300">
         <div class="flex items-center">
           <MediaShow
             file={file}
@@ -103,9 +120,9 @@
           />
         </div>
 
-        <p class="font-bold max-h-12 leading-6 overflow-auto">{file.name}</p>
-        <p class="text-gray-500">{file.formattedDatetime}</p>
-        <p class="text-gray-500">{file.formattedSize}</p>
+        <p class="font-bold max-h-12 leading-6 overflow-auto mt-1">{file.name}</p>
+        <p class="text-gray-500 text-xs">{file.formattedDatetime}</p>
+        <p class="text-gray-500 text-xs">{file.formattedSize}</p>
 
         <div class="">
           {#if comfyApp && file.type != 'dir'}
@@ -131,7 +148,11 @@
 {#if files.length === 0}
   <div class="w-full h-full flex items-center justify-center">
     <span class="font-bold text-4xl">
-      It's empty here.
+      {#if loaded }
+        It's empty here.
+      {:else }
+        Loading ...
+      {/if}
     </span>
   </div>
 {/if}

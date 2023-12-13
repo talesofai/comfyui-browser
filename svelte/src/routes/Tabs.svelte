@@ -10,7 +10,7 @@
   }
 </script>
 
-<div role="tablist" class="tabs tabs-boxed sticky top-0">
+<div role="tablist" class="tabs tabs-boxed sticky top-0 z-10">
   <button
     role="tab"
     class="tab {activeTabClass('outputs')}"

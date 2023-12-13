@@ -15,11 +15,23 @@
   let showCursor = 20;
   let toast: Toast;
   let folderPath: string;
+  let loaded: boolean = false;
+  let searchQuery = '';
+  let searchRegex = new RegExp('');
+
   $: if (folderPath != undefined) {
     fetchFiles(folderType, comfyUrl, folderPath)
     .then(res => {
       files = res;
+      loaded = true;
     });
+  }
+
+
+  $: try {
+    searchRegex = new RegExp(searchQuery.toLowerCase());
+  } catch {
+    searchRegex =  new RegExp('');
   }
 
 
@@ -126,7 +138,7 @@
 
     toast.show(
       ret,
-      'Updated',
+      'Memos Updated',
       'Failed to update. Please check the ComfyUI server.'
     );
   }
@@ -165,7 +177,7 @@
   }
 </script>
 
-<div>
+<div class="border-b-2 border-slate-700 pb-2">
   <input
     type="text"
     placeholder="Input your git repository address"
@@ -188,35 +200,43 @@
   </button>
 </div>
 
-<div class="max-w-full text-sm breadcrumbs">
-  <ul>
+<div class="max-w-full text-sm breadcrumbs flex flex-row ml-4">
+  <ul class="basis-2/3">
     <li><button on:click={() => onClickPath(-1)}>Root</button></li>
     {#each (folderPath || '').split('/') as path, index}
       <li><button on:click={() => onClickPath(index)}>{path}</button></li>
     {/each}
   </ul>
+
+  <input
+    type="text"
+    placeholder="Filter by filename or memos"
+    bind:value={searchQuery}
+    class="input input-bordered border-slate-600 w-full h-full rounded-none text-sm basis-1/3"
+  />
 </div>
 
-<ul class="space-y-2 bg-base-300">
-  {#each files.slice(0, showCursor) as file}
-    <li class="flex h-36 border-0 space-x-4 bg-base-100">
+<ul class="space-y-2">
+  {#each files.filter(f => searchRegex.test(f.name.toLowerCase()) || searchRegex.test(f.notes.toLowerCase()))
+    .slice(0, showCursor) as file}
+    <li class="flex h-36 border-0 space-x-4 bg-base-100 p-2 bg-base-300">
       <MediaShow
         file={file}
         styleClass="w-36"
         onClickDir={onClickDir}
       />
-      <div class="space-y-2 w-72">
+      <div class="space-y-2 w-96 relative">
         <input
           type="text"
           class="input-bordered font-bold w-full bg-base-100"
           on:blur={(e) => updateFilename(e, file)}
           value={file.name}
         />
-        <p class="text-gray-500">
+        <p class="text-gray-500 text-xs">
           {file.formattedDatetime} | {file.formattedSize}
         </p>
 
-        <div>
+        <div class="bottom-0 absolute">
           {#if comfyApp && file.type != 'dir'}
             <button
               class="btn btn-link btn-sm p-0 no-underline text-accent"
@@ -248,7 +268,11 @@
 {#if files.length === 0}
   <div class="w-full h-full flex items-center justify-center">
     <span class="font-bold text-4xl">
-      It's empty here.
+      {#if loaded}
+        It's empty here.
+      {:else}
+        Loading ...
+      {/if}
     </span>
   </div>
 {/if}
