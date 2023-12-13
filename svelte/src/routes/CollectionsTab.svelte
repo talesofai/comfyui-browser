@@ -75,7 +75,7 @@
   }
 
   async function onDelete(file: any) {
-    const ret = confirm('You will delete this file? ' + file.name);
+    const ret = confirm('You want to delete this file? ' + file.name);
     if (!ret) {
       return;
     }
@@ -83,7 +83,7 @@
     const res = await fetch(comfyUrl + '/browser/files', {
       method: 'DELETE',
       body: JSON.stringify({
-        type: 'collections',
+        folder_type: folderType,
         filename: file.name,
         folder_path: file.folder_path,
       }),
@@ -98,9 +98,14 @@
   }
 
   async function updateFile(file: any, payload: any) {
-    const res = await fetch(comfyUrl + '/browser/collections/' + file.name, {
+    const res = await fetch(comfyUrl + '/browser/files', {
       method: 'PUT',
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        folder_type: folderType,
+        folder_path: file.folder_path,
+        filename: file.name,
+        new_data: payload,
+      }),
     });
 
     return res.ok;

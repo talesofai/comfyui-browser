@@ -45,7 +45,7 @@
   }
 
   async function onDelete(file: any) {
-    const ret = confirm('You will delete this file? ' + file.name);
+    const ret = confirm('You want to delete this file? ' + file.name);
     if (!ret) {
       return;
     }
@@ -53,7 +53,7 @@
     const res = await fetch(comfyUrl + '/browser/files', {
       method: 'DELETE',
       body: JSON.stringify({
-        type: 'files',
+        folder_type: folderType,
         filename: file.name,
         folder_path: file.folder_path,
       }),

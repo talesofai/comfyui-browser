@@ -156,7 +156,7 @@ def add_uuid_to_filename(filename):
 
 # folder_path, folder_type
 @routes.get("/browser/files")
-async def api_get_files_root(request):
+async def api_get_files(request):
     folder_path = request.query.get('folder_path', '')
     folder_type = request.query.get('folder_type', 'outputs')
     files = get_target_folder_files(folder_path, folder_type=folder_type)
@@ -174,11 +174,10 @@ async def api_get_files_root(request):
 async def api_delete_file(request):
     json_data = await request.json()
     filename = json_data['filename']
-    folder_path = json_data['folder_path'] or ''
-    parent_path = folder_paths.output_directory
-    if json_data['folder_type'] == 'collections':
-        parent_path = collections_path
+    folder_path = json_data.get('folder_path', '')
+    folder_type = json_data.get('folder_type', 'outputs')
 
+    parent_path = get_parent_path(folder_type)
     target_path = path.join(parent_path, folder_path, filename)
     if not path.exists(target_path):
         return web.json_response(status=404)
@@ -195,22 +194,30 @@ async def api_delete_file(request):
     return web.Response(status=201)
 
 
-@routes.put("/browser/collections/{filename}")
-async def api_update_collection(request):
+# filename, folder_path, folder_type, new_data: {}
+@routes.put("/browser/files")
+async def api_update_file(request):
     json_data = await request.json()
-    filename = request.match_info.get("filename", None)
+    filename = json_data['filename']
     folder_path = json_data.get('folder_path', '')
+    folder_type = json_data.get('folder_type', 'outputs')
+    parent_path = get_parent_path(folder_type)
 
-    new_filename = json_data.get('filename', filename)
-    notes = json_data['notes']
+    new_data = json_data.get('new_data', None)
+    print(new_data)
+    if not new_data:
+        return web.Response(status=400)
 
-    old_file_path = path.join(collections_path, folder_path, filename)
-    new_file_path = path.join(collections_path, folder_path, new_filename)
+    new_filename = new_data['filename']
+    notes = new_data['notes']
+
+    old_file_path = path.join(parent_path, folder_path, filename)
+    new_file_path = path.join(parent_path, folder_path, new_filename)
 
     if not path.exists(old_file_path):
         return web.Response(status=404)
 
-    if filename != new_filename:
+    if new_filename and filename != new_filename:
         shutil.move(
             old_file_path,
             new_file_path
@@ -232,19 +239,6 @@ async def api_update_collection(request):
             json.dump(extra, outfile)
 
     return web.Response(status=201)
-
-
-@routes.get("/browser/collections")
-async def api_get_collections(request):
-    folder_path = request.query.get('folder_path', '')
-    files = get_target_folder_files(folder_path, 'collections')
-
-    if files == None:
-        return web.Response(status=404)
-
-    return web.json_response({
-        'files': files
-    })
 
 # filename, folder_path, folder_type
 @routes.get("/browser/files/view")
