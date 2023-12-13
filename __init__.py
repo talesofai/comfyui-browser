@@ -182,14 +182,13 @@ async def api_delete_file(request):
     if not path.exists(target_path):
         return web.json_response(status=404)
 
-    os.remove(target_path)
+    if path.isdir(target_path):
+        shutil.rmtree(target_path)
+    else:
+        os.remove(target_path)
     info_file_path = get_info_filename(target_path)
     if path.exists(info_file_path):
         os.remove(info_file_path)
-
-    info_filename = get_info_filename(target_path)
-    if path.exists(info_filename):
-        os.remove(info_filename)
 
     return web.Response(status=201)
 
@@ -204,7 +203,6 @@ async def api_update_file(request):
     parent_path = get_parent_path(folder_type)
 
     new_data = json_data.get('new_data', None)
-    print(new_data)
     if not new_data:
         return web.Response(status=400)
 
@@ -271,7 +269,7 @@ async def api_view_file(request):
         headers={"Content-Disposition": f"filename=\"{filename}\""}
     )
 
-# filename, folder_path
+# filename, folder_path, folder_type = 'outputs' | 'sources'
 @routes.post("/browser/collections")
 async def api_add_to_collections(request):
     json_data = await request.json()
@@ -281,10 +279,13 @@ async def api_add_to_collections(request):
 
     folder_path = json_data.get('folder_path', '')
 
+    folder_type = json_data.get("folder_type", "outputs")
+    parent_path = get_parent_path(folder_type)
+
     if not path.exists(collections_path):
         os.mkdir(collections_path)
 
-    source_file_path = path.join(folder_paths.output_directory, folder_path, filename)
+    source_file_path = path.join(parent_path, folder_path, filename)
     if not path.exists(source_file_path):
         return web.Response(status=404)
 
@@ -293,7 +294,10 @@ async def api_add_to_collections(request):
         add_uuid_to_filename(filename)
     )
 
-    shutil.copy(source_file_path, new_filepath)
+    if path.isdir(source_file_path):
+        shutil.copytree(source_file_path, new_filepath)
+    else:
+        shutil.copy(source_file_path, new_filepath)
 
     return web.Response(status=201)
 

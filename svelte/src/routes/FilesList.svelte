@@ -34,6 +34,7 @@
       body: JSON.stringify({
         filename: file.name,
         folder_path: file.folder_path,
+        folder_type: folderType,
       }),
     });
 
