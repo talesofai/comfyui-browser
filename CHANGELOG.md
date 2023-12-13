@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.4.0 - 2023-12-13
+
+- Add 'Sources' tab to subscribe external workflow git repository
+
 ## v1.3.0 - 2023-12-11
 
 - Support subfolder for output and collection
