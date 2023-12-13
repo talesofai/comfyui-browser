@@ -61,7 +61,7 @@
 
   async function addSource() {
     if (! inputRepoUrl) {
-      toast.show(false, '', 'missing Git URL', 1000);
+      toast.show(false, '', 'missing Git URL');
       return;
     }
 

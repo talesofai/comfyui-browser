@@ -98,5 +98,5 @@ export async function onLoadWorkflow(file: any, comfyApp: any, toast: Toast) {
   }
   await comfyApp.handleFile(fileObj);
 
-  toast.show(false, 'Loaded', 'No workflow found here', 1000);
+  toast.show(false, 'Loaded', 'No workflow found here');
 }

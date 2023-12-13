@@ -217,7 +217,7 @@
         </p>
 
         <div>
-          {#if comfyApp}
+          {#if comfyApp && file.type != 'dir'}
             <button
               class="btn btn-link btn-sm p-0 no-underline text-accent"
               on:click={async () => await onLoadWorkflow(file, comfyApp, toast)}
