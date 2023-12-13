@@ -88,7 +88,7 @@
 
 <div class="drawer md:drawer-open">
   <input type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content flex flex-col items-center">
+  <div class="drawer-content flex flex-col">
     <FilesList
       folderType="sources"
       folderPath={selectedSource?.name}
@@ -132,22 +132,22 @@
 
 <Toast bind:this={toast} />
 
-  <!-- Open the modal using ID.showModal() method -->
-  <dialog class="modal" bind:this={sourceEditModal}>
-    <div class="modal-box">
-      <input
-        type="text"
-        bind:value={inputRepoUrl}
-        placeholder="Input Git remote address of the source"
-        class="input input-bordered w-full max-w-xs"
-      />
-      <button
-        class="btn"
-        on:click={addSource}
-        disabled={addWaiting}
-      >{addWaiting ? 'Adding...' : 'Add'}</button>
-    </div>
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
-  </dialog>
+<!-- Open the modal using ID.showModal() method -->
+<dialog class="modal" bind:this={sourceEditModal}>
+  <div class="modal-box">
+    <input
+      type="text"
+      bind:value={inputRepoUrl}
+      placeholder="Input Git remote address of the source"
+      class="input input-bordered w-full max-w-xs"
+    />
+    <button
+      class="btn"
+      on:click={addSource}
+      disabled={addWaiting}
+    >{addWaiting ? 'Adding...' : 'Add'}</button>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

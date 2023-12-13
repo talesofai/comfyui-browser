@@ -14,8 +14,8 @@
   let configGitRepo = '';
   let showCursor = 20;
   let toast: Toast;
-  let folderPath: string = '';
-  $: if (folderPath) {
+  let folderPath: string;
+  $: if (folderPath != undefined) {
     fetchFiles(folderType, comfyUrl, folderPath)
     .then(res => {
       files = res;
@@ -27,7 +27,7 @@
     //@ts-ignore
     comfyApp = window.top.app;
 
-    files = await fetchFiles(folderType, comfyUrl);
+    folderPath = '';
     config = await fetchConfig() || {};
     configGitRepo = config?.git_repo;
 
@@ -154,6 +154,15 @@
   async function onClickDir(dir: any) {
     folderPath = dir.path;
   }
+
+  async function onClickPath(index: number) {
+    if (index === -1) {
+      folderPath = '';
+      return;
+    }
+
+    folderPath = folderPath.split('/').slice(0, index + 1).join('/');
+  }
 </script>
 
 <div>
@@ -177,6 +186,15 @@
   >
     Sync
   </button>
+</div>
+
+<div class="max-w-full text-sm breadcrumbs">
+  <ul>
+    <li><button on:click={() => onClickPath(-1)}>Root</button></li>
+    {#each (folderPath || '').split('/') as path, index}
+      <li><button on:click={() => onClickPath(index)}>{path}</button></li>
+    {/each}
+  </ul>
 </div>
 
 <ul class="space-y-2 bg-base-300">

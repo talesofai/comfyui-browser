@@ -8,8 +8,8 @@
   export let comfyUrl: string;
   export let folderType: FOLDER_TYPES;
   export let toast: Toast;
-  export let folderPath: string = '';
-  $: if (folderPath) {
+  export let folderPath: string;
+  $: if (folderPath != undefined) {
     fetchFiles(folderType, comfyUrl, folderPath)
     .then(res => {
       files = res;
@@ -24,7 +24,7 @@
     //@ts-ignore
     comfyApp = window.top.app;
 
-    files = await fetchFiles(folderType, comfyUrl, folderPath);
+    folderPath = '';
     window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
   });
 
@@ -71,7 +71,25 @@
   async function onClickDir(dir: any) {
     folderPath = dir.path;
   }
+
+  async function onClickPath(index: number) {
+    if (index === -1) {
+      folderPath = '';
+      return;
+    }
+
+    folderPath = folderPath.split('/').slice(0, index + 1).join('/');
+  }
 </script>
+
+<div class="max-w-full text-sm breadcrumbs">
+  <ul>
+    <li><button on:click={() => onClickPath(-1)}>Root</button></li>
+    {#each (folderPath || '').split('/') as path, index}
+      <li><button on:click={() => onClickPath(index)}>{path}</button></li>
+    {/each}
+  </ul>
+</div>
 
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2 bg-base-300">
   {#each files.slice(0, showCursor) as file}
