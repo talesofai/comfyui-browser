@@ -448,6 +448,9 @@ async def api_create_source(request):
     if not repo_url:
         return web.Response(status=400)
 
+    if not path.exists(sources_path):
+        os.mkdir(sources_path)
+
     pattern = r'[\:\/]([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)(\.git)?'
     ret = re.search(pattern, repo_url)
     author = ret.group(1)
