@@ -23,7 +23,7 @@
     class="tab {activeTabClass('collections')}"
     on:click={() => onClickTab('collections')}
   >
-    Collections
+    Saves
   </button>
   <button
     role="tab"

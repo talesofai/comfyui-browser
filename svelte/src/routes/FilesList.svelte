@@ -50,8 +50,8 @@
 
     toast.show(
       res.ok,
-      'Added to collections',
-      'Failed to add to collections. Please check the ComfyUI server.'
+      'Added to Saves',
+      'Failed to add to Saves. Please check the ComfyUI server.'
     );
   }
 
@@ -111,7 +111,7 @@
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
   {#each files.filter(f => searchRegex.test(f.name.toLowerCase())).slice(0, showCursor) as file}
     {#if ['dir', 'image', 'video', 'json'].includes(file.fileType)}
-      <div class="bg-base-100 p-2 bg-base-300">
+      <div class="p-2 bg-base-300">
         <div class="flex items-center">
           <MediaShow
             file={file}
@@ -134,7 +134,7 @@
           <button
             class="btn btn-link btn-sm p-0 no-underline text-accent"
             on:click={async () => await onCollect(file)}
-          >Collect</button>
+          >Save</button>
           <button
             class="btn btn-link btn-sm p-0 no-underline text-error"
             on:click={async () => await onDelete(file)}

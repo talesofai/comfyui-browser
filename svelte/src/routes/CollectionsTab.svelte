@@ -219,7 +219,7 @@
 <ul class="space-y-2">
   {#each files.filter(f => searchRegex.test(f.name.toLowerCase()) || searchRegex.test(f.notes.toLowerCase()))
     .slice(0, showCursor) as file}
-    <li class="flex h-36 border-0 space-x-4 bg-base-100 p-2 bg-base-300">
+    <li class="flex h-36 border-0 space-x-4 p-2 bg-base-300">
       <MediaShow
         file={file}
         styleClass="w-36"

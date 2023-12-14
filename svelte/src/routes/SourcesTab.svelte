@@ -7,32 +7,24 @@
 
   let sources: Array<any> = [];
   let toast: Toast;
-  let selectedSource: any;
   let sourceEditModal: any;
   let inputRepoUrl: string;
   let addWaiting = false;
+  let folderPath = '';
 
-  async function refreshSources(selectGitUrl: string | null = null) {
+  async function refreshSources() {
     const res = await fetch(comfyUrl + '/browser/sources');
     const ret = await res.json();
     sources = ret.sources;
-
-    if (selectGitUrl) {
-      selectGitUrl = selectGitUrl.trim();
-      selectedSource = sources.find(s => s.url == selectGitUrl);
-    }
-
-    if (! selectedSource) {
-      selectedSource = sources[0];
-    }
   }
 
   onMount(async () => {
     await refreshSources();
   });
 
-  function onClickAddSource(source: any) {
-    selectedSource = source;
+  function onClickSource(source: any) {
+    console.log(folderPath);
+    folderPath = source.name;
   }
 
   async function onClickDeleteSource(source: any) {
@@ -75,7 +67,7 @@
     addWaiting = false;
 
     if (res.ok) {
-      await refreshSources(inputRepoUrl);
+      await refreshSources();
     }
     toast.show(
       res.ok,
@@ -89,20 +81,12 @@
 <div class="drawer md:drawer-open">
   <input type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col pl-2">
-    {#if selectedSource} 
     <FilesList
       folderType="sources"
-      folderPath={selectedSource.name}
+      bind:folderPath={folderPath}
       comfyUrl={comfyUrl}
       toast={toast}
     />
-    {:else}
-    <div class="w-full h-full flex items-center justify-center">
-      <span class="font-bold text-4xl">
-          No source selected.
-      </span>
-    </div>
-    {/if}
   </div>
 
   <div class="drawer-side border-r-2 border-slate-700 pr-2">
@@ -118,10 +102,10 @@
 
       {#each sources as source}
         <li class="w-full">
-          <div class="w-full {source == selectedSource ? 'bg-success' : ''} flex items-center justify-between">
+          <div class="{source.name == folderPath.split('/')[0] ? 'bg-success' : ''} w-full flex items-center justify-between">
             <button
               class="btn w-3/4 items-center justify-center text-left text-sm"
-              on:click={() => onClickAddSource(source)}
+              on:click={() => onClickSource(source)}
             >{source.name}</button>
             <button
               class="btn w-1/4"
