@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Tabs from './Tabs.svelte';
+  import Navbar from './Navbar.svelte';
   import FilesTab from "./FilesTab.svelte";
   import CollectionsTab from './CollectionsTab.svelte';
   import SourcesTab from './SourcesTab.svelte';
@@ -11,7 +11,7 @@
   let activeTab = 'outputs';
 </script>
 
-<Tabs bind:activeTab={activeTab} />
+<Navbar bind:activeTab={activeTab} />
 
 {#if activeTab === 'collections'}
   <CollectionsTab {comfyUrl} />

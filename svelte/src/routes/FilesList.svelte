@@ -111,7 +111,7 @@
 <div class="grid grid-cols-4 lg:grid-cols-6 gap-2">
   {#each files.filter(f => searchRegex.test(f.name.toLowerCase())).slice(0, showCursor) as file}
     {#if ['dir', 'image', 'video', 'json'].includes(file.fileType)}
-      <div class="p-2 bg-base-300">
+      <div class="p-2 bg-info-content">
         <div class="flex items-center">
           <MediaShow
             file={file}

@@ -89,7 +89,7 @@
     />
   </div>
 
-  <div class="drawer-side border-r-2 border-slate-700 pr-2">
+  <div class="drawer-side border-r border-base-content pr-2">
     <ul class="menu bg-base-200 w-56 p-0 [&_li>*]:rounded-none">
       <li class="w-full">
         <div class="w-full flex items-center justify-between">
