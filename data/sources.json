@@ -1,0 +1,18 @@
+{
+  "sources": [
+    {
+      "title": "ComfyUI_examples",
+      "author": "comfyanonymous",
+      "url": "https://github.com/comfyanonymous/ComfyUI_examples",
+      "type": "git",
+      "description": "Examples of ComfyUI workflows"
+    },
+    {
+      "title": "comfyui-workflow",
+      "author": "hylarucoder",
+      "url": "https://github.com/hylarucoder/comfyui-workflow",
+      "type": "git",
+      "description": "Some workflows that I have authored myself as well as some workflows that I have modified from online sources."
+    }
+  ]
+}
