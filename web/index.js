@@ -15,6 +15,7 @@ class BrowserDialog extends ComfyDialog {
         width: "100%",
         height: "100%",
         padding: "10px",
+        zIndex: 1000,
       },
     }, [
       $el("div.comfy-modal-content", {
@@ -48,7 +49,11 @@ class BrowserDialog extends ComfyDialog {
       }),
     ]);
     return [
-      $el("div", {}, [
+      $el("div", {
+        style: {
+          marginTop: '10px'
+        }
+      }, [
         closeBtn,
         browseBtn,
       ]),

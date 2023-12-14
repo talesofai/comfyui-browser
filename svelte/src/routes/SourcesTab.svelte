@@ -88,21 +88,29 @@
 
 <div class="drawer md:drawer-open">
   <input type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content flex flex-col">
+  <div class="drawer-content flex flex-col pl-2">
+    {#if selectedSource} 
     <FilesList
       folderType="sources"
-      folderPath={selectedSource?.name}
+      folderPath={selectedSource.name}
       comfyUrl={comfyUrl}
       toast={toast}
     />
+    {:else}
+    <div class="w-full h-full flex items-center justify-center">
+      <span class="font-bold text-4xl">
+          No source selected.
+      </span>
+    </div>
+    {/if}
   </div>
 
-  <div class="drawer-side">
+  <div class="drawer-side border-r-2 border-slate-700 pr-2">
     <ul class="menu bg-base-200 w-56 p-0 [&_li>*]:rounded-none">
       <li class="w-full">
         <div class="w-full flex items-center justify-between">
           <button
-            class="btn btn-outline btn-primary w-3/4 pl-0 justify-start text-left"
+            class="btn btn-outline btn-primary w-3/4 justify-center text-left"
             on:click={openEditModal}
           >Add new source</button>
         </div>
@@ -112,7 +120,7 @@
         <li class="w-full">
           <div class="w-full {source == selectedSource ? 'bg-success' : ''} flex items-center justify-between">
             <button
-              class="btn w-3/4 pl-0 justify-start text-left"
+              class="btn w-3/4 items-center justify-center text-left text-sm"
               on:click={() => onClickAddSource(source)}
             >{source.name}</button>
             <button
@@ -139,10 +147,10 @@
       type="text"
       bind:value={inputRepoUrl}
       placeholder="Input Git remote address of the source"
-      class="input input-bordered w-full max-w-xs"
+      class="input input-bordered w-full max-w-sm"
     />
     <button
-      class="btn"
+      class="btn absolute mr-4 r-0"
       on:click={addSource}
       disabled={addWaiting}
     >{addWaiting ? 'Adding...' : 'Add'}</button>
