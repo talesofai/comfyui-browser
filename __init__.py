@@ -1,7 +1,7 @@
 import json
 import os, stat, errno
 from os import path
-from aiohttp import request, web
+from aiohttp import web, ClientSession, ClientTimeout
 from typing import TypedDict, List
 import shutil
 import time
@@ -506,6 +506,27 @@ async def api_sync_source(request):
         return web.Response(status=200)
     else:
         return web.Response(status=400, text=ret.stdout + ret.stderr)
+
+@routes.get("/browser/sources/all")
+async def api_get_all_sources(_):
+    source_url = 'https://github.com/talesofai/comfyui-browser/raw/main/data/sources.json'
+    file_path = path.join(browser_path, 'data/sources.json')
+    timeout = ClientTimeout(connect=2)
+
+    sources = {
+        "sources": []
+    }
+    try:
+        async with ClientSession(timeout=timeout) as session:
+            async with session.get(source_url) as resp:
+                if resp.ok:
+                    ret = await resp.text()
+                    sources = json.loads(ret)
+    except:
+        with open(file_path, 'r') as f:
+            sources = json.load(f)
+
+    return web.json_response(sources)
 
 
 routes.static(
