@@ -3,24 +3,22 @@
 This is an image/video/workflow browser and manager for ComfyUI.
 You can sync your workflows to a remote Git repository and use them everywhere.
 
+Welcome to submit your workflow source by submitting [an issue](https://github.com/talesofai/comfyui-browser/issues/new?assignees=tzwm&labels=workflow-repo&projects=&template=new-workflow-repository.md&title=New+workflow+repo%3A). Let's build the workflows together.
 
 ## Features
 
 - Browse and manage your images/videos/workflows in the output folder.
-- Add your workflows to the collection so that you can switch and manage them more easily.
+- Add your workflows to the 'Saves' so that you can switch and manage them more easily.
 - Sync your collection anywhere by Git.
-- [DOING] Clone public workflow by Git and load them more easily.
-
+- Subscribe workflow sources by Git and load them more easily.
+- Search your workflow by keywords.
 
 ## Preview
 
-![e08f52dacabad159519d0d0efb87de9d7118e17dd08f8064cb90b2d59a9278da](https://github.com/tzwm/comfyui-browser/assets/828837/46c03aec-1047-4890-8d28-509448a14e02)
-
-![6362bea4c745d845728f4885fd3fe5092f15dcc00e0f01790fe843e1cdf4777e](https://github.com/tzwm/comfyui-browser/assets/828837/41b793c3-05eb-447e-8f14-993187a2c906)
-
-[comfyui_browser_demo_simple_231210.webm](https://github.com/tzwm/comfyui-browser/assets/828837/1eb67a5c-a40d-4b34-af78-687c05478639)
-
-
+![b359de5f6556649512e7ed8f812ba67d444be9914173e2467018450ce1a3ce1d](https://github.com/talesofai/comfyui-browser/assets/828837/4b0b0f4c-28a8-49ef-98c2-d293df5b7747)
+![c91157bf819ef5b9a129976d9e45588106dd6c7ea39ecb0a22519acd72afc7ce](https://github.com/talesofai/comfyui-browser/assets/828837/ee3df970-017c-4825-ab5d-9465cdb77ed6)
+![53053f43847da9597efebab207140eed703b8c7bbe8eb1e63ce5630b5d8c9a3f](https://github.com/talesofai/comfyui-browser/assets/828837/4acb522a-f21c-47ad-9a23-56b08c6e73a5)
+![c7b93b2ec0891eb7cac1385505e855fb28934ec958f7b21cac53c9bf18e6136c](https://github.com/talesofai/comfyui-browser/assets/828837/ef0d5cd2-9238-4e80-9f65-0f7db05ffbf3)
 
 ## Installation
 
@@ -43,8 +41,8 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 ## TODO
 
 - [x] Sync collections to remote git repository
-- [ ] Add external git repository to local collections
-- [ ] Add more information to collections
+- [x] Add external git repository to local collections
+- [ ] Search workflow by node name and model name
 
 
 ## ChangeLog
