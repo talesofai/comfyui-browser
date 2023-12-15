@@ -10,11 +10,7 @@
   export let toast: Toast;
   export let folderPath: string;
   $: if (folderPath != undefined) {
-    fetchFiles(folderType, comfyUrl, folderPath)
-    .then(res => {
-      files = res;
-      loaded = true;
-    });
+    refresh();
   }
 
   $: try {
@@ -29,6 +25,11 @@
   let showCursor = 20;
   let searchQuery = '';
   let searchRegex = new RegExp('');
+
+  export async function refresh() {
+    files = await fetchFiles(folderType, comfyUrl, folderPath);
+    loaded = true;
+  }
 
   onMount(async () => {
     //@ts-ignore
