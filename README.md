@@ -7,6 +7,8 @@ You can sync your workflows to a remote Git repository and use them everywhere.
 
 Welcome to submit your workflow source by submitting [an issue](https://github.com/talesofai/comfyui-browser/issues/new?assignees=tzwm&labels=workflow-repo&projects=&template=new-workflow-repository.md&title=New+workflow+repo%3A). Let's build the workflows together.
 
+https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be17-0efab401ef54
+
 ## Features
 
 - Browse and manage your images/videos/workflows in the output folder.
