@@ -74,6 +74,49 @@ class BrowserDialog extends ComfyDialog {
   }
 }
 
+function showToast(text, onClick) {
+  const toastId = 'comfy-browser-toast';
+  let toast = document.getElementById(toastId);
+  if (! toast) {
+    toast = $el("p", {
+      id: toastId,
+      textContent: '',
+      onclick: onClick,
+      style: {
+        position: 'fixed',
+        top: '70%',
+        left: '34%',
+        zIndex: 999,
+        backgroundColor: 'var(--comfy-menu-bg)',
+        fontSize: '42px',
+        color: 'green',
+        padding: '8px',
+        border: 'green',
+        borderStyle: 'solid',
+        borderRadius: '0.5rem',
+        display: 'none',
+      }
+    });
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = text;
+  toast.style.display = 'block';
+
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 2000);
+}
+
+function showBrowserDialog(browserDialog) {
+  browserDialog.show($el("iframe", {
+    src: browserUrl + "?timestamp=" + Date.now(),
+    style: {
+      width: "100%",
+      height: "inherit",
+    },
+  }));
+}
 
 app.registerExtension({
   name: "ComfyUI.Browser",
@@ -100,15 +143,7 @@ app.registerExtension({
             //color: "var(--descrip-text) !important",
             width: "80%",
           },
-          onclick: () => {
-            browserDialog.show($el("iframe", {
-              src: browserUrl + "?timestamp=" + Date.now(),
-              style: {
-                width: "100%",
-                height: "inherit",
-              },
-            }));
-          },
+          onclick: () => { showBrowserDialog(browserDialog); },
         }),
         $el("button", {
           id: "comfyui-browser-collect-button",
@@ -145,6 +180,10 @@ app.registerExtension({
               });
               if (res.ok) {
                 saveBtn.style = originBtnStyle + "border-color: green;";
+                showToast(
+                  'Saved. Click me to open.',
+                  () => { showBrowserDialog(browserDialog); },
+                );
               } else {
                 saveBtn.style = originBtnStyle + "border-color: red;";
               }
