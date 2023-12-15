@@ -1,5 +1,10 @@
 # ChangeLog
 
+## v1.5.0 - 2023-12-15
+
+- Update styles
+- Add recommend sources
+
 ## v1.4.0 - 2023-12-13
 
 - Add 'Sources' tab to subscribe external workflow git repository
