@@ -1,5 +1,7 @@
 # ComfyUI Browser
 
+[中文说明](README_CN.md)
+
 This is an image/video/workflow browser and manager for ComfyUI.
 You can sync your workflows to a remote Git repository and use them everywhere.
 
@@ -9,7 +11,7 @@ Welcome to submit your workflow source by submitting [an issue](https://github.c
 
 - Browse and manage your images/videos/workflows in the output folder.
 - Add your workflows to the 'Saves' so that you can switch and manage them more easily.
-- Sync your collection anywhere by Git.
+- Sync your 'Saves' anywhere by Git.
 - Subscribe workflow sources by Git and load them more easily.
 - Search your workflow by keywords.
 
@@ -36,7 +38,7 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 
 ## Notes
 
-- Your collections are stored in the `ComfyUI/custom_nodes/comfyui-browser/collections`.
+- Your 'Saves' are stored in the `ComfyUI/custom_nodes/comfyui-browser/collections`.
 
 ## TODO
 
