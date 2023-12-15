@@ -6,6 +6,9 @@
 
 还能订阅社区开放的工作流仓库，方便抄作业！
 
+https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be17-0efab401ef54
+
+
 ## 功能
 
 - 浏览和管理你的 ComfyUI 输出文件
