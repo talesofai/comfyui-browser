@@ -519,7 +519,7 @@ async def api_sync_source(request):
 async def api_get_all_sources(_):
     source_url = 'https://github.com/talesofai/comfyui-browser/raw/main/data/sources.json'
     file_path = path.join(browser_path, 'data/sources.json')
-    timeout = ClientTimeout(connect=2)
+    timeout = ClientTimeout(connect=2, total=4)
 
     sources = {
         "sources": []
