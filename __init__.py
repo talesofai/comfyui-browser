@@ -33,6 +33,14 @@ video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
 
 info_file_suffix = '.info'
 
+
+def init_path():
+    if not path.exists(collections_path):
+        os.mkdir(collections_path)
+
+    if not path.exists(sources_path):
+        os.mkdir(sources_path)
+
 # folder_type = 'outputs', 'collections', 'sources'
 def get_parent_path(folder_type: str):
     if folder_type == 'collections':
@@ -53,7 +61,7 @@ def get_target_folder_files(folder_path: str, folder_type: str = 'outputs'):
     target_path = path.join(parent_path, folder_path)
 
     if not path.exists(target_path):
-        return None
+        return []
 
     folder_listing = os.scandir(target_path)
     folder_listing = sorted(folder_listing, key=lambda f: (f.is_file(), -f.stat().st_ctime))
@@ -536,3 +544,5 @@ routes.static(
 
 WEB_DIRECTORY = "web"
 NODE_CLASS_MAPPINGS = {}
+
+init_path()

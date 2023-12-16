@@ -21,12 +21,13 @@
 
   let comfyApp: any;
   let files: Array<any> = [];
-  let loaded: boolean = false;
+  let loaded: boolean = true;
   let showCursor = 20;
   let searchQuery = '';
   let searchRegex = new RegExp('');
 
   export async function refresh() {
+    loaded = true;
     files = await fetchFiles(folderType, comfyUrl, folderPath);
     loaded = true;
   }
