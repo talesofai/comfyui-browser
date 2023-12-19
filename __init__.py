@@ -155,6 +155,22 @@ def git_init(run_path = collections_path):
     if not path.exists(path.join(run_path, '.git')):
         run_cmd('git init', collections_path)
 
+    ret = run_cmd('git config user.name', collections_path,
+                  log_cmd=False, log_code=False, log_message=False)
+    if len(ret.stdout) == 0:
+        ret = run_cmd('whoami', collections_path,
+                      log_cmd=False, log_code=False, log_message=False)
+        username = ret.stdout.rstrip("\n")
+        run_cmd(f'git config user.name "{username}"', collections_path)
+
+    ret = run_cmd('git config user.email', collections_path,
+                  log_cmd=False, log_code=False, log_message=False)
+    if len(ret.stdout) == 0:
+        ret = run_cmd('hostname', collections_path,
+                      log_cmd=False, log_code=False, log_message=False)
+        hostname = ret.stdout.rstrip("\n")
+        run_cmd(f'git config user.email "{hostname}"', collections_path)
+
 def log(message):
     print('[comfyui-browser] ' + message)
 
