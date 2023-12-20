@@ -1,5 +1,10 @@
 # ChangeLog
 
+## v1.5.1 - 2023-12-20
+
+- Add Side/Center toggle
+- Update styles for responsive
+
 ## v1.5.0 - 2023-12-15
 
 - Update styles
