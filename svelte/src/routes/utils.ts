@@ -3,6 +3,8 @@ import type Toast from './Toast.svelte';
 
 export type FOLDER_TYPES = 'outputs' | 'collections' | 'sources';
 
+const localStorageKey = 'comfyui-browser';
+
 function processFile(
   file: any,
   folderType: FOLDER_TYPES,
@@ -99,4 +101,22 @@ export async function onLoadWorkflow(file: any, comfyApp: any, toast: Toast) {
   await comfyApp.handleFile(fileObj);
 
   toast.show(false, 'Loaded', 'No workflow found here');
+}
+
+
+export function getLocalConfig() {
+  let localConfigStr = localStorage.getItem(localStorageKey);
+  let localConfig: any = {};
+
+  if (localConfigStr) {
+    localConfig = JSON.parse(localConfigStr);
+  }
+
+  return localConfig;
+}
+
+export function setLocalConfig(key: string, value: any) {
+  let localConfig = getLocalConfig();
+  localConfig[key] = value;
+  localStorage.setItem(localStorageKey, JSON.stringify(localConfig));
 }

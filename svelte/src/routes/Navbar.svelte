@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { setLocalConfig } from "./utils";
+
   export let activeTab = 'outputs';
 
   $: activeTabClass = function(tab: string) {
@@ -7,6 +9,8 @@
 
   async function onClickTab(tab: string) {
     activeTab = tab;
+
+    setLocalConfig('lastTab', tab);
   }
 </script>
 
