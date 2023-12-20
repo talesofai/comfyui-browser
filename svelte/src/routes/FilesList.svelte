@@ -117,7 +117,7 @@
         <div class="flex items-center">
           <MediaShow
             file={file}
-            styleClass="w-full h-36"
+            styleClass="w-full h-16 sm:h-36"
             onClickDir={onClickDir}
           />
         </div>

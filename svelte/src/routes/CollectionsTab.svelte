@@ -226,10 +226,10 @@
 <ul class="space-y-2">
   {#each files.filter(f => searchRegex.test(f.name.toLowerCase()) || searchRegex.test(f.notes.toLowerCase()))
     .slice(0, showCursor) as file}
-    <li class="flex h-36 border-0 space-x-4 p-2 bg-info-content">
+    <li class="flex h-16 sm:h-28 border-0 space-x-4 p-2 bg-info-content">
       <MediaShow
         file={file}
-        styleClass="w-36"
+        styleClass="w-16 sm:w-28"
         onClickDir={onClickDir}
       />
       <div class="space-y-2 w-96 relative">
@@ -239,7 +239,7 @@
           on:blur={(e) => updateFilename(e, file)}
           value={file.name}
         />
-        <p class="text-gray-500 text-xs">
+        <p class="text-gray-500 text-xs hidden sm:block">
           {file.formattedDatetime} | {file.formattedSize}
         </p>
 
@@ -260,10 +260,9 @@
       <div>
         <textarea
           name="notes"
-          rows="4"
           placeholder="write some memos..."
           on:blur={(e) => updateFileNotes(e, file)}
-          class="resize-none textarea hidden md:block md:w-72 max-w-72"
+          class="resize-none textarea hidden md:block md:w-72 max-w-72 h-14 sm:h-24"
           value={file.notes}
         />
       </div>
