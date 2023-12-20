@@ -1,5 +1,10 @@
 # ChangeLog
 
+## v1.5.2 - 2023-12-20
+
+- Support resize the modal
+- Remember the last Tab select
+
 ## v1.5.1 - 2023-12-20
 
 - Add Side/Center toggle
