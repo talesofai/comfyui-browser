@@ -29,18 +29,23 @@ class BrowserDialog extends ComfyDialog {
 
     const localConfig = getLocalConfig();
     let modalStyle = {
-      width: "100%",
-      height: "100%",
+      width: "70%",
+      height: "80%",
+      maxWidth: "100%",
+      maxHeight: "100%",
+      minWidth: "24%",
+      minHeight: "24%",
       padding: "6px",
       zIndex: 1000,
+      resize: 'auto',
     };
     const cs = localConfig.modalStyles;
     if (cs) {
       modalStyle.left = cs.left;
       modalStyle.top = cs.top;
       modalStyle.transform = cs.transform;
-      modalStyle.maxHeight = cs.maxHeight;
-      modalStyle.maxWidth = cs.maxWidth;
+      modalStyle.height = cs.height;
+      modalStyle.width = cs.width;
     }
 
     this.element = $el("div.comfy-modal", {
@@ -50,8 +55,8 @@ class BrowserDialog extends ComfyDialog {
     }, [
       $el("div.comfy-modal-content", {
         style: {
-          width: "inherit",
-          height: "inherit",
+          width: "100%",
+          height: "100%",
         },
       }, [
         $el("div", {
@@ -61,6 +66,10 @@ class BrowserDialog extends ComfyDialog {
         ...this.createButtons(),
       ]),
 		]);
+
+    new ResizeObserver(
+      this.onResize.bind(this)
+    ).observe(this.element);
   }
 
   createButtons() {
@@ -96,28 +105,39 @@ class BrowserDialog extends ComfyDialog {
     ];
   }
 
+  onResize() {
+    const e = this.element;
+    setLocalConfig('modalStyles', {
+      left: e.style.left,
+      top: e.style.top,
+      transform: e.style.transform,
+      height: e.style.height,
+      width: e.style.width,
+    });
+  }
+
   toggleSidePanel() {
     const e = this.element;
     if (e.style.left === '0px') {
       e.style.left = '';
       e.style.top = '';
       e.style.transform = '';
-      e.style.maxHeight = '';
-      e.style.maxWidth = '';
+      e.style.height = '85%';
+      e.style.width = '80%';
     } else {
       e.style.left = '0px';
       e.style.top = '0px';
       e.style.transform = 'translate(-10px, -10px)';
-      e.style.maxHeight = '100%';
-      e.style.maxWidth = '32%';
+      e.style.height = '100%';
+      e.style.width = '32%';
     }
 
     setLocalConfig('modalStyles', {
       left: e.style.left,
       top: e.style.top,
       transform: e.style.transform,
-      maxHeight: e.style.maxHeight,
-      maxWidth: e.style.maxWidth,
+      height: e.style.height,
+      width: e.style.width,
     });
   }
 
@@ -174,7 +194,7 @@ function showBrowserDialog(browserDialog) {
     src: browserUrl + "?timestamp=" + Date.now(),
     style: {
       width: "100%",
-      height: "inherit",
+      height: "100%",
     },
   }));
 }
