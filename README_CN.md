@@ -8,6 +8,8 @@
 
 https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be17-0efab401ef54
 
+也可以参考B站的中文解说：
+https://www.bilibili.com/video/BV1qc411m7Gp/
 
 ## 功能
 
