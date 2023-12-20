@@ -1,11 +1,10 @@
 <script lang="ts">
-  import Toast from "./Toast.svelte";
-  import FilesList from "./FilesList.svelte";
+  import Toast from './Toast.svelte';
+  import FilesList from './FilesList.svelte';
 
   export let comfyUrl: string;
 
   let toast: Toast;
-
 </script>
 
 <FilesList folderType="outputs" {comfyUrl} {toast} />

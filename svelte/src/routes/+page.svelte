@@ -1,6 +1,6 @@
 <script lang="ts">
   import Navbar from './Navbar.svelte';
-  import FilesTab from "./FilesTab.svelte";
+  import FilesTab from './FilesTab.svelte';
   import CollectionsTab from './CollectionsTab.svelte';
   import SourcesTab from './SourcesTab.svelte';
   import { getLocalConfig } from './utils';
@@ -20,7 +20,7 @@
   });
 </script>
 
-<Navbar bind:activeTab={activeTab} />
+<Navbar bind:activeTab />
 
 {#if activeTab === 'collections'}
   <CollectionsTab {comfyUrl} />

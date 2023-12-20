@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
+  import { _ } from 'svelte-i18n';
   import { fetchFiles, onLoadWorkflow, onScroll } from './utils';
-  import MediaShow from "./MediaShow.svelte";
-  import Toast from "./Toast.svelte";
+  import MediaShow from './MediaShow.svelte';
+  import Toast from './Toast.svelte';
 
   export let comfyUrl: string;
 
@@ -20,30 +21,29 @@
   let searchRegex = new RegExp('');
 
   $: if (folderPath != undefined) {
-    fetchFiles(folderType, comfyUrl, folderPath)
-    .then(res => {
+    fetchFiles(folderType, comfyUrl, folderPath).then((res) => {
       files = res;
       loaded = true;
     });
   }
 
-
   $: try {
     searchRegex = new RegExp(searchQuery.toLowerCase());
   } catch {
-    searchRegex =  new RegExp('');
+    searchRegex = new RegExp('');
   }
-
 
   onMount(async () => {
     //@ts-ignore
     comfyApp = window.top.app;
 
     folderPath = '';
-    config = await fetchConfig() || {};
+    config = (await fetchConfig()) || {};
     configGitRepo = config?.git_repo;
 
-    window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
+    window.addEventListener('scroll', () => {
+      showCursor = onScroll(showCursor, files.length);
+    });
   });
 
   async function fetchConfig() {
@@ -56,13 +56,13 @@
     btn.disabled = true;
     btn.innerHTML = 'Syncing...';
     const res = await fetch(comfyUrl + '/browser/collections/sync', {
-     method: 'POST',
+      method: 'POST',
     });
 
     toast.show(
       res.ok,
       'Synced',
-      'Failed to sync. Please check the ComfyUI server.'
+      'Failed to sync. Please check the ComfyUI server.',
     );
     btn.disabled = false;
     btn.innerHTML = 'Sync';
@@ -82,7 +82,7 @@
     toast.show(
       res.ok,
       'Updated config',
-      'Failed to update config. Please check the ComfyUI server.'
+      'Failed to update config. Please check the ComfyUI server.',
     );
   }
 
@@ -104,9 +104,9 @@
     toast.show(
       res.ok,
       'Deleted the file ' + file.name,
-      'Failed to delete the file. Please check the ComfyUI server.'
+      'Failed to delete the file. Please check the ComfyUI server.',
     );
-    files = files.filter(f => f != file);
+    files = files.filter((f) => f != file);
   }
 
   async function updateFile(file: any, payload: any) {
@@ -139,7 +139,7 @@
     toast.show(
       ret,
       'Memos Updated',
-      'Failed to update. Please check the ComfyUI server.'
+      'Failed to update. Please check the ComfyUI server.',
     );
   }
 
@@ -159,7 +159,7 @@
     toast.show(
       ret,
       'Updated',
-      'Failed to update. Please check the ComfyUI server.'
+      'Failed to update. Please check the ComfyUI server.',
     );
   }
 
@@ -173,43 +173,56 @@
       return;
     }
 
-    folderPath = folderPath.split('/').slice(0, index + 1).join('/');
+    folderPath = folderPath
+      .split('/')
+      .slice(0, index + 1)
+      .join('/');
   }
 </script>
 
 <div class="flex border-b border-base-content pb-2">
-  <a class="btn pr-2"
+  <a
+    class="btn pr-2"
     target="_blank"
-    href="https://github.com/talesofai/comfyui-browser/wiki/How-to-use-'Sync'-in-the-'Saves'">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+    href="https://github.com/talesofai/comfyui-browser/wiki/How-to-use-Sync-in-the-Saves-tab"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      data-slot="icon"
+      class="w-6 h-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
+      />
     </svg>
   </a>
   <input
     type="text"
-    placeholder="Input your git repository address"
+    placeholder={$_('collection.syncInput.placeholder')}
     bind:value={configGitRepo}
     class="input input-bordered w-full max-w-lg"
   />
   {#if configGitRepo != config?.git_repo}
-    <button
-      class="btn btn-outline btn-accent"
-      on:click={onClickSaveConfig}
-    >
-      Save
+    <button class="btn btn-outline btn-accent" on:click={onClickSaveConfig}>
+      {$_('collection.btn.save')}
     </button>
   {/if}
-  <button
-    class="btn btn-outline btn-accent"
-    on:click={onClickSyncCollections}
-  >
-    Sync
+  <button class="btn btn-outline btn-accent" on:click={onClickSyncCollections}>
+    {$_('collection.btn.sync')}
   </button>
 </div>
 
 <div class="max-w-full text-sm breadcrumbs flex flex-row ml-4">
   <ul class="basis-2/3">
-    <li><button on:click={() => onClickPath(-1)}>Root</button></li>
+    <li>
+      <button on:click={() => onClickPath(-1)}>{$_('common.rootDir')}</button>
+    </li>
     {#each (folderPath || '').split('/') as path, index}
       <li><button on:click={() => onClickPath(index)}>{path}</button></li>
     {/each}
@@ -217,21 +230,18 @@
 
   <input
     type="text"
-    placeholder="Filter by filename or memos"
+    placeholder={$_('collection.searchInput.placeholder')}
     bind:value={searchQuery}
     class="input input-bordered border-slate-600 w-full h-full rounded-none text-sm basis-1/3"
   />
 </div>
 
 <ul class="space-y-2">
-  {#each files.filter(f => searchRegex.test(f.name.toLowerCase()) || searchRegex.test(f.notes.toLowerCase()))
+  {#each files
+    .filter((f) => searchRegex.test(f.name.toLowerCase()) || searchRegex.test(f.notes.toLowerCase()))
     .slice(0, showCursor) as file}
     <li class="flex h-16 sm:h-28 border-0 space-x-4 p-2 bg-info-content">
-      <MediaShow
-        file={file}
-        styleClass="w-16 sm:w-28"
-        onClickDir={onClickDir}
-      />
+      <MediaShow {file} styleClass="w-16 sm:w-28" {onClickDir} />
       <div class="space-y-2 w-96 relative">
         <input
           type="text"
@@ -248,12 +258,13 @@
             <button
               class="btn btn-link btn-sm p-0 no-underline text-accent"
               on:click={async () => await onLoadWorkflow(file, comfyApp, toast)}
-            >Load</button>
+              >Load</button
+            >
           {/if}
           <button
             class="btn btn-link btn-sm p-0 no-underline text-error"
-            on:click={async () => await onDelete(file)}
-          >Remove</button>
+            on:click={async () => await onDelete(file)}>Remove</button
+          >
         </div>
       </div>
 
@@ -274,9 +285,9 @@
   <div class="w-full h-full flex items-center justify-center">
     <span class="font-bold text-4xl">
       {#if loaded}
-        It's empty here.
+        {$_('common.emptyList')}
       {:else}
-        Loading ...
+        {$_('common.rootDir')}
       {/if}
     </span>
   </div>

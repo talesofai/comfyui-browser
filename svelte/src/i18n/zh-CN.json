@@ -1,0 +1,35 @@
+{
+  "navbar": {
+    "outputs": "输出",
+    "saves": "已保存",
+    "sources": "源"
+  },
+  "common": {
+    "emptyList": "暂无数据",
+    "loading": "加载中...",
+    "rootDir": "根目录",
+    "btn": {
+      "load": "加载",
+      "save": "保存",
+      "delete": "删除",
+      "add": "新增"
+    }
+  },
+  "collection": {
+    "searchInput": {
+      "placeholder": "根据文件名过滤"
+    },
+    "btn": {
+      "save": "保存",
+      "sync": "同步"
+    },
+    "syncInput": {
+      "placeholder": "请输入 git 地址"
+    }
+  },
+  "filesList": {
+    "searchInput": {
+      "placeholder": "根据文件名过滤"
+    }
+  }
+}

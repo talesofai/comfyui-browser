@@ -1,0 +1,35 @@
+{
+  "navbar": {
+    "outputs": "Outputs",
+    "saves": "Saves",
+    "sources": "Sources"
+  },
+  "common": {
+    "emptyList": "No data",
+    "loading": "loading...",
+    "rootDir": "Root",
+    "btn": {
+      "load": "Load",
+      "save": "Save",
+      "delete": "Delete",
+      "add": "Add"
+    }
+  },
+  "collection": {
+    "searchInput": {
+      "placeholder": "Filter by filename"
+    },
+    "btn": {
+      "save": "Save",
+      "sync": "Sync"
+    },
+    "syncInput": {
+      "placeholder": "Input your git repo url"
+    }
+  },
+  "filesList": {
+    "searchInput": {
+      "placeholder": "Filter by filename"
+    }
+  }
+}
