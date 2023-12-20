@@ -48,6 +48,11 @@ class BrowserDialog extends ComfyDialog {
         textContent: "Browse in new tab",
       }),
     ]);
+    const toggleSidePanelBtn = $el("button", {
+      type: "button",
+      textContent: "Side/Center",
+      onclick: () => this.toggleSidePanel(),
+    });
     return [
       $el("div", {
         style: {
@@ -56,8 +61,26 @@ class BrowserDialog extends ComfyDialog {
       }, [
         closeBtn,
         browseBtn,
+        toggleSidePanelBtn,
       ]),
     ];
+  }
+
+  toggleSidePanel() {
+    const e = this.element;
+    if (e.style.left === '0px') {
+      e.style.left = '';
+      e.style.top = '';
+      e.style.transform = '';
+      e.style.maxHeight = '';
+      e.style.maxWidth = '';
+    } else {
+      e.style.left = '0px';
+      e.style.top = '0px';
+      e.style.transform = 'translate(-10px, -10px)';
+      e.style.maxHeight = '100%';
+      e.style.maxWidth = '32%';
+    }
   }
 
   close() {

@@ -260,11 +260,10 @@
       <div>
         <textarea
           name="notes"
-          cols="40"
           rows="4"
           placeholder="write some memos..."
           on:blur={(e) => updateFileNotes(e, file)}
-          class="resize-none textarea"
+          class="resize-none textarea hidden md:block md:w-72 max-w-72"
           value={file.notes}
         />
       </div>

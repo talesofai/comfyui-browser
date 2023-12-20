@@ -123,8 +123,8 @@
         </div>
 
         <p class="font-bold max-h-12 leading-6 overflow-auto mt-1">{file.name}</p>
-        <p class="text-gray-500 text-xs">{file.formattedDatetime}</p>
-        <p class="text-gray-500 text-xs">{file.formattedSize}</p>
+        <p class="hidden sm:block text-gray-500 text-xs">{file.formattedDatetime}</p>
+        <p class="hidden sm:block text-gray-500 text-xs">{file.formattedSize}</p>
 
         <div class="">
           {#if comfyApp && file.type != 'dir'}

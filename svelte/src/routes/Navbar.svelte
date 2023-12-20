@@ -48,7 +48,7 @@
     </li>
   </ul>
 
-  <div class="flex-0 flex items-center justify-center p-2">
+  <div class="hidden sm:flex flex-0 items-center justify-center p-2">
     <a href="https://github.com/talesofai/comfyui-browser" target="_blank">
       <img src="https://img.shields.io/github/stars/talesofai/comfyui-browser?style=social" alt="stars - comfyui-browser">
       </a>
