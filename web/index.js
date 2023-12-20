@@ -4,19 +4,38 @@ import { api } from "../../scripts/api.js";
 
 const browserUrl = "./browser/web/index.html";
 
+const localStorageKey = 'comfyui-browser';
+
 class BrowserDialog extends ComfyDialog {
   constructor() {
     super();
 
+    let localConfig = localStorage.getItem(localStorageKey);
+    if (localConfig) {
+      localConfig = JSON.parse(localConfig);
+    } else {
+      localConfig = {};
+    }
+
+    let modalStyle = {
+      width: "100%",
+      height: "100%",
+      padding: "6px",
+      zIndex: 1000,
+    };
+    const cs = localConfig.modalStyles;
+    if (cs) {
+      modalStyle.left = cs.left;
+      modalStyle.top = cs.top;
+      modalStyle.transform = cs.transform;
+      modalStyle.maxHeight = cs.maxHeight;
+      modalStyle.maxWidth = cs.maxWidth;
+    }
+
     this.element = $el("div.comfy-modal", {
       id: "comfy-browser-dialog",
       parent: document.body,
-      style: {
-        width: "100%",
-        height: "100%",
-        padding: "10px",
-        zIndex: 1000,
-      },
+      style: modalStyle,
     }, [
       $el("div.comfy-modal-content", {
         style: {
@@ -81,6 +100,17 @@ class BrowserDialog extends ComfyDialog {
       e.style.maxHeight = '100%';
       e.style.maxWidth = '32%';
     }
+
+    const localConfig = {
+      modalStyles: {
+        left: e.style.left,
+        top: e.style.top,
+        transform: e.style.transform,
+        maxHeight: e.style.maxHeight,
+        maxWidth: e.style.maxWidth,
+      },
+    }
+    localStorage.setItem(localStorageKey, JSON.stringify(localConfig));
   }
 
   close() {
