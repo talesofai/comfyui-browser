@@ -41,6 +41,38 @@ https://www.bilibili.com/video/BV1qc411m7Gp/
 cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 ```
 
+## 开发
+
+- 使用的框架
+
+  - 前端: [Svelte](https://kit.svelte.dev/)
+  - 后端: [aiohttp](https://docs.aiohttp.org/)(和 ComfyUI 一样)
+
+- 目录介绍
+
+```
+├── __init__.py  (后端服务)
+├── web          (ComfyUI 加载的前端路径)
+    ├── build    (Svelte 的生成文件)
+    └── index.js (和 ComfyUI 交互的前端代码)
+├── svelte       (前端主体部分)
+```
+
+- 开发和调试
+
+  - 复制或者链接 `comfyui-browser` 到 `ComfyUI/custom_nodes/`
+  - 启动服务端: `cd ComfyUI && python main.py --enable-cors-header`
+  - 启动前端: `cd ComfyUI/comfyui-browser/svelte && npm i && npm run dev`
+  - 调试地址 `http://localhost:5173/?comfyUrl=http://localhost:8188`
+    - `localhost:8188` 是 ComfyUI server 地址
+    - `localhost:5173` 是 Vite dev server
+
+- 备注
+
+  - 请尽量在 Windows 上测试, 因为我只有 Linux 和 macOS
+
+
+
 ## 更新记录
 
 详见：[ChangeLog](CHANGELOG.md)

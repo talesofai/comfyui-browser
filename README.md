@@ -42,6 +42,38 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 
 - Your 'Saves' are stored in the `ComfyUI/custom_nodes/comfyui-browser/collections`.
 
+
+## Development
+
+- Framework
+
+  - Frontend: [Svelte](https://kit.svelte.dev/)
+  - Backend: [aiohttp](https://docs.aiohttp.org/)(the same with ComfyUI)
+
+- Project Structure
+
+```
+├── __init__.py  (Backend Server)
+├── web          (Frontend code loaded by ComfyUI)
+    ├── build    (Built by Svelte)
+    └── index.js (Frontend that interact with ComfyUI)
+├── svelte       (Frontend in the Modal as a iframe, written by Svelte)
+```
+
+- Build and Run
+
+  - Copy or link `comfyui-browser` to `ComfyUI/custom_nodes/`
+  - Start backend by `cd ComfyUI && python main.py --enable-cors-header`
+  - Start frontend by `cd ComfyUI/comfyui-browser/svelte && npm i && npm run dev`
+  - Open and debug by `http://localhost:5173/?comfyUrl=http://localhost:8188`
+    - It will use `localhost:8188` as ComfyUI server
+    - `localhost:5173` is a Vite dev server
+
+- Notes
+
+  - Please try to test on Windows, because I only have Linux/macOS
+
+
 ## TODO
 
 - [x] Sync collections to remote git repository
