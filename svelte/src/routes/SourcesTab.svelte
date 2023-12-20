@@ -218,7 +218,7 @@
                 <p>{s.author}/{s.title}</p>
               </a>
               <a href={s.url} target="_blank">
-                <p class="text-xs text-gray-500">{s.url}</p>
+                <img src={`https://img.shields.io/github/stars${(new URL(s.url)).pathname}?style=flat-square`} alt="stars">
               </a>
             </div>
             <div class="w-72 grow">
