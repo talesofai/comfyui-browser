@@ -13,6 +13,13 @@
       "url": "https://github.com/hylarucoder/comfyui-workflow",
       "type": "git",
       "description": "Some workflows that I have authored myself as well as some workflows that I have modified from online sources."
+    },
+    {
+      "title": "awesome-comfyui-workflow",
+      "author": "shadowcz007",
+      "url": "https://github.com/shadowcz007/awesome-comfyui-workflow",
+      "type": "git",
+      "description": "Some workflows includes CUTE YOU, Real-time design, Extended image, AI Dialogue Game..."
     }
   ]
 }
