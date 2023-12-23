@@ -15,6 +15,13 @@
       "description": "Some workflows that I have authored myself as well as some workflows that I have modified from online sources."
     },
     {
+        "title": "sharing-is-caring",
+        "author": "fictions-ai",
+        "url": "https://github.com/fictions-ai/sharing-is-caring",
+        "type": "git",
+        "description": "This repository is maintained by the fictions.ai team. We believe in the power of collaboration and the magic that happens when we share knowledge. Here, we'll be sharing our workflow, useful scripts, and tools related to A.I. generation."
+    },
+    {
       "title": "awesome-comfyui-workflow",
       "author": "shadowcz007",
       "url": "https://github.com/shadowcz007/awesome-comfyui-workflow",
