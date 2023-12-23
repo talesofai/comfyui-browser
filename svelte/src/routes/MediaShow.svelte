@@ -32,13 +32,13 @@
         <img
           class="h-full w-full object-contain"
           loading="lazy"
-          src={file.url}
+          src={file.previewUrl}
           alt={file.name} />
       {/if}
       {#if file.fileType === 'video'}
         <video
           class="h-full w-full object-contain pb-0.5 border-0.5 border-black"
-          src={file.url}
+          src={file.previewUrl}
           loop={true}
           autoplay={true}
           muted={true}
