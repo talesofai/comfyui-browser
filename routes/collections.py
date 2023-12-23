@@ -3,7 +3,7 @@ from aiohttp import web
 import shutil
 import time
 
-from utils import collections_path, get_parent_path, add_uuid_to_filename, \
+from ..utils import collections_path, get_parent_path, add_uuid_to_filename, \
     config_path, get_config, git_init, run_cmd, git_remote_name
 
 

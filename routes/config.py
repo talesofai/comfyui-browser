@@ -1,7 +1,7 @@
 from aiohttp import web
 import json
 
-from utils import get_config, git_remote_name, run_cmd, git_init, \
+from ..utils import get_config, git_remote_name, run_cmd, git_init, \
     collections_path, config_path
 
 async def api_get_browser_config(_):

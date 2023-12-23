@@ -4,7 +4,7 @@ from os import path
 import os
 import shutil
 
-from utils import get_target_folder_files, get_parent_path, get_info_filename, \
+from ..utils import get_target_folder_files, get_parent_path, get_info_filename, \
     image_extensions, video_extensions
 
 # folder_path, folder_type

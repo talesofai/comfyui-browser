@@ -5,7 +5,7 @@ import re
 import shutil
 import os, stat, errno
 
-from utils import sources_path, run_cmd, browser_path, git_remote_name
+from ..utils import sources_path, run_cmd, browser_path, git_remote_name
 
 
 def handle_remove_readonly(func, path, exc):
