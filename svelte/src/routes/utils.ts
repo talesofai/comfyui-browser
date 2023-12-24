@@ -56,13 +56,9 @@ function processFile(
   }
 
   const d = dayjs.unix(file.created_at);
-  file['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
+  file['formattedDatetime'] = d.format('YYYY-MM-DD HH:mm:ss');
+  file['formattedSize'] = formatFileSize(file['bytes']);
 
-  if (file['bytes'] / 1024 / 1024 > 1) {
-    file['formattedSize'] = (file['bytes'] / 1024 / 1024).toFixed(2) + ' MB';
-  } else {
-    file['formattedSize'] = Math.round(file['bytes'] / 1024) + ' KB';
-  }
   return file;
 }
 
@@ -159,4 +155,12 @@ export function setLocalConfig(key: string, value: any) {
   let localConfig = getLocalConfig();
   localConfig[key] = value;
   localStorage.setItem(localStorageKey, JSON.stringify(localConfig));
+}
+
+export function formatFileSize(size: number) {
+  if (size / 1024 / 1024 > 1) {
+    return (size / 1024 / 1024).toFixed(2) + ' MB';
+  } else {
+    return Math.round(size / 1024) + ' KB';
+  }
 }
