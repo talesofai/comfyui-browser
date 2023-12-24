@@ -41,6 +41,7 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 ## Notes
 
 - Your 'Saves' are stored in the `ComfyUI/custom_nodes/comfyui-browser/collections`.
+- Press 'B' to toggle the Browser dialog in the ComfyUI.
 
 
 ## Development

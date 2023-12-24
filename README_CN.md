@@ -70,6 +70,7 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 - 备注
 
   - 请尽量在 Windows 上测试, 因为我只有 Linux 和 macOS
+  - 在 ComfyUI 中可以按 'B' 键来打开/关闭 Browser
 
 
 

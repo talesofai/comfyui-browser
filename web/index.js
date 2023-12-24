@@ -59,8 +59,11 @@ class BrowserDialog extends ComfyDialog {
           height: "100%",
         },
       }, [
-        $el("div", {
-          $: (e) => (this.textElement = e), style: { height: "inherit",
+        $el("iframe", {
+          src: browserUrl + "?timestamp=" + Date.now(),
+          style: {
+            width: "100%",
+            height: "100%",
           },
         }),
         ...this.createButtons(),
@@ -101,6 +104,16 @@ class BrowserDialog extends ComfyDialog {
         closeBtn,
         browseBtn,
         toggleSidePanelBtn,
+        /*$el("span", {*/
+          /*textContent: "Tips: press 'B' to toggle me",*/
+          /*style: {*/
+            /*color: "var(--input-text)",*/
+            /*right: 0,*/
+            /*position: "absolute",*/
+            /*lineHeight: "28.5px",*/
+            /*marginRight: "2px",*/
+          /*},*/
+        /*}),*/
       ]),
     ];
   }
@@ -145,13 +158,17 @@ class BrowserDialog extends ComfyDialog {
     this.element.style.display = "none";
   }
 
-  show(html) {
-    if (typeof html === "string") {
-      this.textElement.innerHTML = html;
-    } else {
-      this.textElement.replaceChildren(html);
-    }
+  show() {
     this.element.style.display = "flex";
+  }
+
+  toggle() {
+    const e = this.element;
+    if (e.style.display === "none") {
+      this.show();
+    } else {
+      this.close();
+    }
   }
 }
 
@@ -189,22 +206,23 @@ function showToast(text, onClick) {
   }, 2000);
 }
 
-function showBrowserDialog(browserDialog) {
-  browserDialog.show($el("iframe", {
-    src: browserUrl + "?timestamp=" + Date.now(),
-    style: {
-      width: "100%",
-      height: "100%",
-    },
-  }));
-}
-
 app.registerExtension({
   name: "ComfyUI.Browser",
   init() {
   },
   async setup() {
     const browserDialog = new BrowserDialog();
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'b') {
+        if (event.target.matches('input, textarea')) {
+          return;
+        }
+
+        browserDialog.toggle();
+        event.preventDefault();
+      }
+    });
 
     app.ui.menuContainer.appendChild(
       $el("div.comfy-list", {
@@ -224,7 +242,7 @@ app.registerExtension({
             //color: "var(--descrip-text) !important",
             width: "80%",
           },
-          onclick: () => { showBrowserDialog(browserDialog); },
+          onclick: () => { browserDialog.show() },
         }),
         $el("button", {
           id: "comfyui-browser-collect-button",
@@ -263,7 +281,7 @@ app.registerExtension({
                 saveBtn.style = originBtnStyle + "border-color: green;";
                 showToast(
                   'Saved. Click me to open.',
-                  () => { showBrowserDialog(browserDialog); },
+                  () => { browserDialog.show() },
                 );
               } else {
                 saveBtn.style = originBtnStyle + "border-color: red;";
