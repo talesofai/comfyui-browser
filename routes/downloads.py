@@ -5,6 +5,7 @@ import requests
 import time
 import asyncio
 import json
+import threading
 from aiohttp import web
 from tqdm import tqdm
 
@@ -119,7 +120,10 @@ async def api_create_new_download(request):
     if '..' in save_in:
         return web.Response(status=400)
 
-    asyncio.create_task(download_by_requests(str(int(time.time())), download_url, save_in, filename, overwrite))
+    threading.Thread(
+        target=asyncio.run,
+        args=(download_by_requests(str(int(time.time())), download_url, save_in, filename, overwrite),)
+    ).start()
 
     return web.json_response(status=201)
 
