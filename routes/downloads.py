@@ -44,6 +44,8 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         'result': '',
         'total_size': 0,
         'downloaded_size': 0,
+        'created_at': int(time.time()),
+        'updated_at': int(time.time()),
     }
     with open(log_file_path, 'w') as log_file:
         json.dump(base_info, log_file)
@@ -70,8 +72,13 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
             json.dump(base_info, log_file)
 
         target_path = path.join(folder_paths.models_dir, save_in, filename)
+        base_info['save_in'] = target_path
         if not overwrite and path.exists(target_path):
-            base_info['result'] = f'{target_path} already exists'
+            result = f'Already exists: {target_path}'
+            base_info['result'] = result
+            with open(log_file_path, 'w') as log_file:
+                json.dump(base_info, log_file)
+            log(result)
             return
 
         # download file
@@ -80,7 +87,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         CHUNK_SIZE = chunk_size * 10**6
         base_info['total_size'] = TOTAL_SIZE
         base_info['result'] = resp.reason
-        log('download to ' + target_path)
+        log('Download to ' + target_path)
         with (
             open(tmp_target_path, mode="wb") as file,
             open(log_file_path, 'w') as log_file,
@@ -90,6 +97,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
                 size = file.write(data)
                 bar.update(size)
                 base_info['downloaded_size'] += size
+                base_info['updated_at'] = int(time.time())
                 log_file.seek(0)
                 json.dump(base_info, log_file)
                 log_file.write('\n' * 2)
@@ -130,11 +138,12 @@ async def api_list_downloads(_):
         if item.is_file() and not ext in ['.json']:
             continue
 
-        created_at = item.stat().st_ctime
-        download_logs.append({
-            'filename': name,
-            'created_at': created_at,
-        })
+        info = {}
+        with open(item.path, 'r') as f:
+            info = json.load(f)
+
+        if info['uuid']:
+            download_logs.append(info)
 
     return web.json_response({
         'download_logs': download_logs,
