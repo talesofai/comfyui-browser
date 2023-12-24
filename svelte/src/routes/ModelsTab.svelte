@@ -1,5 +1,6 @@
 <script lang="ts">
-    import DownloadHistory from "./DownloadHistory.svelte";
+  import DownloadHistory from "./DownloadHistory.svelte";
+  import NewDownload from "./NewDownload.svelte";
 
   export let comfyUrl: string;
 
@@ -20,7 +21,7 @@
     {#if activeTab === 'downloadHistory'}
       <DownloadHistory {comfyUrl} />
     {:else}
-      <p>hi</p>
+      <NewDownload {comfyUrl} />
     {/if}
   </div>
 
