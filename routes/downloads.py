@@ -42,7 +42,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         'filename': filename,
         'overwrite': overwrite,
         'method': 'requests',
-        'result': '',
+        'result': 'connecting',
         'total_size': 0,
         'downloaded_size': 0,
         'created_at': int(time.time()),
@@ -144,9 +144,12 @@ async def api_list_downloads(_):
 
         info = {}
         with open(item.path, 'r') as f:
-            info = json.load(f)
+            try:
+                info = json.load(f)
+            except:
+                pass
 
-        if info['uuid']:
+        if 'uuid' in info:
             download_logs.append(info)
 
     return web.json_response({

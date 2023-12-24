@@ -2,6 +2,7 @@
   import Toast from "./Toast.svelte";
 
   export let comfyUrl: string;
+  export let afterStartingDownload: Function;
 
   const modelTypes = [
     { text: 'Checkpoint', value: 'checkpoints' },
@@ -38,6 +39,10 @@
       'Download started',
       'Failed'
     );
+
+    if (afterStartingDownload) {
+      afterStartingDownload();
+    }
   }
 </script>
 

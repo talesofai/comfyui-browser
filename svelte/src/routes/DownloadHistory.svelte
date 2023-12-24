@@ -1,15 +1,25 @@
 <script lang="ts">
   import dayjs from 'dayjs';
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { formatFileSize } from './utils';
 
   export let comfyUrl: string;
 
   let downloads: Array<any> = [];
+  let autoRefresh = true;
+  $: if (autoRefresh) {
+    autoRefreshInterval = setInterval(refreshHistory, 1000);
+  } else {
+    if (autoRefreshInterval) {
+      clearInterval(autoRefreshInterval);
+    }
+  }
+  let autoRefreshInterval: number;
 
-  onMount(async () => {
+  async function refreshHistory() {
     const res = await fetch(comfyUrl + '/browser/downloads');
     const ret = await res.json();
+    let newDownloads: Array<any> = [];
     ret.download_logs.forEach((dl: any) => {
       let newDl = dl;
       const timeFormat = 'YYYY-MM-DD HH:mm:ss';
@@ -19,15 +29,39 @@
       newDl['formattedDownloadedSize'] = formatFileSize(dl.downloaded_size);
       newDl['formattedTotalSize'] = formatFileSize(dl.total_size);
 
-      downloads = [...downloads, newDl];
+      newDownloads.push(newDl);
     });
+    downloads = newDownloads;
+  }
+
+  onMount(async () => {
+    refreshHistory();
+  });
+
+  onDestroy(() => {
+    if (autoRefreshInterval) {
+      clearInterval(autoRefreshInterval);
+    }
   });
 </script>
 
+<div class="flex flex-row justify-between">
+  <button
+    class="btn btn-accent btn-outline"
+    on:click={refreshHistory}
+  >
+    Refresh
+  </button>
+
+  <div class="flex items-center">
+    <span class="label-text">Auto Refresh</span>
+    <input type="checkbox" bind:checked={autoRefresh} class="checkbox checkbox-secondary" />
+  </div>
+</div>
 <ul class="space-y-2">
   {#each downloads as dl}
     <li class="bg-info-content">
-      <p class="font-bold text-lg">{dl.filename}</p>
+      <p class="font-bold text-lg">{dl.filename ? dl.filename : dl.uuid}</p>
       <p class="text-gray-500 text-xs">
         <span>Created at: {dl.formattedCreatedAt}</span>
         <span>Updated at: {dl.formattedUpdatedAt}</span>

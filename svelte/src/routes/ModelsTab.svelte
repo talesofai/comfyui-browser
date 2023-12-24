@@ -21,7 +21,10 @@
     {#if activeTab === 'downloadHistory'}
       <DownloadHistory {comfyUrl} />
     {:else}
-      <NewDownload {comfyUrl} />
+      <NewDownload
+        comfyUrl={comfyUrl}
+        afterStartingDownload={() => onClickTab('downloadHistory')}
+      />
     {/if}
   </div>
 
