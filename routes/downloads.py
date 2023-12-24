@@ -1,4 +1,5 @@
 from os import path
+import os
 import shutil
 import requests
 import time
@@ -39,6 +40,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         'save_in': save_in,
         'filename': filename,
         'overwrite': overwrite,
+        'method': 'requests',
         'result': '',
         'total_size': 0,
         'downloaded_size': 0,
@@ -112,3 +114,44 @@ async def api_create_new_download(request):
     asyncio.create_task(download_by_requests(str(int(time.time())), download_url, save_in, filename, overwrite))
 
     return web.json_response(status=201)
+
+async def api_list_downloads(_):
+    download_logs = []
+    folder_listing = os.scandir(download_logs_path)
+    folder_listing = sorted(folder_listing, key=lambda f: (f.is_file(), -f.stat().st_ctime))
+    for item in folder_listing:
+        if not path.exists(item.path):
+            continue
+
+        name = path.basename(item.path)
+        ext = path.splitext(name)[1].lower()
+        if name == '' or name[0] == '.':
+            continue
+        if item.is_file() and not ext in ['.json']:
+            continue
+
+        created_at = item.stat().st_ctime
+        download_logs.append({
+            'filename': name,
+            'created_at': created_at,
+        })
+
+    return web.json_response({
+        'download_logs': download_logs,
+    })
+
+# uuid
+async def api_show_download(request):
+    uuid = request.match_info.get('uuid', '')
+    if uuid == '':
+        return web.Response(status=400)
+
+    target_path = path.join(download_logs_path, uuid + '.json')
+    if not path.exists(target_path):
+        return web.Response(status=404)
+
+    download_log = {}
+    with open(target_path, 'r') as file:
+        download_log = json.load(file)
+
+    return web.json_response(download_log)

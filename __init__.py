@@ -27,6 +27,8 @@ browser_app.add_routes([
     web.put("/config", config.api_update_browser_config),
 
     web.post("/downloads", downloads.api_create_new_download),
+    web.get("/downloads", downloads.api_list_downloads),
+    web.get("/downloads/{uuid}", downloads.api_show_download),
 
     web.static("/web", path.join(browser_path, 'web/build')),
 ])
