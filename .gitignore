@@ -2,3 +2,4 @@ config.json
 __pycache__/
 collections/
 sources/
+download_logs/

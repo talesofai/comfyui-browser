@@ -1,4 +1,5 @@
 from os import path
+import shutil
 import requests
 import time
 import asyncio
@@ -8,7 +9,7 @@ from tqdm import tqdm
 
 import folder_paths
 
-from ..utils import download_logs_path
+from ..utils import download_logs_path, log
 
 def parse_options_header(content_disposition):
     param, options = '', {}
@@ -72,14 +73,17 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
             return
 
         # download file
+        tmp_target_path = target_path + '.downloading'
         TOTAL_SIZE = int(resp.headers.get("Content-Length", 0))
         CHUNK_SIZE = chunk_size * 10**6
+        base_info['total_size'] = TOTAL_SIZE
+        base_info['result'] = resp.reason
+        log('download to ' + target_path)
         with (
-            open(target_path, mode="wb") as file,
+            open(tmp_target_path, mode="wb") as file,
             open(log_file_path, 'w') as log_file,
             tqdm(total=TOTAL_SIZE, desc=f"download {filename}", unit="B", unit_scale=True) as bar,
         ):
-            base_info['total_size'] = TOTAL_SIZE
             for data in resp.iter_content(chunk_size=CHUNK_SIZE):
                 size = file.write(data)
                 bar.update(size)
@@ -87,6 +91,9 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
                 log_file.seek(0)
                 json.dump(base_info, log_file)
                 log_file.write('\n' * 2)
+
+        shutil.move(tmp_target_path, target_path)
+
 
 # download_url, filename, save_in, overwrite
 async def api_create_new_download(request):
