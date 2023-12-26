@@ -3,8 +3,8 @@ from aiohttp import web
 
 import server
 
-from .utils import collections_path, browser_path, sources_path
-from .routes import sources, collections, config, files
+from .utils import collections_path, browser_path, sources_path, download_logs_path
+from .routes import sources, collections, config, files, downloads
 
 browser_app = web.Application()
 browser_app.add_routes([
@@ -26,18 +26,17 @@ browser_app.add_routes([
     web.get("/config", config.api_get_browser_config),
     web.put("/config", config.api_update_browser_config),
 
+    web.post("/downloads", downloads.api_create_new_download),
+    web.get("/downloads", downloads.api_list_downloads),
+    web.get("/downloads/{uuid}", downloads.api_show_download),
+
     web.static("/web", path.join(browser_path, 'web/build')),
 ])
 server.PromptServer.instance.app.add_subapp("/browser/", browser_app)
 
-def init_path():
-    if not path.exists(collections_path):
-        mkdir(collections_path)
-
-    if not path.exists(sources_path):
-        mkdir(sources_path)
-
-init_path()
+for dir in [collections_path, sources_path, download_logs_path]:
+    if not path.exists(dir):
+        mkdir(dir)
 
 WEB_DIRECTORY = "web"
 NODE_CLASS_MAPPINGS = {}

@@ -10,6 +10,7 @@ browser_path = path.dirname(__file__)
 collections_path = path.join(browser_path, 'collections')
 config_path = path.join(browser_path, 'config.json')
 sources_path = path.join(browser_path, 'sources')
+download_logs_path = path.join(browser_path, 'download_logs')
 
 image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
