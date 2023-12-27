@@ -25,6 +25,7 @@
   let showCursor = 20;
   let searchQuery = '';
   let searchRegex = new RegExp('');
+  let scrollTop = 0;
 
   export async function refresh() {
     loaded = true;
@@ -37,7 +38,11 @@
     comfyApp = window.top.app;
 
     folderPath = '';
-    window.addEventListener('scroll', () => { showCursor = onScroll(showCursor, files.length); });
+    window.addEventListener('scroll', (e) => { 
+      showCursor = onScroll(showCursor, files.length); 
+      //@ts-ignore
+      scrollTop = (e.target.scrollingElement as HTMLElement).scrollTop;
+    });
   });
 
   async function onCollect(file: any) {
@@ -56,6 +61,11 @@
       'Failed to add to Saves. Please check the ComfyUI server.'
     );
   }
+
+  async function scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
 
   async function onDelete(file: any) {
     const ret = confirm('You want to delete this file? ' + file.name);
@@ -138,9 +148,14 @@
             on:click={async () => await onCollect(file)}
           >Save</button>
           <button
-            class="btn btn-link btn-sm p-0 no-underline text-error"
+            class="btn btn-link btn-sm p-0 no-underline text-error float-right"
             on:click={async () => await onDelete(file)}
-          >Delete</button>
+          >
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 2v4h6v2h-2v14H4V8H2V6h6V2h8zm-2 2h-4v2h4V4zm0 4H6v12h12V8h-4zm-5 2h2v8H9v-8zm6 0h-2v8h2v-8z" fill="#f77"/>
+            </svg>
+            Delete
+          </button>
         </div>
       </div>
     {/if}
@@ -157,4 +172,12 @@
       {/if}
     </span>
   </div>
+{/if}
+
+{#if scrollTop >= 300}
+<button class="fixed right-10 bottom-10 w-10 h-10 flex justify-center items-center	rounded-full bg-slate-50" on:click={scrollToTop}>
+  <svg class="w-5 h-5 icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#333333" d="M572.235 205.282v600.365a30.118 30.118 0 11-60.235 0V205.282L292.382 438.633a28.913 28.913 0 01-42.646 0 33.43 33.43 0 010-45.236l271.058-288.045a28.913 28.913 0 0142.647 0L834.5 393.397a33.43 33.43 0 010 45.176 28.913 28.913 0 01-42.647 0l-219.618-233.23z"/>
+  </svg>
+</button>
 {/if}
