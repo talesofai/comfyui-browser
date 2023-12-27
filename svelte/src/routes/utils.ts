@@ -3,32 +3,62 @@ import type Toast from './Toast.svelte';
 
 export type FOLDER_TYPES = 'outputs' | 'collections' | 'sources';
 
+export const IMAGE_EXTS = ['png', 'webp', 'jpeg', 'jpg', 'gif'];
+export const VIDEO_EXTS = ['mp4', 'webm', 'mov', 'avi', 'mkv'];
+export const JSON_EXTS = ['json'];
+
 const localStorageKey = 'comfyui-browser';
+
+function findFile(filename: string, exts: Array<string>, files: Array<any>) {
+  let fn: any = filename.split('.');
+  fn.pop();
+  fn = fn.join('.');
+  return files.find((f: any) => {
+    const fa = f.name.split('.');
+    const extname = fa.pop().toLowerCase();
+    const name = fa.join('.');
+
+    return name === fn && exts.includes(extname);
+  });
+}
 
 function processFile(
   file: any,
   folderType: FOLDER_TYPES,
   comfyUrl: string,
+  files: Array<any>,
 ) {
   const extname = file.name.split('.').pop().toLowerCase();
-  file['fileType'] = 'json';
-  if (['png', 'webp', 'jpeg', 'jpg', 'gif'].includes(extname)) {
+  if (JSON_EXTS.includes(extname)) {
+    file['fileType'] = 'json';
+    if (findFile(file.name, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
+      return;
+    }
+  }
+  if (IMAGE_EXTS.includes(extname)) {
     file['fileType'] = 'image';
   }
-  if (['mp4', 'webm', 'mov', 'avi', 'mkv'].includes(extname)) {
+  if (VIDEO_EXTS.includes(extname)) {
     file['fileType'] = 'video';
+  }
+  if (! file['fileType']) {
+    return;
   }
 
   file['url'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${file.name}&folder_path=${file.folder_path}`;
+  if (['image', 'video'].includes(file['fileType'])) {
+    file['previewUrl'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${file.name}&folder_path=${file.folder_path}`;
+
+    let jsonFile = findFile(file.name, JSON_EXTS, files);
+    if (jsonFile) {
+      file['url'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${jsonFile.name}&folder_path=${jsonFile.folder_path}`;
+    }
+  }
 
   const d = dayjs.unix(file.created_at);
-  file['formattedDatetime'] = d.format('YYYY-MM-DD HH-mm-ss');
+  file['formattedDatetime'] = d.format('YYYY-MM-DD HH:mm:ss');
+  file['formattedSize'] = formatFileSize(file['bytes']);
 
-  if (file['bytes'] / 1024 / 1024 > 1) {
-    file['formattedSize'] = (file['bytes'] / 1024 / 1024).toFixed(2) + ' MB';
-  } else {
-    file['formattedSize'] = Math.round(file['bytes'] / 1024) + ' KB';
-  }
   return file;
 }
 
@@ -59,15 +89,21 @@ export async function fetchFiles(
   const ret = await res.json();
 
   let files = ret.files;
+  let newFiles: Array<any> = [];
   files.forEach((f: any) => {
+    let newFile;
     if (f.type === 'dir') {
-      f = processDir(f);
+      newFile = processDir(f);
     } else {
-      f = processFile(f, folderType, comfyUrl);
+      newFile = processFile(f, folderType, comfyUrl, files);
+    }
+
+    if (newFile) {
+      newFiles.push(newFile);
     }
   });
 
-  return files;
+  return newFiles;
 }
 
 export function onScroll(showCursor: number, filesLen: number) {
@@ -119,4 +155,12 @@ export function setLocalConfig(key: string, value: any) {
   let localConfig = getLocalConfig();
   localConfig[key] = value;
   localStorage.setItem(localStorageKey, JSON.stringify(localConfig));
+}
+
+export function formatFileSize(size: number) {
+  if (size / 1024 / 1024 > 1) {
+    return (size / 1024 / 1024).toFixed(2) + ' MB';
+  } else {
+    return Math.round(size / 1024) + ' KB';
+  }
 }

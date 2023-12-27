@@ -3,3 +3,4 @@ __pycache__/
 collections/
 sources/
 .DS_Store
+download_logs/

@@ -3,6 +3,7 @@
   import FilesTab from './FilesTab.svelte';
   import CollectionsTab from './CollectionsTab.svelte';
   import SourcesTab from './SourcesTab.svelte';
+  import ModelsTab from './ModelsTab.svelte';
   import { getLocalConfig } from './utils';
   import { onMount } from 'svelte';
 
@@ -26,6 +27,8 @@
   <CollectionsTab {comfyUrl} />
 {:else if activeTab === 'sources'}
   <SourcesTab {comfyUrl} />
+{:else if activeTab === 'models'}
+  <ModelsTab {comfyUrl} />
 {:else}
   <FilesTab {comfyUrl} />
 {/if}

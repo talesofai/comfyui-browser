@@ -266,12 +266,8 @@
           >
             <img src={`https://github.com/${s.author}.png`} alt={s.author} />
             <div class="w-80">
-              <a
-                class="link link-warning text-lg no-underline"
-                href={s.url}
-                target="_blank"
-              >
-                <p>{s.author}/{s.title}</p>
+              <a class="link link-warning text-lg no-underline" href={s.url} target="_blank">
+                <p class="line-clamp-2">{s.author}/{s.title}</p>
               </a>
               <a href={s.url} target="_blank">
                 <img
@@ -282,7 +278,7 @@
                 />
               </a>
             </div>
-            <div class="w-72 grow">
+            <div class="w-72 grow overflow-auto">
               <p>{s.description}</p>
             </div>
             <div class="flex items-center justify-center">

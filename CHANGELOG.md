@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.5.3 - 2023-12-23
+
+- Merge the same name JSON and media file in the same directory
+
 ## v1.5.2 - 2023-12-20
 
 - Support resize the modal
