@@ -2,7 +2,8 @@
   "navbar": {
     "outputs": "Outputs",
     "saves": "Saves",
-    "sources": "Sources"
+    "sources": "Sources",
+    "models": "Models"
   },
   "common": {
     "emptyList": "No data",
@@ -15,16 +16,31 @@
       "add": "Add"
     }
   },
-  "collection": {
+  "collectionsTab": {
     "searchInput": {
-      "placeholder": "Filter by filename"
+      "placeholder": "Filter by filename or memos"
     },
     "btn": {
       "save": "Save",
-      "sync": "Sync"
+      "sync": "Sync",
+      "syncing": "Syncing"
     },
     "syncInput": {
-      "placeholder": "Input your git repo url"
+      "placeholder": "Git URL likes 'git@github.com:tzwm/comfyui-workflows.git'"
+    },
+    "collection": {
+      "memoPlaceholder": "write some memos..."
+    },
+    "toast": {
+      "synced": "Synced",
+      "syncFailed": "Failed to sync. Please check the ComfyUI server.",
+      "configUpdated": "Updated config",
+      "configUpdatedFailed": "Failed to update config. Please check the ComfyUI server.",
+      "deleteConfirm": "You want to delete this file: ",
+      "deleteSuccess": "Deleted the file: ",
+      "deleteFailed": "Failed to delete the file. Please check the ComfyUI server.",
+      "updated": "Updated",
+      "updatedFailed": "Failed to update. Please check the ComfyUI server."
     }
   },
   "filesList": {
