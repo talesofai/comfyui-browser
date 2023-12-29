@@ -15,10 +15,10 @@
   }
 
   function showLocale(locale: string) {
-    switch (locale.split('-')[0]) {
-      case 'en':
+    switch (locale) {
+      case 'en-US':
         return 'En';
-      case 'zh':
+      case 'zh-CN':
         return '中文';
       default:
         return 'En';
