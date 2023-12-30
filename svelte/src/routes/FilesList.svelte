@@ -28,7 +28,7 @@
   let scrollTop = 0;
 
   export async function refresh() {
-    loaded = true;
+    loaded = false;
     files = await fetchFiles(folderType, comfyUrl, folderPath);
     loaded = true;
   }
@@ -37,9 +37,15 @@
     //@ts-ignore
     comfyApp = window.top.app;
 
+    //@ts-ignore
+    window.top.addEventListener("comfyuiBrowserShow", () => {
+      refresh();
+    });
+
     folderPath = '';
-    window.addEventListener('scroll', (e) => { 
-      showCursor = onScroll(showCursor, files.length); 
+
+    window.addEventListener('scroll', (e) => {
+      showCursor = onScroll(showCursor, files.length);
       //@ts-ignore
       scrollTop = (e.target.scrollingElement as HTMLElement).scrollTop;
     });
