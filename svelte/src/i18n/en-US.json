@@ -7,7 +7,7 @@
   },
   "common": {
     "emptyList": "No data",
-    "loading": "loading...",
+    "loading": "Loading...",
     "rootDir": "Root",
     "btn": {
       "load": "Load",
@@ -61,6 +61,8 @@
     "You want to delete this source": "You want to delete this source? ",
     "Deleted this source": "Deleted this source.",
     "Failed to delete this source": "Failed to delete this source.",
-    "Add new source": "Add new source"
+    "Add new source": "Add new source",
+    "Subscribe": "Subscribe",
+    "Subscribing...": "Subscribing..."
   }
 }

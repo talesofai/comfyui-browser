@@ -252,15 +252,15 @@
         on:click={() => addSource(inputRepoUrl)}
         disabled={waitingForUrl.length > 0 || !inputRepoUrl}
         >{waitingForUrl === inputRepoUrl && inputRepoUrl
-          ? 'Subscribing...'
-          : 'Subscribe'}</button
+          ? tt('Subscribing...')
+          : tt('Subscribe')}</button
       >
     </div>
 
     <div>
       {#if allSources.length === 0}
         <div class="w-full h-full flex items-center justify-center">
-          <span class="font-bold text-4xl"> Loading ... </span>
+          <span class="font-bold text-4xl"> {$t('common.loading')} </span>
         </div>
       {/if}
       <ul class="space-y-1">
@@ -291,7 +291,7 @@
                 on:click={() => addSource(s.url)}
                 disabled={waitingForUrl.length > 0}
               >
-                {waitingForUrl === s.url ? 'Subscribing...' : 'Subscribe'}
+                {waitingForUrl === s.url ? tt('Subscribing...') : tt('Subscribe')}
               </button>
             </div>
           </li>
