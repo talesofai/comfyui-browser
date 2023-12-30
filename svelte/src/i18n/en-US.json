@@ -13,7 +13,8 @@
       "load": "Load",
       "save": "Save",
       "delete": "Delete",
-      "add": "Add"
+      "add": "Add",
+      "refresh": "Refresh"
     }
   },
   "collectionsTab": {
@@ -46,6 +47,20 @@
   "filesList": {
     "searchInput": {
       "placeholder": "Filter by filename"
-    }
+    },
+    "Added to Saves": "Added to Saves",
+    "Failed to add to Saves": "Failed to add to Saves. Please check the ComfyUI server.",
+    "You want to delete this file?": "You want to delete this file?",
+    "Deleted the file": "Deleted the file ",
+    "Failed to delete the file": "Failed to delete the file. Please check the ComfyUI server."
+  },
+  "downloadHistory": {
+    "Auto Refresh": "Auto Refresh"
+  },
+  "sourcesTab": {
+    "You want to delete this source": "You want to delete this source? ",
+    "Deleted this source": "Deleted this source.",
+    "Failed to delete this source": "Failed to delete this source.",
+    "Add new source": "Add new source"
   }
 }

@@ -11,9 +11,10 @@
     "rootDir": "根目录",
     "btn": {
       "load": "加载",
-      "save": "保存",
+      "save": "收藏",
       "delete": "删除",
-      "add": "新增"
+      "add": "新增",
+      "refresh": "刷新"
     }
   },
   "collectionsTab": {
@@ -46,6 +47,20 @@
   "filesList": {
     "searchInput": {
       "placeholder": "根据文件名过滤"
-    }
+    },
+    "Added to Saves": "收藏成功",
+    "Failed to add to Saves": "收藏失败。请在控制台查看详情。",
+    "You want to delete this file?": "确认删除这个文件？",
+    "Deleted the file": "删除成功：",
+    "Failed to delete the file": "删除失败。请在控制台查看详情。"
+  },
+  "downloadHistory": {
+    "Auto Refresh": "自动刷新"
+  },
+  "sourcesTab": {
+    "You want to delete this source": "确认删除这个订阅吗？",
+    "Deleted this source": "删除成功",
+    "Failed to delete this source": "删除失败。请在控制台查看详情。",
+    "Add new source": "订阅新的源"
   }
 }

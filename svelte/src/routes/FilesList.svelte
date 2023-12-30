@@ -1,12 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { onLoadWorkflow, onScroll, fetchFiles } from './utils';
-  import { _, unwrapFunctionStore } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   import type { FOLDER_TYPES } from './utils';
   import MediaShow from './MediaShow.svelte';
   import type Toast from './Toast.svelte';
-
-  const t = unwrapFunctionStore(_);
 
   export let comfyUrl: string;
   export let folderType: FOLDER_TYPES;
@@ -29,6 +27,10 @@
   let searchQuery = '';
   let searchRegex = new RegExp('');
   let scrollTop = 0;
+
+  $: tt = function(key: string) {
+    return $t('filesList.' + key);
+  }
 
   export async function refresh() {
     loaded = true;
@@ -60,8 +62,8 @@
 
     toast.show(
       res.ok,
-      t('Added to Saves'),
-      t('Failed to add to Saves. Please check the ComfyUI server.'),
+      tt('fileList.Added to Saves'),
+      tt('fileList.Failed to add to Saves'),
     );
   }
 
@@ -71,13 +73,7 @@
 
 
   async function onDelete(file: any) {
-    const ret = confirm(
-      t('You want to delete file {filename}?', {
-        values: {
-          filename: file.name,
-        },
-      }),
-    );
+    const ret = confirm(tt('You want to delete this file?') + ' ' + file.name);
     if (!ret) {
       return;
     }
@@ -93,8 +89,8 @@
 
     toast.show(
       res.ok,
-      'Deleted the file ' + file.name,
-      'Failed to delete the file. Please check the ComfyUI server.',
+      tt('Deleted the file') + file.name,
+      tt('Failed to delete the file'),
     );
     files = files.filter((f) => f != file);
   }
@@ -119,7 +115,7 @@
 <div class="max-w-full text-sm breadcrumbs flex flex-row ml-4">
   <ul class="basis-3/4">
     <li>
-      <button on:click={() => onClickPath(-1)}>{$_('common.rootDir')}</button>
+      <button on:click={() => onClickPath(-1)}>{$t('common.rootDir')}</button>
     </li>
     {#each (folderPath || '').split('/') as path, index}
       <li><button on:click={() => onClickPath(index)}>{path}</button></li>
@@ -128,7 +124,7 @@
 
   <input
     type="text"
-    placeholder={$_('filesList.searchInput.placeholder')}
+    placeholder={tt('searchInput.placeholder')}
     bind:value={searchQuery}
     class="input input-bordered w-full h-full rounded-none border-slate-600 text-sm basis-1/4"
   />
@@ -159,13 +155,13 @@
             <button
               class="btn btn-link btn-sm p-0 no-underline text-accent"
               on:click={async () => await onLoadWorkflow(file, comfyApp, toast)}
-              >{$_('common.btn.load')}</button
+              >{$t('common.btn.load')}</button
             >
           {/if}
           <button
             class="btn btn-link btn-sm p-0 no-underline text-accent"
             on:click={async () => await onCollect(file)}
-            >{$_('common.btn.save')}</button
+            >{$t('common.btn.save')}</button
           >
           <button
             class="btn btn-link btn-sm p-0 no-underline text-error float-right"
@@ -174,7 +170,7 @@
             <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M16 2v4h6v2h-2v14H4V8H2V6h6V2h8zm-2 2h-4v2h4V4zm0 4H6v12h12V8h-4zm-5 2h2v8H9v-8zm6 0h-2v8h2v-8z" fill="#f77"/>
             </svg>
-            {$_('common.btn.delete')}
+            {$t('common.btn.delete')}
           </button>
         </div>
       </div>
@@ -186,9 +182,9 @@
   <div class="w-full h-full flex items-center justify-center">
     <span class="font-bold text-4xl">
       {#if loaded}
-        {$_('common.emptyList')}
+        {$t('common.emptyList')}
       {:else}
-        {$_('common.loading')}
+        {$t('common.loading')}
       {/if}
     </span>
   </div>

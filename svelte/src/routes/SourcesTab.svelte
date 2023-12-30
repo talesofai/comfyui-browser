@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { _ } from 'svelte-i18n';
+  import { t } from 'svelte-i18n';
   import Toast from './Toast.svelte';
   import FilesList from './FilesList.svelte';
 
@@ -15,6 +15,10 @@
   let allSources: Array<any> = [];
   let fileList: FilesList;
   let syncingSouce: any;
+
+  $: tt = function(key: string) {
+    return $t('sourcesTab.' + key);
+  }
 
   async function refreshSources() {
     const res = await fetch(comfyUrl + '/browser/sources');
@@ -43,7 +47,7 @@
   }
 
   async function onClickDeleteSource(source: any) {
-    const ret = confirm('You want to delete this source? ' + source.name);
+    const ret = confirm(tt('You want to delete this source') + source.name);
     if (!ret) {
       return;
     }
@@ -58,8 +62,8 @@
     }
     toast.show(
       res.ok,
-      'Deleted this source',
-      'Failed to delete this source. Please check the ComfyUI server.',
+      tt('Deleted this source'),
+      tt('Failed to delete this source'),
     );
   }
 
@@ -150,7 +154,7 @@
               d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
-          {$_('common.btn.add')}
+          {tt('Add new source')}
         </button>
       </li>
 
