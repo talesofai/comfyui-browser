@@ -2,6 +2,7 @@
   import dayjs from 'dayjs';
   import { onMount, onDestroy } from "svelte";
   import { formatFileSize } from './utils';
+  import { t } from 'svelte-i18n';
 
   export let comfyUrl: string;
 
@@ -50,11 +51,11 @@
     class="btn btn-accent btn-outline"
     on:click={refreshHistory}
   >
-    Refresh
+    {$t('common.btn.refresh')}
   </button>
 
   <div class="flex items-center">
-    <span class="label-text">Auto Refresh</span>
+    <span class="label-text">{$t('downloadHistory.Auto Refresh')}</span>
     <input type="checkbox" bind:checked={autoRefresh} class="checkbox checkbox-secondary" />
   </div>
 </div>
