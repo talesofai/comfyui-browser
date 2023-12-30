@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.6.0 - 2023-12-30
+
+- Add i18n support and zh-CN language
+
 ## v1.5.3 - 2023-12-23
 
 - Merge the same name JSON and media file in the same directory
