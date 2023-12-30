@@ -21,10 +21,7 @@
   let searchRegex = new RegExp('');
 
   $: if (folderPath != undefined) {
-    fetchFiles(folderType, comfyUrl, folderPath).then((res) => {
-      files = res;
-      loaded = true;
-    });
+    refresh();
   }
 
   $: try {
@@ -33,9 +30,20 @@
     searchRegex = new RegExp('');
   }
 
+  async function refresh() {
+    loaded = true;
+    files = await fetchFiles(folderType, comfyUrl, folderPath);
+    loaded = true;
+  }
+
   onMount(async () => {
     //@ts-ignore
     comfyApp = window.top.app;
+
+    //@ts-ignore
+    window.top.addEventListener("comfyuiBrowserShow", () => {
+      refresh();
+    });
 
     folderPath = '';
     config = (await fetchConfig()) || {};

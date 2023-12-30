@@ -160,6 +160,7 @@ class BrowserDialog extends ComfyDialog {
 
   show() {
     this.element.style.display = "flex";
+    dispatchEvent(new Event('comfyuiBrowserShow'));
   }
 
   toggle() {
