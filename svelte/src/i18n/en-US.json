@@ -41,7 +41,8 @@
       "deleteSuccess": "Deleted the file: ",
       "deleteFailed": "Failed to delete the file. Please check the ComfyUI server.",
       "updated": "Updated",
-      "updatedFailed": "Failed to update. Please check the ComfyUI server."
+      "updatedFailed": "Failed to update. Please check the ComfyUI server.",
+      "Invalid filename": "Invalid filename"
     }
   },
   "filesList": {

@@ -41,7 +41,8 @@
       "deleteSuccess": "删除成功：",
       "deleteFailed": "删除失败。请在控制台查看详情。",
       "updated": "更新成功",
-      "UpdatedFailed": "更新失败。请在控制台查看详情。"
+      "UpdatedFailed": "更新失败。请在控制台查看详情。",
+      "Invalid filename": "不是个有效文件名"
     }
   },
   "filesList": {

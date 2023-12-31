@@ -30,6 +30,10 @@
     searchRegex = new RegExp('');
   }
 
+  $: tt = function(key: string) {
+    return $t('collectionsTab.' + key);
+  }
+
   async function refresh() {
     loaded = true;
     files = await fetchFiles(folderType, comfyUrl, folderPath);
@@ -62,18 +66,18 @@
   async function onClickSyncCollections(e: Event) {
     const btn = e.target as HTMLButtonElement;
     btn.disabled = true;
-    btn.innerHTML = $t('collectionsTab.btn.syncing');
+    btn.innerHTML = tt('btn.syncing');
     const res = await fetch(comfyUrl + '/browser/collections/sync', {
       method: 'POST',
     });
 
     toast.show(
       res.ok,
-      $t('collectionsTab.toast.synced'),
-      $t('collectionsTab.toast.syncFailed'),
+      tt('toast.synced'),
+      tt('toast.syncFailed'),
     );
     btn.disabled = false;
-    btn.innerHTML = $t('collectionsTab.btn.sync');
+    btn.innerHTML = tt('btn.sync');
 
     folderPath = '';
     files = await fetchFiles(folderType, comfyUrl);
@@ -90,13 +94,13 @@
     fetchConfig();
     toast.show(
       res.ok,
-      $t('collectionsTab.toast.configUpdated'),
-      $t('collectionsTab.toast.configUpdatedFailed'),
+      tt('toast.configUpdated'),
+      tt('toast.configUpdatedFailed'),
     );
   }
 
   async function onDelete(file: any) {
-    const ret = confirm($t('collectionsTab.toast.deleteConfirm') + file.name);
+    const ret = confirm(tt('toast.deleteConfirm') + file.name);
     if (!ret) {
       return;
     }
@@ -113,8 +117,8 @@
     refresh();
     toast.show(
       res.ok,
-      $t('collectionsTab.toast.deleteSuccess') + file.name,
-      $t('collectionsTab.toast.deleteFailed'),
+      tt('toast.deleteSuccess') + file.name,
+      tt('toast.deleteFailed'),
     );
   }
 
@@ -135,8 +139,11 @@
   }
 
   async function updateFilename(e: Event, file: any) {
-    //@ts-ignore
-    const value = e.target.value;
+    const value = (e.target as HTMLInputElement).value;
+    if (! isFilenameValid(value)) {
+      toast.show(false, '', tt('toast.Invalid filename'));
+      return;
+    }
     if (value === file.name) {
       return;
     }
@@ -149,8 +156,8 @@
 
     toast.show(
       ret,
-      $t('collectionsTab.toast.updated'),
-      $t('collectionsTab.toast.updatedFailed'),
+      tt('toast.updated'),
+      tt('toast.updatedFailed'),
     );
   }
 
@@ -169,8 +176,8 @@
 
     toast.show(
       ret,
-      $t('collectionsTab.toast.updated'),
-      $t('collectionsTab.toast.updatedFailed'),
+      tt('toast.updated'),
+      tt('toast.updatedFailed'),
     );
   }
 
@@ -188,6 +195,13 @@
       .split('/')
       .slice(0, index + 1)
       .join('/');
+  }
+
+  function isFilenameValid(filename: string) {
+    // Regular expression to match valid filename patterns
+    var validFilenameRegex = /^[a-zA-Z0-9-_|\u4E00-\u9FFF]+(\.[a-zA-Z0-9]+)?$/;
+
+    return validFilenameRegex.test(filename);
   }
 </script>
 
@@ -215,17 +229,17 @@
   </a>
   <input
     type="text"
-    placeholder={$t('collectionsTab.syncInput.placeholder')}
+    placeholder={tt('syncInput.placeholder')}
     bind:value={configGitRepo}
     class="input input-bordered w-full max-w-lg"
   />
   {#if configGitRepo != config?.git_repo}
     <button class="btn btn-outline btn-accent" on:click={onClickSaveConfig}>
-      {$t('collectionsTab.btn.save')}
+      {tt('btn.save')}
     </button>
   {/if}
   <button class="btn btn-outline btn-accent" on:click={onClickSyncCollections}>
-    {$t('collectionsTab.btn.sync')}
+    {tt('btn.sync')}
   </button>
 </div>
 
@@ -241,7 +255,7 @@
 
   <input
     type="text"
-    placeholder={$t('collectionsTab.searchInput.placeholder')}
+    placeholder={tt('searchInput.placeholder')}
     bind:value={searchQuery}
     class="input input-bordered border-slate-600 w-full h-full rounded-none text-sm basis-1/3"
   />
@@ -287,7 +301,7 @@
       <div>
         <textarea
           name="notes"
-          placeholder={$t('collectionsTab.collection.memoPlaceholder')}
+          placeholder={tt('collection.memoPlaceholder')}
           on:blur={(e) => updateFileNotes(e, file)}
           class="resize-none textarea hidden md:block md:w-72 max-w-72 h-14 sm:h-24"
           value={file.notes}
