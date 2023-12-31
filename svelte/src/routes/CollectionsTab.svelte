@@ -87,6 +87,7 @@
       }),
     });
 
+    fetchConfig();
     toast.show(
       res.ok,
       $t('collectionsTab.toast.configUpdated'),
@@ -109,12 +110,12 @@
       }),
     });
 
+    refresh();
     toast.show(
       res.ok,
       $t('collectionsTab.toast.deleteSuccess') + file.name,
       $t('collectionsTab.toast.deleteFailed'),
     );
-    files = files.filter((f) => f != file);
   }
 
   async function updateFile(file: any, payload: any) {
@@ -127,6 +128,8 @@
         new_data: payload,
       }),
     });
+
+    refresh();
 
     return res.ok;
   }

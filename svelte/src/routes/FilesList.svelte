@@ -93,12 +93,12 @@
       }),
     });
 
+    refresh();
     toast.show(
       res.ok,
       tt('Deleted the file') + file.name,
       tt('Failed to delete the file'),
     );
-    files = files.filter((f) => f != file);
   }
 
   async function onClickDir(dir: any) {
