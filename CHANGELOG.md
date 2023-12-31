@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.6.1 - 2023-12-31
+
+- Fix some bugs about CollectionsTab
+
 ## v1.6.0 - 2023-12-30
 
 - Add i18n support and zh-CN language
