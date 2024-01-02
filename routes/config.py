@@ -39,7 +39,7 @@ async def api_update_browser_config(request):
     return web.Response(status=200)
 
 def set_config(config):
-    with open(config_path, 'w') as f:
+    with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(config, f)
 
 def git_set_remote_url(remote_url, run_path = collections_path):

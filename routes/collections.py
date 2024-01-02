@@ -51,7 +51,7 @@ async def api_create_new_workflow(request):
         collections_path,
         add_uuid_to_filename(filename)
     )
-    with open(new_filepath, 'w') as f:
+    with open(new_filepath, 'w', encoding='utf-8') as f:
         f.write(content)
 
     return web.Response(status=201)

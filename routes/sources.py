@@ -122,7 +122,7 @@ async def api_get_all_sources(_):
                     ret = await resp.text()
                     sources = json.loads(ret)
     except:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding="utf-8") as f:
             sources = json.load(f)
 
     return web.json_response(sources)

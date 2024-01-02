@@ -83,7 +83,7 @@ async def api_update_file(request):
             "notes": notes
         }
         info_file_path = get_info_filename(new_file_path)
-        with open(info_file_path, "w") as outfile:
+        with open(info_file_path, "w", encoding="utf-8") as outfile:
             json.dump(extra, outfile)
 
     return web.Response(status=201)

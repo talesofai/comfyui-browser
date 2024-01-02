@@ -48,7 +48,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         'created_at': int(time.time()),
         'updated_at': int(time.time()),
     }
-    with open(log_file_path, 'w') as log_file:
+    with open(log_file_path, 'w', encoding='utf-8') as log_file:
         json.dump(base_info, log_file)
 
     HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"}
@@ -69,7 +69,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
             filename = MISSING_FILENAME
 
         base_info['filename'] = filename
-        with open(log_file_path, 'w') as log_file:
+        with open(log_file_path, 'w', encoding='utf-8') as log_file:
             json.dump(base_info, log_file)
 
         target_path = path.join(folder_paths.models_dir, save_in, filename)
@@ -77,7 +77,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         if not overwrite and path.exists(target_path):
             result = f'Already exists: {target_path}'
             base_info['result'] = result
-            with open(log_file_path, 'w') as log_file:
+            with open(log_file_path, 'w', encoding='utf-8') as log_file:
                 json.dump(base_info, log_file)
             log(result)
             return
@@ -91,7 +91,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
         log('Download to ' + target_path)
         with (
             open(tmp_target_path, mode="wb") as file,
-            open(log_file_path, 'w') as log_file,
+            open(log_file_path, 'w', encoding='utf-8') as log_file,
             tqdm(total=TOTAL_SIZE, desc=f"download {filename}", unit="B", unit_scale=True) as bar,
         ):
             for data in resp.iter_content(chunk_size=CHUNK_SIZE):
