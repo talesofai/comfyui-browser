@@ -41,6 +41,20 @@
       "url": "https://github.com/shadowcz007/awesome-comfyui-workflow",
       "type": "git",
       "description": "Some workflows includes CUTE YOU, Real-time design, Extended image, AI Dialogue Game..."
+    },
+    {
+      "title": "wyrde-comfyui-workflows",
+      "author": "wyrde",
+      "url": "https://github.com/wyrde/wyrde-comfyui-workflows",
+      "type": "git",
+      "description": "some wyrde workflows for comfyUI"
+    },
+    {
+      "title": "Templates-ComfyUI-",
+      "author": "atlasunified",
+      "url": "https://github.com/atlasunified/Templates-ComfyUI-",
+      "type": "git",
+      "description": "Templates to view the variety of a prompt based on the samplers available in ComfyUI. Variety of sizes and singlular seed and random seed templates."
     }
   ]
 }
