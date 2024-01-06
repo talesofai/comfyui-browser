@@ -19,10 +19,22 @@ https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be
 
 ## Preview
 
-![b359de5f6556649512e7ed8f812ba67d444be9914173e2467018450ce1a3ce1d](https://github.com/talesofai/comfyui-browser/assets/828837/4b0b0f4c-28a8-49ef-98c2-d293df5b7747)
-![c91157bf819ef5b9a129976d9e45588106dd6c7ea39ecb0a22519acd72afc7ce](https://github.com/talesofai/comfyui-browser/assets/828837/ee3df970-017c-4825-ab5d-9465cdb77ed6)
-![53053f43847da9597efebab207140eed703b8c7bbe8eb1e63ce5630b5d8c9a3f](https://github.com/talesofai/comfyui-browser/assets/828837/4acb522a-f21c-47ad-9a23-56b08c6e73a5)
-![c7b93b2ec0891eb7cac1385505e855fb28934ec958f7b21cac53c9bf18e6136c](https://github.com/talesofai/comfyui-browser/assets/828837/ef0d5cd2-9238-4e80-9f65-0f7db05ffbf3)
+
+#### Outputs
+<img width="1212" alt="Outputs" src="https://github.com/talesofai/comfyui-browser/assets/1184998/49936e2f-9682-4df8-af8e-6e1653e78ca1">
+
+#### Saves
+<img width="1207" alt="Saves" src="https://github.com/talesofai/comfyui-browser/assets/1184998/de3327e3-643e-4ae4-9e31-86df6a0353e0">
+
+#### Sources
+<img width="1504" alt="Sources" src="https://github.com/talesofai/comfyui-browser/assets/1184998/07671822-c4d1-4327-bd87-6b1c7e85a354">
+<img width="1212" alt="Recommended Sources" src="https://github.com/talesofai/comfyui-browser/assets/1184998/f37852b9-1030-4044-abf3-12bd8158c446">
+
+#### Models
+<img width="1510" alt="Models" src="https://github.com/talesofai/comfyui-browser/assets/1184998/4f36378e-05e0-49dc-a5b2-07d24a8b96bc">
+
+#### Side Bar View
+<img width="1506" alt="SideBar" src="https://github.com/talesofai/comfyui-browser/assets/1184998/746a031e-88b0-4ccf-8e2d-e448c001f319">
 
 ## Installation
 
