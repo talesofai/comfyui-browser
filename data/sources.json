@@ -33,7 +33,7 @@
         "author": "BoosterCore",
         "url": "https://github.com/BoosterCore/ChaosFlow",
         "type": "git",
-        "description": "ChaosFlow是一个用于展示我自己制作的一些ComfyUI工作流的代码仓库，目的是为了分享我对ComfyUI的探索和实践，同时也希望能够得到有兴趣的朋友们的反馈和建议。ChaosFlow欢迎任何水平的视觉设计爱好者浏览和评论，您也可以在GitHub上给我发消息，我很乐意与您交流和学习。"
+        "description": "ChaosFlow is a code repository used to showcase some of my own ComfyUI workflow creations. The purpose is to share my exploration and practice with ComfyUI, and at the same time, I hope to receive feedback and suggestions from interested friends. ChaosFlow welcomes visual design enthusiasts of any level to browse and comment. You can also message me on GitHub, and I am very happy to communicate and learn with you."
     },
     {
       "title": "awesome-comfyui-workflow",
