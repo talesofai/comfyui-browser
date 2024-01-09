@@ -5,6 +5,9 @@ import time
 from typing import TypedDict, List
 
 import folder_paths
+from comfy.cli_args import args
+
+SERVER_BASE_URL = f'http://{args.listen}:{args.port}'
 
 browser_path = path.dirname(__file__)
 collections_path = path.join(browser_path, 'collections')
