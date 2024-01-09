@@ -4,7 +4,7 @@ import { api } from "../../../scripts/api.js";
 const xyzNodeType = 'XyzPlot|Browser';
 
 app.registerExtension({
-  name: "Browser.XyzPlot",
+  name: "Browser.Nodes.XyzPlot",
   async beforeRegisterNodeDef(nodeType, nodeData, app) {
     if (nodeData.name == xyzNodeType) {
       const onExecuted = nodeType.prototype.onExecuted;
