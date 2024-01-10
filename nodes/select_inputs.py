@@ -10,6 +10,7 @@ class SelectInputs:
                 "input_2": [["none"], {}],
                 "input_3": [["none"], {}],
                 "input_4": [["none"], {}],
+                "preview": ["STRING", {"multiline": True}],
             }
         }
 
