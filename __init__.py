@@ -5,6 +5,7 @@ import server
 
 from .utils import collections_path, browser_path, sources_path, download_logs_path
 from .routes import sources, collections, config, files, downloads
+from .nodes import load_image_by_url
 
 browser_app = web.Application()
 browser_app.add_routes([
@@ -39,4 +40,9 @@ for dir in [collections_path, sources_path, download_logs_path]:
         mkdir(dir)
 
 WEB_DIRECTORY = "web"
-NODE_CLASS_MAPPINGS = {}
+NODE_CLASS_MAPPINGS = {
+    "LoadImageByUrl //Browser": load_image_by_url.LoadImageByUrl,
+}
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "LoadImageByUrl //Browser": "Load Image By URL",
+}
