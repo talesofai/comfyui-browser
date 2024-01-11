@@ -15,7 +15,7 @@ class SelectInputs:
         }
 
     @classmethod
-    def VALIDATE_INPUTS(s, input_1, input_2, input_3, input_4):
+    def VALIDATE_INPUTS(s, input_1, input_2, input_3, input_4, preview):
         return True
 
     # {
@@ -33,7 +33,7 @@ class SelectInputs:
     CATEGORY = "Browser"
 
 
-    def run(self, input_1, input_2, input_3, input_4):
+    def run(self, input_1, input_2, input_3, input_4, preview):
         ret = ()
         for input in [input_1, input_2, input_3, input_3]:
             node_id, node_type, widget_name = input.split("::")
