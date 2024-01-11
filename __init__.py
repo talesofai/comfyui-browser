@@ -5,7 +5,7 @@ import server
 
 from .utils import collections_path, browser_path, sources_path, download_logs_path
 from .routes import sources, collections, config, files, downloads
-from .nodes import xyz_plot, select_inputs
+from .nodes import select_inputs
 
 browser_app = web.Application()
 browser_app.add_routes([
@@ -41,10 +41,8 @@ for dir in [collections_path, sources_path, download_logs_path]:
 
 WEB_DIRECTORY = "web"
 NODE_CLASS_MAPPINGS = {
-    "XyzPlot|Browser": xyz_plot.XyzPlot,
     "SelectInputs|Browser": select_inputs.SelectInputs,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "XyzPlot|Browser": "XYZ Plot",
     "SelectInputs|Browser": "Select Node Inputs",
 }
