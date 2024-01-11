@@ -1,6 +1,6 @@
 import { app } from "../../../scripts/app.js";
 
-const selectInputsNodeType = 'SelectInputs|Browser';
+const selectInputsNodeType = 'SelectInputs //Browser';
 const SPLITTER = '::';
 
 function getGraphInputs(graph) {

@@ -41,8 +41,8 @@ for dir in [collections_path, sources_path, download_logs_path]:
 
 WEB_DIRECTORY = "web"
 NODE_CLASS_MAPPINGS = {
-    "SelectInputs|Browser": select_inputs.SelectInputs,
+    "SelectInputs //Browser": select_inputs.SelectInputs,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SelectInputs|Browser": "Select Node Inputs",
+    "SelectInputs //Browser": "Select Node Inputs",
 }
