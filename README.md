@@ -38,9 +38,9 @@ https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be
 
 ## Installation
 
-### Comfy Manager
+### ComfyUI Manager
 
-Search for `comfyui-browser` and install it.
+Install [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager), search `comfyui-browser` in Install Custom Node and install it.
 
 ### Manually
 
@@ -58,26 +58,30 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 
 ## Development
 
+- Prerequisite
+  - Install [Node](https://nodejs.org/en/download/current)
+
+
 - Framework
 
   - Frontend: [Svelte](https://kit.svelte.dev/)
-  - Backend: [aiohttp](https://docs.aiohttp.org/)(the same with ComfyUI)
+  - Backend: [aiohttp](https://docs.aiohttp.org/)(the same as ComfyUI)
 
 - Project Structure
 
 ```
 ├── __init__.py  (Backend Server)
 ├── web          (Frontend code loaded by ComfyUI)
-    ├── build    (Built by Svelte)
+    ├── build    (Built in Svelte)
     └── index.js (Frontend that interact with ComfyUI)
-├── svelte       (Frontend in the Modal as a iframe, written by Svelte)
+├── svelte       (Frontend in the Modal as a iframe, written in Svelte)
 ```
 
 - Build and Run
 
   - Copy or link `comfyui-browser` to `ComfyUI/custom_nodes/`
   - Start backend by `cd ComfyUI && python main.py --enable-cors-header`
-  - Start frontend by `cd ComfyUI/comfyui-browser/svelte && npm i && npm run dev`
+  - Start frontend by `cd ComfyUI/custom_nodes/comfyui-browser/svelte && npm i && npm run dev`
   - Open and debug by `http://localhost:5173/?comfyUrl=http://localhost:8188`
     - It will use `localhost:8188` as ComfyUI server
     - `localhost:5173` is a Vite dev server

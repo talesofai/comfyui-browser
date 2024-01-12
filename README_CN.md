@@ -29,9 +29,8 @@ https://www.bilibili.com/video/BV1qc411m7Gp/
 
 ## 安装方式
 
-### Comfy Manager
-
-搜索 `comfyui-browser` 来安装。
+### ComfyUI Manager
+安装[ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager)， 在 Install Custom Node 中搜索 `comfyui-browser` 来安装。
 
 ### 手动
 
@@ -42,6 +41,9 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 ```
 
 ## 开发
+
+- 前置需求
+  - 安装[Node](https://nodejs.org/en/download/current)
 
 - 使用的框架
 
@@ -62,7 +64,7 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 
   - 复制或者链接 `comfyui-browser` 到 `ComfyUI/custom_nodes/`
   - 启动服务端: `cd ComfyUI && python main.py --enable-cors-header`
-  - 启动前端: `cd ComfyUI/comfyui-browser/svelte && npm i && npm run dev`
+  - 启动前端: `cd ComfyUI/custom_nodes/comfyui-browser/svelte && npm i && npm run dev`
   - 调试地址 `http://localhost:5173/?comfyUrl=http://localhost:8188`
     - `localhost:8188` 是 ComfyUI server 地址
     - `localhost:5173` 是 Vite dev server
