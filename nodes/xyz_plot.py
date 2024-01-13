@@ -100,7 +100,8 @@ class XyzPlot:
                 data = json.dumps({
                     'prompt': new_prompt
                 }).encode('utf-8')
-                requests.post(SERVER_BASE_URL + '/prompt', data=data)
+
+                r = requests.post(SERVER_BASE_URL + '/prompt', data=data)
 
                 row[vy] = ""
                 for i in range(batch_size):
@@ -112,12 +113,20 @@ class XyzPlot:
 
         # To generate grid HTML
         def gird_title(input):
-            return f"#{input['node_id']} {input['node_type']} - {input['widget_name']}"
+            return f"#{input['node_id']} {input['node_title']} - {input['widget_name']}"
 
         df = pd.DataFrame(ret)
         html = df.to_html(escape=False)
         html = f"<h4>X: {gird_title(input_x)}</h4><h4>Y: {gird_title(input_y)}</h4>" + html
         target_path = f"{self.output_folder_name}/result.html"
+
+        # Check if the directory exists
+        if not os.path.exists(os.path.dirname(target_path)):
+            try:
+                os.makedirs(os.path.dirname(target_path))
+            except Exception as e:
+                raise Exception(f"Failed to create directory: {e}")
+
         with open(target_path, 'w') as f:
             f.write(html)
 

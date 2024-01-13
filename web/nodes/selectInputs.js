@@ -6,8 +6,9 @@ const SPLITTER = '::';
 function getGraphInputs(graph) {
   let inputs = [];
   graph._nodes?.forEach(n => {
+    console.log(n);
     n.widgets?.forEach(w => {
-      inputs.push([`#${n.id}`, n.type, w.name].join(SPLITTER));
+      inputs.push([`#${n.id}`, n.title, w.name].join(SPLITTER));
     });
   });
 
@@ -21,7 +22,7 @@ function refreshPreview(node) {
       const v = w.value.split(SPLITTER);
       values.push({
         node_id: v[0].substring(1),
-        node_type: v[1],
+        node_title: v[1],
         widget_name: v[2],
       });
     }

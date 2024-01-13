@@ -20,7 +20,7 @@ class SelectInputs:
 
     # {
         # "node_id": 4,
-        # "node_type": "CheckpointLoaderSimple",
+        # "node_title": "CheckpointLoaderSimple",
         # "widget_name": "ckpt_name",
     # }
     RETURN_TYPES = ("INPUT", "INPUT", "INPUT", "INPUT",)
@@ -35,11 +35,11 @@ class SelectInputs:
 
     def run(self, input_1, input_2, input_3, input_4, preview):
         ret = ()
-        for input in [input_1, input_2, input_3, input_3]:
-            node_id, node_type, widget_name = input.split("::")
+        for input in [input_1, input_2, input_3, input_4]:
+            node_id, node_title, widget_name = input.split("::")
             ret = ret + ({
                 "node_id": node_id[1:],
-                "node_type": node_type,
+                "node_title": node_title,
                 "widget_name": widget_name,
             },)
 
