@@ -42,7 +42,6 @@
   });
 
   function onClickSource(source: any) {
-    console.log(folderPath);
     folderPath = source.name;
   }
 

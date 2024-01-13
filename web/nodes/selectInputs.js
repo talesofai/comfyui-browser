@@ -6,7 +6,6 @@ const SPLITTER = '::';
 function getGraphInputs(graph) {
   let inputs = [];
   graph._nodes?.forEach(n => {
-    console.log(n);
     n.widgets?.forEach(w => {
       inputs.push([`#${n.id}`, n.title, w.name].join(SPLITTER));
     });
