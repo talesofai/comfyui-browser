@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { onLoadWorkflow, onScroll, fetchFiles } from './utils';
+  import { onLoadWorkflow, onScroll, fetchFiles, WHITE_EXTS } from './utils';
   import { t } from 'svelte-i18n';
   import type { FOLDER_TYPES } from './utils';
   import MediaShow from './MediaShow.svelte';
@@ -140,7 +140,7 @@
   {#each files
     .filter((f) => searchRegex.test(f.name.toLowerCase()))
     .slice(0, showCursor) as file}
-    {#if ['dir', 'image', 'video', 'json'].includes(file.fileType)}
+    {#if WHITE_EXTS.includes(file.fileType)}
       <div class="p-2 bg-info-content">
         <div class="flex items-center">
           <MediaShow {file} styleClass="w-full h-16 sm:h-36" {onClickDir} />

@@ -28,6 +28,13 @@
           </span>
         </div>
       {/if}
+      {#if file.fileType === 'html'}
+        <div class="w-full h-full flex items-center justify-center">
+          <span class="font-bold text-xl">
+            HTML
+          </span>
+        </div>
+      {/if}
       {#if file.fileType === 'image'}
         <img
           class="h-full w-full object-contain"

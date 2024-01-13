@@ -6,8 +6,17 @@ export type FOLDER_TYPES = 'outputs' | 'collections' | 'sources';
 export const IMAGE_EXTS = ['png', 'webp', 'jpeg', 'jpg', 'gif'];
 export const VIDEO_EXTS = ['mp4', 'webm', 'mov', 'avi', 'mkv'];
 export const JSON_EXTS = ['json'];
+export const WHITE_EXTS = ['html', 'image', 'video', 'json', 'dir'];
 
 const localStorageKey = 'comfyui-browser';
+
+function getFileUrl(comfyUrl: string, folderType: string, file: any) {
+  if (file.folder_path) {
+    return `${comfyUrl}/browser/s/${folderType}/${file.folder_path}/${file.name}`;
+  } else {
+    return `${comfyUrl}/browser/s/${folderType}/${file.name}`;
+  }
+}
 
 function findFile(filename: string, exts: Array<string>, files: Array<any>) {
   let fn: any = filename.split('.');
@@ -29,10 +38,12 @@ function processFile(
   files: Array<any>,
 ) {
   const extname = file.name.split('.').pop().toLowerCase();
-  if (JSON_EXTS.includes(extname)) {
-    file['fileType'] = 'json';
-    if (findFile(file.name, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
-      return;
+  if (WHITE_EXTS.includes(extname)) {
+    file['fileType'] = extname;
+    if (extname === 'json') {
+      if (findFile(file.name, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
+        return;
+      }
     }
   }
   if (IMAGE_EXTS.includes(extname)) {
@@ -45,13 +56,13 @@ function processFile(
     return;
   }
 
-  file['url'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${file.name}&folder_path=${file.folder_path}`;
+  file['url'] = getFileUrl(comfyUrl, folderType, file);
   if (['image', 'video'].includes(file['fileType'])) {
-    file['previewUrl'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${file.name}&folder_path=${file.folder_path}`;
+    file['previewUrl'] = getFileUrl(comfyUrl, folderType, file);
 
     let jsonFile = findFile(file.name, JSON_EXTS, files);
     if (jsonFile) {
-      file['url'] = `${comfyUrl}/browser/files/view?folder_type=${folderType}&filename=${jsonFile.name}&folder_path=${jsonFile.folder_path}`;
+      file['url'] = getFileUrl(comfyUrl, folderType, jsonFile);
     }
   }
 

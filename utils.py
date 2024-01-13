@@ -17,6 +17,7 @@ download_logs_path = path.join(browser_path, 'download_logs')
 
 image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
+white_extensions = ['.json', '.html'] + image_extensions + video_extensions
 
 info_file_suffix = '.info'
 
@@ -88,7 +89,7 @@ def get_target_folder_files(folder_path: str, folder_type: str = 'outputs'):
         if name == '' or name[0] == '.':
             continue
         if item.is_file():
-            if not (ext in (image_extensions + video_extensions + ['.json'])):
+            if not (ext in white_extensions):
                 continue
 
         created_at = item.stat().st_ctime
