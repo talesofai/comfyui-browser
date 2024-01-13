@@ -7,7 +7,6 @@ import torch
 
 
 import folder_paths
-from ..utils import log
 
 class LoadImageByUrl:
     CATEGORY = "Browser"
