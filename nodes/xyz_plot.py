@@ -23,7 +23,8 @@ class XyzPlot:
     # xyz_data = {
         # "source_unique_id": "",
         # "output_folder_name": "",
-        # "filename": "",
+        # "x_index": 0,
+        # "y_index": 0,
     # }
     @classmethod
     def INPUT_TYPES(s):
@@ -94,9 +95,7 @@ class XyzPlot:
                     "source_unique_id": unique_id,
                     "output_folder_name": output_folder_name,
                     "x_index": ix,
-                    "x_node": input_x,
                     "y_index": iy,
-                    "y_node": input_y,
                 }
                 data = json.dumps({
                     'prompt': new_prompt
