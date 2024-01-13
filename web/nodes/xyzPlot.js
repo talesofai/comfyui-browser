@@ -18,7 +18,7 @@ app.registerExtension({
       }
 
       let button = this.widgets.find(w => w.type === 'button');
-      const callback = () => { window.open(resultPath, "_blank"); };
+      const callback = () => { window.open(window.location.origin + resultPath, "_blank"); };
       if (!button) {
         this.addWidget("button", 'Open the result', '', callback);
       } else {

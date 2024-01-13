@@ -61,7 +61,7 @@ class XyzPlot:
 
     @staticmethod
     def get_preview_url(folder_name, filename):
-        return f"{SERVER_BASE_URL}/browser/files/view?folder_type=outputs&filename={filename}&folder_path={folder_name}"
+        return f"/browser/files/view?folder_type=outputs&filename={filename}&folder_path={folder_name}"
 
     def save_images(self, images):
         if not os.path.exists(self.output_folder_name):
@@ -120,7 +120,7 @@ class XyzPlot:
             except Exception as e:
                 raise Exception(f"Failed to create directory: {e}")
 
-        browser_base_url = f"{SERVER_BASE_URL}/browser/s/outputs/{output_folder_name}"
+        browser_base_url = f"/browser/s/outputs/{output_folder_name}"
 
         workflow_html = ""
         if extra_pnginfo:
