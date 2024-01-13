@@ -36,10 +36,12 @@ class XyzPlot:
                 "value_x": ["STRING", {"multiline": True, "placeholder": 'X values split by semicolon such as "1girl; 1boy"'}],
                 "value_y": ["STRING", {"multiline": True, "placeholder": 'Y values split by semicolon such as "1girl; 1boy"'}],
                 "output_folder_name": ["STRING", {"default": "xyz_plot"}],
+                "result_filename": ["STRING", {"default": "result"}],
             },
             "hidden": {
                 "prompt": "PROMPT",
                 "unique_id": "UNIQUE_ID",
+                "extra_pnginfo": "EXTRA_PNGINFO",
                 # "xyz_data": "XYZ",
             },
         }
@@ -73,7 +75,7 @@ class XyzPlot:
             target_path = os.path.join(self.output_folder_name, filename)
             img.save(target_path, 'JPEG', quality=90)
 
-    def run(self, images, input_x, input_y, value_x, value_y, output_folder_name, prompt, unique_id):
+    def run(self, images, input_x, input_y, value_x, value_y, output_folder_name, result_filename, prompt, unique_id, extra_pnginfo=None):
         self.output_folder_name = os.path.join(folder_paths.get_output_directory(), output_folder_name)
         if 'xyz_data' in prompt[unique_id]['inputs']:
             self.x_index = prompt[unique_id]['inputs']['xyz_data']['x_index']
@@ -111,23 +113,38 @@ class XyzPlot:
 
             ret[vx] = row
 
+        # Check if the directory exists
+        if not os.path.exists(self.output_folder_name):
+            try:
+                os.makedirs(self.output_folder_name)
+            except Exception as e:
+                raise Exception(f"Failed to create directory: {e}")
+
+        browser_base_url = f"{SERVER_BASE_URL}/browser/s/outputs/{output_folder_name}"
+
+        workflow_html = ""
+        if extra_pnginfo:
+            workflow_filename = f"{result_filename}_workflow.json"
+            with open(f"{self.output_folder_name}/{workflow_filename}", "w") as f:
+                json.dump(extra_pnginfo, f)
+            workflow_html = f'<p><a target="_blank" href="{browser_base_url}/{workflow_filename}">Open the workflow</a></p>'
+
+
         # To generate grid HTML
         def gird_title(input):
             return f"#{input['node_id']} {input['node_title']} - {input['widget_name']}"
 
         df = pd.DataFrame(ret)
-        html = df.to_html(escape=False)
-        html = f"<h4>X: {gird_title(input_x)}</h4><h4>Y: {gird_title(input_y)}</h4>" + html
-        target_path = f"{self.output_folder_name}/result.html"
-
-        # Check if the directory exists
-        if not os.path.exists(os.path.dirname(target_path)):
-            try:
-                os.makedirs(os.path.dirname(target_path))
-            except Exception as e:
-                raise Exception(f"Failed to create directory: {e}")
-
-        with open(target_path, 'w') as f:
+        html = workflow_html
+        html += f"<p>X: {gird_title(input_x)}</p><p>Y: {gird_title(input_y)}</p>"
+        html += df.to_html(escape=False)
+        target_path = f"{self.output_folder_name}/{result_filename}.html"
+        with open(target_path, "w") as f:
             f.write(html)
 
-        return ()
+        return {
+            "ui": {
+                "result_path": [f"{browser_base_url}/{result_filename}.html"],
+            },
+            "result": (),
+        }
