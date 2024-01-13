@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.7.0 - 2023-01-14
+
+- Add xyz_plot and select_inputs nodes
+
 ## v1.6.1 - 2023-12-31
 
 - Fix some bugs about CollectionsTab
