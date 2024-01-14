@@ -89,8 +89,10 @@ class XyzPlot:
         new_prompt =  copy.deepcopy(prompt)
         ret = {}
         for ix, vx in enumerate(values_x):
+            vx = vx.strip()
             row = {}
             for iy, vy in enumerate(values_y):
+                vy = vy.strip()
                 new_prompt[input_x["node_id"]]["inputs"][input_x["widget_name"]] = vx
                 new_prompt[input_y["node_id"]]["inputs"][input_y["widget_name"]] = vy
                 new_prompt[unique_id]['inputs']['xyz_data'] = {
@@ -103,6 +105,7 @@ class XyzPlot:
                     'prompt': new_prompt
                 }).encode('utf-8')
 
+                # for some special network environments like AutoDL
                 proxies = {"http": "", "https": ""}
                 r = requests.post(SERVER_BASE_URL + '/prompt', data=data, proxies=proxies)
 
