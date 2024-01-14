@@ -103,7 +103,8 @@ class XyzPlot:
                     'prompt': new_prompt
                 }).encode('utf-8')
 
-                r = requests.post(SERVER_BASE_URL + '/prompt', data=data)
+                proxies = {"http": "", "https": ""}
+                r = requests.post(SERVER_BASE_URL + '/prompt', data=data, proxies=proxies)
 
                 row[vy] = ""
                 for i in range(batch_size):
