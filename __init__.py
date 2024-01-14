@@ -1,10 +1,9 @@
-from os import path, mkdir
+import os
 from aiohttp import web
 
 import server
-import folder_paths
 
-from .utils import collections_path, browser_path, sources_path, download_logs_path
+from .utils import collections_path, browser_path, sources_path, download_logs_path, outputs_path
 from .routes import sources, collections, config, files, downloads
 from .nodes import select_inputs, load_image_by_url, xyz_plot
 
@@ -32,17 +31,13 @@ browser_app.add_routes([
     web.get("/downloads", downloads.api_list_downloads),
     web.get("/downloads/{uuid}", downloads.api_show_download),
 
-    web.static("/web", path.join(browser_path, 'web/build')),
+    web.static("/web", os.path.join(browser_path, 'web/build')),
 
-    web.static("/s/outputs", folder_paths.get_output_directory()),
+    web.static("/s/outputs", outputs_path),
     web.static("/s/collections", collections_path),
     web.static("/s/sources", sources_path),
 ])
 server.PromptServer.instance.app.add_subapp("/browser/", browser_app)
-
-for dir in [collections_path, sources_path, download_logs_path]:
-    if not path.exists(dir):
-        mkdir(dir)
 
 WEB_DIRECTORY = "web"
 NODE_CLASS_MAPPINGS = {

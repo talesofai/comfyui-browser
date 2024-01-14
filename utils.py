@@ -1,5 +1,5 @@
 import json
-from os import path, scandir
+from os import path, scandir, mkdir
 import subprocess
 import time
 from typing import TypedDict, List
@@ -14,6 +14,14 @@ collections_path = path.join(browser_path, 'collections')
 config_path = path.join(browser_path, 'config.json')
 sources_path = path.join(browser_path, 'sources')
 download_logs_path = path.join(browser_path, 'download_logs')
+outputs_path = folder_paths.get_output_directory()
+if args.output_directory:
+    outputs_path = path.abspath(args.output_directory)
+
+for dir in [collections_path, sources_path, download_logs_path, outputs_path]:
+    if not path.exists(dir):
+        mkdir(dir)
+
 
 image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
@@ -64,7 +72,7 @@ def get_parent_path(folder_type: str):
         return sources_path
 
     # outputs
-    return folder_paths.output_directory
+    return outputs_path
 
 # folder_type = 'outputs', 'collections', 'sources'
 def get_target_folder_files(folder_path: str, folder_type: str = 'outputs'):
