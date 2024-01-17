@@ -16,6 +16,25 @@ https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be
 - Sync your 'Saves' anywhere by Git.
 - Subscribe workflow sources by Git and load them more easily.
 - Search your workflow by keywords.
+- Some useful custom nodes like xyz_plot, inputs_select.
+
+## Custom Nodes
+
+#### Select Inputs
+
+- Select any inputs of the current graph.
+
+<img width="256" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/8e505f62-f709-426a-8a0a-fca291784b08">
+
+
+#### XYZ Plot
+
+- Simple XYZ Plot by selecting inputs and filling in the values.
+
+<img width="256" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/23ce6a4d-3311-4058-9b46-ddb50d07e22a">
+
+<img width="256" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/347cad17-17c0-46f1-8df3-4b188b16a354">
+
 
 ## Preview
 
