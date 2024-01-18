@@ -43,6 +43,13 @@
       "description": "Some workflows includes CUTE YOU, Real-time design, Extended image, AI Dialogue Game..."
     },
     {
+      "title": "IF-Animation-Workflows",
+      "author": "if-ai",
+      "url": "https://github.com/if-ai/IF-Animation-Workflows",
+      "type": "git",
+      "description": "This are a series of ComfyUI workflows that work together to create and repurpose animation"
+    },
+    {
       "title": "wyrde-comfyui-workflows",
       "author": "wyrde",
       "url": "https://github.com/wyrde/wyrde-comfyui-workflows",
