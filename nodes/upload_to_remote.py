@@ -80,8 +80,12 @@ class UploadToRemote:
                 data['track_id'] = track_id
             if unique_id:
                 data['unique_id'] = unique_id
+
+            headers = {
+                "Content-Type": "application/json",
+            }
             data = json.dumps(data).encode('utf-8')
-            res = requests.post(remote_url, data=data)
+            res = requests.post(remote_url, data=data, headers=headers)
             # TODO: check the response
 
 
