@@ -23,13 +23,14 @@ class UploadToRemote:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "images": ["IMAGE", {}],
                 "remote_url": ["STRING", {}],
                 "extension": (['jpeg', 'webp', 'png', 'jpg', 'gif'], ),
                 "quality": ("INT", {"default": 85, "min": 1, "max": 100, "step": 1}),
                 "embed_workflow": (["false", "true"],),
             },
             "optional": {
+                "images": ["IMAGE", {}],
+                "extra": ["STRING", {"forceInput": True}],
                 "track_id": ["STRING", {"placeholder": "Optional. Post it as the track_id field."}],
             },
             "hidden": {
@@ -39,7 +40,7 @@ class UploadToRemote:
         }
 
 
-    def run(self, images, remote_url, extension='jpeg', quality=85, embed_workflow='false', track_id=None, unique_id=None, prompt=None):
+    def run(self, remote_url, extension='jpeg', quality=85, images=[], extra='', embed_workflow='false', track_id=None, unique_id=None, prompt=None):
         def process_images(images, extension='jpeg', quality=85, embed_workflow='false', prompt=None):
             results = list()
             for image in images:
@@ -72,9 +73,10 @@ class UploadToRemote:
 
             return results
 
-        async def callback(images, remote_url, extension='jpeg', quality=85, embed_workflow='false', track_id=None, unique_id=None, prompt=None):
+        async def callback(images, extra, remote_url, extension='jpeg', quality=85, embed_workflow='false', track_id=None, unique_id=None, prompt=None):
             data = {
-                "images": process_images(images, extension, quality, embed_workflow, prompt)
+                "images": process_images(images, extension, quality, embed_workflow, prompt),
+                "extra": extra,
             }
             if track_id:
                 data['track_id'] = track_id
@@ -91,7 +93,7 @@ class UploadToRemote:
 
         threading.Thread(
             target=asyncio.run,
-            args=(callback(images, remote_url, extension, quality, embed_workflow, track_id, unique_id, prompt),),
+            args=(callback(images, extra, remote_url, extension, quality, embed_workflow, track_id, unique_id, prompt),),
         ).start()
 
         return ()
