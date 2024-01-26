@@ -8,6 +8,9 @@ import folder_paths
 from comfy.cli_args import args
 
 SERVER_BASE_URL = f'http://{args.listen}:{args.port}'
+# To support IPv6
+if ':' in args.listen:
+    SERVER_BASE_URL = f'http://[{args.listen}]:{args.port}'
 
 browser_path = path.dirname(__file__)
 collections_path = path.join(browser_path, 'collections')
