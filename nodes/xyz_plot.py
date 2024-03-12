@@ -129,7 +129,7 @@ class XyzPlot:
         workflow_html = ""
         if extra_pnginfo:
             workflow_filename = f"{result_filename}_workflow.json"
-            with open(f"{self.output_folder_name}/{workflow_filename}", "w") as f:
+            with open(f"{self.output_folder_name}/{workflow_filename}", "w", encoding="utf-8") as f:
                 json.dump(extra_pnginfo, f)
             workflow_html = f'<p><a target="_blank" href="{browser_base_url}/{workflow_filename}">Open the workflow</a></p>'
 
@@ -143,7 +143,7 @@ class XyzPlot:
         html += f"<p>X: {gird_title(input_x)}</p><p>Y: {gird_title(input_y)}</p>"
         html += df.to_html(escape=False)
         target_path = f"{self.output_folder_name}/{result_filename}.html"
-        with open(target_path, "w") as f:
+        with open(target_path, "w", encoding="utf-8") as f:
             f.write(html)
 
         return {
