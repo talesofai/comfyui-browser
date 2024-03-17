@@ -8,6 +8,13 @@
       "description": "Examples of ComfyUI workflows"
     },
     {
+      "title": "ComfyUI-Workflows-ZHO",
+      "author": "ZHO-ZHO-ZHO",
+      "url": "https://github.com/ZHO-ZHO-ZHO/ComfyUI-Workflows-ZHO",
+      "type": "git",
+      "description": "我的 ComfyUI 工作流合集 | My ComfyUI workflows collection"
+    },
+    {
       "title": "comfyui-workflow",
       "author": "hylarucoder",
       "url": "https://github.com/hylarucoder/comfyui-workflow",
