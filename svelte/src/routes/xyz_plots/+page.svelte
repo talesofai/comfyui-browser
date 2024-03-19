@@ -1,8 +1,8 @@
 <script>
   import { onMount } from 'svelte';
-  import AnalyzeLayout from '$lib/analyze/layout.svelte';
-  import AnalyzeTable from '$lib/analyze/table.svelte';
-  import { imageWidth } from '$lib/analyze/store';
+  import MultiDimTable from '$lib/multi-dim-table/layout.svelte';
+  import AnalyzeTable from '$lib/multi-dim-table/table.svelte';
+  import { imageWidth } from '$lib/multi-dim-table/store';
   import InfoIcon from '$lib/icons/info.svelte';
 
   /** @type {import('./$types').PageData} */
@@ -15,7 +15,7 @@
 
   let mounted = false;
 
-  /** @type {import("$lib/analyze/models").Payload}*/
+  /** @type {import("$lib/multi-dim-table/models").Payload}*/
   let payload;
   let loading = false;
 
@@ -53,7 +53,7 @@
   {:else if !payload}
     null
   {:else}
-    <AnalyzeLayout
+    <MultiDimTable
       extraItems={[
         {
           label: 'Open Workflow',
@@ -89,7 +89,7 @@
       <div class="w-full h-full" bind:this={tableContainerRef}>
         <AnalyzeTable {payload} height={tableContainerRef?.clientHeight ?? 0} />
       </div>
-    </AnalyzeLayout>
+    </MultiDimTable>
   {/if}
 {:else}
   Invalid Path
