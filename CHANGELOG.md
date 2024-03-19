@@ -1,6 +1,10 @@
 # ChangeLog
 
-## v1.7.0 - 2023-01-14
+## v1.8.0 - 2024-03-19
+
+- Update xyz_plot to support Z axis
+
+## v1.7.0 - 2024-01-14
 
 - Add xyz_plot and select_inputs nodes
 
