@@ -3,6 +3,8 @@
   import AnalyzeLayout from '$lib/analyze/layout.svelte';
   import AnalyzeTable from '$lib/analyze/table.svelte';
   import { imageWidth } from '$lib/analyze/store';
+  import InfoIcon from '$lib/icons/info.svelte';
+
   /** @type {import('./$types').PageData} */
   export let data;
 
@@ -60,11 +62,19 @@
           },
         },
       ]}
-      sidebarItems={payload.annotations.map((d) => ({
-        label: `${d.axis}: ${d.key} - ${d.type}`,
-      }))}
     >
-      <div slot="title">Analyze</div>
+      <div slot="title">
+        XYZ Plots
+
+        <div
+          class="tooltip tooltip-bottom z-10 before:whitespace-pre-wrap"
+          data-tip={payload.annotations
+            .map((d) => `${d.axis}: ${d.key} - ${d.type}`)
+            .join('\n')}
+        >
+          <InfoIcon />
+        </div>
+      </div>
       <li slot="extra">
         <div>
           <input

@@ -9,4 +9,6 @@
   });
 </script>
 
-<img style={`min-width:${width}px`} src={value.src} alt={value.uuid} />
+<div class="px-0.5">
+  <img style={`min-width:${width}px`} src={value.src} alt={value.uuid} />
+</div>
