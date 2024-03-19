@@ -208,7 +208,7 @@ class XyzPlot:
 
         return {
             "ui": {
-                "result_path": [f"/browser/web/xyz_plots?path={browser_base_url}/result.json"],
+                "result_path": [f"/browser/web/xyz_plot.html?path={browser_base_url}/result.json"],
             },
             "result": (),
         }
