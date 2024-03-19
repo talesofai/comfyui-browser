@@ -10,5 +10,5 @@
 </script>
 
 <div class="px-0.5">
-  <img style={`min-width:${width}px`} src={value.src} alt={value.uuid} />
+  <img style={`width:${width}px`} src={value.src} alt={value.uuid} />
 </div>
