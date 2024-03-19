@@ -4,7 +4,6 @@ from PIL import Image
 import numpy as np
 import os
 import copy
-import pandas as pd
 
 import folder_paths
 
@@ -35,8 +34,11 @@ class XyzPlot:
                 "input_y": ["INPUT", {}],
                 "value_x": ["STRING", {"multiline": True, "placeholder": 'X values split by semicolon such as "1girl; 1boy"'}],
                 "value_y": ["STRING", {"multiline": True, "placeholder": 'Y values split by semicolon such as "1girl; 1boy"'}],
+                "value_z": ["STRING", {"multiline": True, "placeholder": 'Z values split by semicolon such as "1girl; 1boy"'}],
                 "output_folder_name": ["STRING", {"default": "xyz_plot"}],
-                "result_filename": ["STRING", {"default": "result"}],
+            },
+            "optional": {
+                "input_z": ["INPUT", {}],
             },
             "hidden": {
                 "prompt": "PROMPT",
@@ -56,8 +58,11 @@ class XyzPlot:
         self.y_index = 0
 
     @staticmethod
-    def get_filename(ix, iy, i):
-        return f"x{ix}_y{iy}_{i}.jpeg"
+    def get_filename(ix, iy, iz, i):
+        if (iz >= 0):
+            return f"x{ix}_y{iy}_z{iz}_{i}.jpeg"
+        else:
+            return f"x{ix}_y{iy}_{i}.jpeg"
 
     @staticmethod
     def get_preview_url(folder_name, filename):
@@ -71,51 +76,100 @@ class XyzPlot:
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
             img = img.convert('RGB')
-            filename = self.get_filename(self.x_index, self.y_index, index)
+            filename = self.get_filename(self.x_index, self.y_index, self.z_index, index)
             target_path = os.path.join(self.output_folder_name, filename)
             img.save(target_path, 'JPEG', quality=90)
 
-    def run(self, images, input_x, input_y, value_x, value_y, output_folder_name, result_filename, prompt, unique_id, extra_pnginfo=None):
-        self.output_folder_name = os.path.join(folder_paths.get_output_directory(), output_folder_name)
+    def run(self, images, input_x, input_y, value_x, value_y, output_folder_name, prompt, unique_id, input_z=None, value_z="", extra_pnginfo=None):
+        self.output_folder_name = os.path.join(
+            folder_paths.get_output_directory(),
+            output_folder_name,
+        )
+
         if 'xyz_data' in prompt[unique_id]['inputs']:
             self.x_index = prompt[unique_id]['inputs']['xyz_data']['x_index']
             self.y_index = prompt[unique_id]['inputs']['xyz_data']['y_index']
+            self.z_index = prompt[unique_id]['inputs']['xyz_data']['z_index']
             self.save_images(images)
             return ()
 
+
+        def filter_values(value):
+            return list(filter(lambda x: x != '', value.split(";")))
+
+        def queue_new_prompt(prompt):
+            data = json.dumps({
+                'prompt': prompt
+            }).encode('utf-8')
+
+            # for some special network environments like AutoDL
+            proxies = {"http": "", "https": ""}
+            return requests.post(SERVER_BASE_URL + '/prompt', data=data, proxies=proxies)
+
+
         batch_size = len(images)
-        values_x = value_x.split(";")
-        values_y = value_y.split(";")
-        new_prompt =  copy.deepcopy(prompt)
-        ret = {}
+        values_x = filter_values(value_x)
+        values_y = filter_values(value_y)
+        values_z = filter_values(value_z)
+        new_prompt = copy.deepcopy(prompt)
+        ret = []
         for ix, vx in enumerate(values_x):
             vx = vx.strip()
-            row = {}
+            row = []
             for iy, vy in enumerate(values_y):
                 vy = vy.strip()
                 new_prompt[input_x["node_id"]]["inputs"][input_x["widget_name"]] = vx
                 new_prompt[input_y["node_id"]]["inputs"][input_y["widget_name"]] = vy
+
                 new_prompt[unique_id]['inputs']['xyz_data'] = {
                     "source_unique_id": unique_id,
                     "output_folder_name": output_folder_name,
                     "x_index": ix,
                     "y_index": iy,
+                    "z_index": -1,
                 }
-                data = json.dumps({
-                    'prompt': new_prompt
-                }).encode('utf-8')
 
-                # for some special network environments like AutoDL
-                proxies = {"http": "", "https": ""}
-                r = requests.post(SERVER_BASE_URL + '/prompt', data=data, proxies=proxies)
+                ceil = []
+                if (input_z and len(values_z) > 0):
+                    for iz, vz in enumerate(values_z):
+                        vz = vz.strip()
+                        new_prompt[input_z["node_id"]]["inputs"][input_z["widget_name"]] = vz
+                        new_prompt[unique_id]['inputs']['xyz_data']['z_index'] = iz
+                        queue_new_prompt(new_prompt)
+                        zCeil = []
+                        for i in range(batch_size):
+                            filename = self.get_filename(ix, iy, iz, i)
+                            preview_url = self.get_preview_url(output_folder_name, filename)
+                            zCeil.append({
+                                "type": "img",
+                                "src": preview_url,
+                            })
+                        ceil.append({
+                            "type": "axis",
+                            "value": vz,
+                            "children": zCeil,
+                        })
+                else:
+                    queue_new_prompt(new_prompt)
+                    for i in range(batch_size):
+                        filename = self.get_filename(ix, iy, -1, i)
+                        preview_url = self.get_preview_url(output_folder_name, filename)
+                        ceil.append({
+                            "type": "img",
+                            "src": preview_url,
+                        })
 
-                row[vy] = ""
-                for i in range(batch_size):
-                    filename = self.get_filename(ix, iy, i)
-                    preview_url = self.get_preview_url(output_folder_name, filename)
-                    row[vy] += f'<img src="{preview_url}" width="100">'
+                row.append({
+                    "type": "axis",
+                    "value": vy,
+                    "children": ceil,
+                })
 
-            ret[vx] = row
+            ret.append({
+                "type": "axis",
+                "value": vx,
+                "children": row,
+            })
 
         # Check if the directory exists
         if not os.path.exists(self.output_folder_name):
@@ -125,30 +179,36 @@ class XyzPlot:
                 raise Exception(f"Failed to create directory: {e}")
 
         browser_base_url = f"/browser/s/outputs/{output_folder_name}"
-
-        workflow_html = ""
+        retData = {
+            "result": ret,
+        }
         if extra_pnginfo:
-            workflow_filename = f"{result_filename}_workflow.json"
+            workflow_filename = "workflow.json"
             with open(f"{self.output_folder_name}/{workflow_filename}", "w", encoding="utf-8") as f:
                 json.dump(extra_pnginfo, f)
-            workflow_html = f'<p><a target="_blank" href="{browser_base_url}/{workflow_filename}">Open the workflow</a></p>'
+            retData["workflow"] = {
+                "url": f'{browser_base_url}/{workflow_filename}',
+            }
+
+        axisConst = ["X", "Y", "Z"]
+        retData["annotations"] = []
+        for index, ele in enumerate([input_x, input_y, input_z]):
+            if not ele:
+                continue
+            retData["annotations"].append({
+                "axis": axisConst[index],
+                "key": f"#{ele['node_id']} {ele['node_title']}",
+                "type": ele['widget_name'],
+            })
 
 
-        # To generate grid HTML
-        def gird_title(input):
-            return f"#{input['node_id']} {input['node_title']} - {input['widget_name']}"
-
-        df = pd.DataFrame(ret)
-        html = workflow_html
-        html += f"<p>X: {gird_title(input_x)}</p><p>Y: {gird_title(input_y)}</p>"
-        html += df.to_html(escape=False)
-        target_path = f"{self.output_folder_name}/{result_filename}.html"
+        target_path = f"{self.output_folder_name}/result.json"
         with open(target_path, "w", encoding="utf-8") as f:
-            f.write(html)
+            json.dump(retData, f)
 
         return {
             "ui": {
-                "result_path": [f"{browser_base_url}/{result_filename}.html"],
+                "result_path": [f"/browser/web/xyz_plots?path={browser_base_url}/result.json"],
             },
             "result": (),
         }
