@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ImgResult } from '../../routes/analyze/models';
+  import type { ImgResult } from './models';
   import { imageWidth } from './store';
   export let value: ImgResult;
   export let width = 100;

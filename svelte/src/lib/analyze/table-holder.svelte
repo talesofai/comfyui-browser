@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { AxisValue } from '../../routes/analyze/models';
+  import type { AxisValue } from './models';
   import TableCellAxis from './table-cell-axis.svelte';
   import TableCellImg from './table-cell-img.svelte';
 

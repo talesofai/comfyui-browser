@@ -13,7 +13,7 @@
 
   let mounted = false;
 
-  /** @type {import("./models").Payload}*/
+  /** @type {import("$lib/analyze/models").Payload}*/
   let payload;
   let loading = false;
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Axis } from '../../routes/analyze/models';
+  import type { Axis } from './models';
   import TableHolder from './table-holder.svelte';
   export let axis: Axis;
 </script>

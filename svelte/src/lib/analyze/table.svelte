@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Payload } from '../../routes/analyze/models';
+  import type { Payload } from './models';
   import TableAxis from './table-axis.svelte';
   export let height: number = 0;
   export let payload: Payload;
