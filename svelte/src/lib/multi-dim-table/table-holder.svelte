@@ -6,10 +6,8 @@
   export let value: AxisValue;
 </script>
 
-<div>
-  {#if value.type === 'img'}
-    <TableCellImg {value} />
-  {:else if value.type === 'axis'}
-    <TableCellAxis {value} />
-  {/if}
-</div>
+{#if value.type === 'img'}
+  <TableCellImg {value} />
+{:else if value.type === 'axis'}
+  <TableCellAxis {value} />
+{/if}

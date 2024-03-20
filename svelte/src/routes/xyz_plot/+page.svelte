@@ -1,9 +1,12 @@
 <script>
   import { onMount } from 'svelte';
-  import MultiDimTable from '$lib/multi-dim-table/layout.svelte';
+  import MultiDimTableLayout from '$lib/multi-dim-table/layout.svelte';
   import AnalyzeTable from '$lib/multi-dim-table/table.svelte';
-  import { imageWidth } from '$lib/multi-dim-table/store';
+  import { comfyUrl, imageWidth } from '$lib/multi-dim-table/store';
   import InfoIcon from '$lib/icons/info.svelte';
+  import { db, getUser } from '$lib/db';
+  import { v1 as uuid } from 'uuid';
+  import { fakeUsername } from '$lib/random';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -12,6 +15,7 @@
   export let path;
 
   $: ({ path } = data);
+  $: comfyUrl.set(data.comfyUrl);
 
   let mounted = false;
 
@@ -34,8 +38,17 @@
     }
   }
 
-  onMount(() => {
+  onMount(async () => {
     mounted = true;
+    const user = await getUser();
+    if (!user) {
+      db.user.add({
+        uuid: uuid(),
+        name: fakeUsername(),
+        ctime: Date.now(),
+        mtime: Date.now(),
+      });
+    }
   });
 
   let _imageWidth = 50;
@@ -53,7 +66,7 @@
   {:else if !payload}
     null
   {:else}
-    <MultiDimTable
+    <MultiDimTableLayout
       extraItems={[
         {
           label: 'Open Workflow',
@@ -65,7 +78,6 @@
     >
       <div slot="title">
         XYZ Plots
-
         <div
           class="tooltip tooltip-bottom z-10 before:whitespace-pre-wrap"
           data-tip={payload.annotations
@@ -79,7 +91,7 @@
         <div>
           <input
             type="range"
-            min="5"
+            min="30"
             max="300"
             bind:value={_imageWidth}
             class="range"
@@ -89,7 +101,7 @@
       <div class="w-full h-full" bind:this={tableContainerRef}>
         <AnalyzeTable {payload} height={tableContainerRef?.clientHeight ?? 0} />
       </div>
-    </MultiDimTable>
+    </MultiDimTableLayout>
   {/if}
 {:else}
   Invalid Path

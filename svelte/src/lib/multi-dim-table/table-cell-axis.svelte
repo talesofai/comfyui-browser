@@ -4,7 +4,7 @@
   export let value: Axis;
 </script>
 
-<div class="m-1 border">
+<div class="m-1 border box-border inline-block">
   <div class="text-center font-bold">
     {value.value}
   </div>
