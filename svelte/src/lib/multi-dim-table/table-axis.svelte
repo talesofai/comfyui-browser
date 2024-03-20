@@ -6,7 +6,7 @@
 
 <tr>
   <!-- prompts -->
-  <th>{axis.value}</th>
+  <th style="max-width:30vw">{axis.value}</th>
   {#each axis.children as dim2}
     {#if dim2.type === 'axis'}
       <td>
