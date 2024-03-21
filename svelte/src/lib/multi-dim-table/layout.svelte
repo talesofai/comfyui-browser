@@ -10,7 +10,7 @@
 
   export let sidebarItems: typeof extraItems = undefined;
 
-  let _imageWidth = 50;
+  let _imageWidth = 180;
   let _mode = TableMode.View;
 
   mode.subscribe((v) => {

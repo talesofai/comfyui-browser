@@ -79,7 +79,7 @@
   async function apiUpdateScore(score: number) {
     const user = await getUser();
     if (!user) return;
-    return fetch(api + '/xyz_plot/score', {
+    return fetch(api + '/browser/xyz_plot/score', {
       method: 'PUT',
       body: JSON.stringify({
         user: user.name,
