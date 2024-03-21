@@ -141,6 +141,7 @@ class XyzPlot:
                             filename = self.get_filename(ix, iy, iz, i)
                             preview_url = self.get_preview_url(output_folder_name, filename)
                             zCeil.append({
+                                "uuid": ":".join([output_folder_name, str(ix), str(iy), str(iz), str(i)]),
                                 "type": "img",
                                 "src": preview_url,
                             })
@@ -155,6 +156,7 @@ class XyzPlot:
                         filename = self.get_filename(ix, iy, -1, i)
                         preview_url = self.get_preview_url(output_folder_name, filename)
                         ceil.append({
+                            "uuid": ":".join([output_folder_name, str(ix), str(iy), "-1", str(i)]),
                             "type": "img",
                             "src": preview_url,
                         })
