@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ImgResult } from './models';
-  import { comfyUrl, imageWidth } from './store';
+  import { TableMode, comfyUrl, imageWidth, mode } from './store';
   import { db, getScore, getUser, updateScore, type User } from '$lib/db';
   export let value: ImgResult;
   export let width = 100;
@@ -8,14 +8,15 @@
   let api = '';
   comfyUrl.subscribe((d) => (api = d));
 
-  let hover = false;
   let like = false;
+  let _mode = TableMode.View;
   imageWidth.subscribe((d) => {
     width = d;
   });
 
-  $: {
-    if (hover)
+  mode.subscribe((v) => {
+    _mode = v;
+    if (v === TableMode.Score)
       db.scoreboard
         .where('uuid')
         .equals(value.uuid)
@@ -27,7 +28,7 @@
             like = false;
           }
         });
-  }
+  });
 
   function updateSelfScore(score: number) {
     return updateScore(value.uuid, { score });
@@ -91,29 +92,26 @@
 
 <div class="px-0.5 box-border inline-block relative" style={`width:${width}px`}>
   <img
-    on:mouseenter={() => (hover = true)}
     class="w-full"
     src={value.src}
     alt={value.uuid}
+    style={`width:${width}px`}
   />
-  {#if hover}
-    <div
-      class="absolute h-full w-full top-0 left-0 my-img-mask text-white flex flex-col justify-center items-center cursor-default"
-      role="button"
+  {#if _mode === TableMode.Score}
+    <button
+      class="absolute h-full w-full top-0 left-0 my-img-mask text-white flex flex-col justify-center items-center"
       tabindex="0"
-      on:mouseleave={() => (hover = false)}
+      on:click={like ? onDislike : onLike}
     >
       <div class="flex justify-around btn-container">
-        <button on:click={like ? onDislike : onLike}>
-          <svg class="inline-block w-1/3" viewBox="0 0 1024 1024">
-            <path
-              d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
-              fill={like ? '#F44336' : 'grey'}
-            />
-          </svg>
-        </button>
+        <svg class="inline-block w-1/3" viewBox="0 0 1024 1024">
+          <path
+            d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
+            fill={like ? '#F44336' : 'grey'}
+          />
+        </svg>
       </div>
-    </div>
+    </button>
   {/if}
 </div>
 
@@ -124,7 +122,7 @@
       background: rgba(0, 0, 0, 0);
     }
     100% {
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(2px);
       background: rgba(0, 0, 0, 0.5);
     }
   }
