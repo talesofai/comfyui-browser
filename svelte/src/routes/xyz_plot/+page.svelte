@@ -14,6 +14,9 @@
   /** @type {string | null} */
   export let path;
 
+  /** @type {import('$lib/multi-dim-table/models').AxisScore[]} */
+  let scores;
+
   $: ({ path } = data);
   $: comfyUrl.set(data.comfyUrl);
 
@@ -34,6 +37,11 @@
         .then((d) => (payload = d))
         .finally(() => {
           loading = false;
+        });
+      fetch(data.comfyUrl + '/browser/xyz_plot/score?path=' + data.path)
+        .then(async (d) => (scores = await d.json()))
+        .catch((e) => {
+          console.log(e);
         });
     }
   }
@@ -71,7 +79,7 @@
       ]}
     >
       <div slot="title">
-        XYZ Plots
+        XYZ Plot
         <div
           class="tooltip tooltip-bottom z-10 before:whitespace-pre-wrap"
           data-tip={payload.annotations
@@ -82,7 +90,11 @@
         </div>
       </div>
       <div class="w-full h-full" bind:this={tableContainerRef}>
-        <AnalyzeTable {payload} height={tableContainerRef?.clientHeight ?? 0} />
+        <AnalyzeTable
+          bind:payload
+          bind:scores
+          height={tableContainerRef?.clientHeight ?? 0}
+        />
       </div>
     </MultiDimTableLayout>
   {/if}
