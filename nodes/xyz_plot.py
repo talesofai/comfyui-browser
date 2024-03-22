@@ -1,3 +1,5 @@
+import shutil
+import time
 import requests
 import json
 from PIL import Image
@@ -93,6 +95,8 @@ class XyzPlot:
             self.save_images(images)
             return ()
 
+        if os.path.exists(self.output_folder_name):
+            shutil.move(self.output_folder_name, self.output_folder_name + f'_old_{int(time.time())}')
 
         def filter_values(value):
             return list(filter(lambda x: x != '', value.split(";")))
