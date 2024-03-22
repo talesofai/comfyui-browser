@@ -48,6 +48,11 @@ async def api_get_score_statistic(request):
     if not target_path:
         return web.Response(status=404)
 
+    #/browser/s/outputs/xyz_plot_4/result.json
+    if len(target_path.split('/')) < 5:
+        return web.Response(status=400)
+
+    target_path = target_path.split('/')[4]
     log_path = os.path.join(
         folder_paths.get_output_directory(),
         target_path,
