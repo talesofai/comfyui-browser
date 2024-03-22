@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { TableMode, imageWidth, mode } from './store';
+
   export let extraItems:
     | undefined
     | {
@@ -7,6 +9,16 @@
       }[] = undefined;
 
   export let sidebarItems: typeof extraItems = undefined;
+
+  let _imageWidth = 180;
+  let _mode = TableMode.View;
+
+  mode.subscribe((v) => {
+    _mode = v;
+  });
+  $: {
+    imageWidth.set(_imageWidth);
+  }
 </script>
 
 <div class="drawer absolute h-full w-full overflow-y-hidden">
@@ -41,14 +53,38 @@
       <div class="flex-none">
         {#if extraItems}
           <ul class="menu menu-horizontal items-center">
-            <slot name="extra" />
+            <li>
+              <div>
+                <input
+                  type="range"
+                  min="30"
+                  max="300"
+                  bind:value={_imageWidth}
+                  class="range"
+                />
+              </div>
+            </li>
+
             {#each extraItems as item}
               <li>
-                <a on:click={item.onClick}>
+                <button on:click={item.onClick}>
                   {item.label}
-                </a>
+                </button>
               </li>
             {/each}
+            <li>
+              <button
+                on:click={() => {
+                  if (_mode === TableMode.Score) {
+                    mode.set(TableMode.View);
+                  } else {
+                    mode.set(TableMode.Score);
+                  }
+                }}
+              >
+                {_mode === TableMode.Score ? 'Score' : 'View'}
+              </button>
+            </li>
           </ul>
         {/if}
       </div>

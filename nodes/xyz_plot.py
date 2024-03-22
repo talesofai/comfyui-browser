@@ -1,3 +1,5 @@
+import shutil
+import time
 import requests
 import json
 from PIL import Image
@@ -93,6 +95,8 @@ class XyzPlot:
             self.save_images(images)
             return ()
 
+        if os.path.exists(self.output_folder_name):
+            shutil.move(self.output_folder_name, self.output_folder_name + f'_old_{int(time.time())}')
 
         def filter_values(value):
             return list(filter(lambda x: x != '', value.split(";")))
@@ -141,6 +145,7 @@ class XyzPlot:
                             filename = self.get_filename(ix, iy, iz, i)
                             preview_url = self.get_preview_url(output_folder_name, filename)
                             zCeil.append({
+                                "uuid": ":".join([output_folder_name, str(ix), str(iy), str(iz), str(i)]),
                                 "type": "img",
                                 "src": preview_url,
                             })
@@ -155,6 +160,7 @@ class XyzPlot:
                         filename = self.get_filename(ix, iy, -1, i)
                         preview_url = self.get_preview_url(output_folder_name, filename)
                         ceil.append({
+                            "uuid": ":".join([output_folder_name, str(ix), str(iy), "-1", str(i)]),
                             "type": "img",
                             "src": preview_url,
                         })

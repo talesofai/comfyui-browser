@@ -1,9 +1,16 @@
 <script>
   import { onMount } from 'svelte';
-  import MultiDimTable from '$lib/multi-dim-table/layout.svelte';
+  import MultiDimTableLayout from '$lib/multi-dim-table/layout.svelte';
   import AnalyzeTable from '$lib/multi-dim-table/table.svelte';
-  import { imageWidth } from '$lib/multi-dim-table/store';
+  import {
+    comfyUrl,
+    createRefetchStatisticPublisher,
+  } from '$lib/multi-dim-table/store';
   import InfoIcon from '$lib/icons/info.svelte';
+  import { db, getUser } from '$lib/db';
+  import { v1 as uuid } from 'uuid';
+  import { fakeUsername } from '$lib/random';
+  import { createRefetchStatisticSubscriber } from '$lib/multi-dim-table/store';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -11,7 +18,11 @@
   /** @type {string | null} */
   export let path;
 
+  /** @type {import('$lib/multi-dim-table/models').AxisScore[]} */
+  let scores;
+
   $: ({ path } = data);
+  $: comfyUrl.set(data.comfyUrl);
 
   let mounted = false;
 
@@ -22,8 +33,19 @@
   /**@type {HTMLElement | undefined}*/
   let tableContainerRef;
 
+  createRefetchStatisticSubscriber(() => {
+    fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
+      .then(async (d) => {
+        if (d.ok) {
+          scores = await d.json().then((d) => d.result);
+        }
+      })
+      .catch(() => {});
+  });
+  const refetch = createRefetchStatisticPublisher();
+
   $: {
-    if (mounted && path !== null) {
+    if (mounted && path) {
       loading = true;
       fetch(path)
         .then((d) => d.json())
@@ -34,15 +56,24 @@
     }
   }
 
-  onMount(() => {
-    mounted = true;
-  });
-
-  let _imageWidth = 50;
-
   $: {
-    imageWidth.set(_imageWidth);
+    if (mounted && path) {
+      refetch();
+    }
   }
+
+  onMount(async () => {
+    mounted = true;
+    const user = await getUser();
+    if (!user) {
+      db.user.add({
+        uuid: uuid(),
+        name: fakeUsername(),
+        ctime: Date.now(),
+        mtime: Date.now(),
+      });
+    }
+  });
 </script>
 
 {#if typeof data.path === 'string' && data.path.length > 0}
@@ -53,7 +84,7 @@
   {:else if !payload}
     null
   {:else}
-    <MultiDimTable
+    <MultiDimTableLayout
       extraItems={[
         {
           label: 'Open Workflow',
@@ -64,8 +95,7 @@
       ]}
     >
       <div slot="title">
-        XYZ Plots
-
+        XYZ Plot
         <div
           class="tooltip tooltip-bottom z-10 before:whitespace-pre-wrap"
           data-tip={payload.annotations
@@ -75,21 +105,14 @@
           <InfoIcon />
         </div>
       </div>
-      <li slot="extra">
-        <div>
-          <input
-            type="range"
-            min="5"
-            max="300"
-            bind:value={_imageWidth}
-            class="range"
-          />
-        </div>
-      </li>
       <div class="w-full h-full" bind:this={tableContainerRef}>
-        <AnalyzeTable {payload} height={tableContainerRef?.clientHeight ?? 0} />
+        <AnalyzeTable
+          bind:payload
+          bind:scores
+          height={tableContainerRef?.clientHeight ?? 0}
+        />
       </div>
-    </MultiDimTable>
+    </MultiDimTableLayout>
   {/if}
 {:else}
   Invalid Path

@@ -4,7 +4,7 @@ from aiohttp import web
 import server
 
 from .utils import collections_path, browser_path, sources_path, download_logs_path, outputs_path
-from .routes import sources, collections, config, files, downloads
+from .routes import sources, collections, config, files, downloads, xyz_plot as xyz_plot_routes
 from .nodes import select_inputs, load_image_by_url, xyz_plot, dify_text_generator, upload_to_remote
 
 
@@ -31,6 +31,9 @@ browser_app.add_routes([
     web.post("/downloads", downloads.api_create_new_download),
     web.get("/downloads", downloads.api_list_downloads),
     web.get("/downloads/{uuid}", downloads.api_show_download),
+
+    web.put("/xyz_plot/score", xyz_plot_routes.api_update_score),
+    web.get("/xyz_plot/statistic", xyz_plot_routes.api_get_score_statistic),
 
     web.static("/web", os.path.join(browser_path, 'web/build')),
 
