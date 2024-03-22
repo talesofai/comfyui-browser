@@ -39,7 +39,7 @@
           loading = false;
         });
       fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
-        .then(async (d) => (scores = await d.json()))
+        .then(async (d) => (scores = await d.json().then((d) => d.result)))
         .catch((e) => {
           console.log(e);
         });
