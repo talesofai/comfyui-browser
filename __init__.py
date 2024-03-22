@@ -33,6 +33,7 @@ browser_app.add_routes([
     web.get("/downloads/{uuid}", downloads.api_show_download),
 
     web.put("/xyz_plot/score", xyz_plot_routes.api_update_score),
+    web.get("/xyz_plot/statistic", xyz_plot_routes.api_get_score_statistic),
 
     web.static("/web", os.path.join(browser_path, 'web/build')),
 
