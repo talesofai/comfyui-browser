@@ -94,26 +94,26 @@ async def api_get_score_statistic(request):
         vy = xyz_result[ix]['children']
         rx = {
             'type': 'axis',
-            'score': statistic[str(ix)]['total'],
+            'score': statistic.get(str(ix), {}).get('total', 0),
             'children': [],
         }
         for iy, _ in enumerate(vy):
             vz = vy[iy]['children']
             ry = {
                 'type': 'axis',
-                'score': statistic[str(ix)][str(iy)]['total'],
+                'score': statistic.get(str(ix), {}).get(str(iy), {}).get('total', 0),
                 'children': [],
             }
             if vz[0]['type'] == 'img':
                 ry['children'].append({
                     'type': 'axis',
-                    'score': statistic[str(ix)][str(iy)]['-1'],
+                    'score': statistic.get(str(ix), {}).get(str(iy), {}).get('-1', 0),
                 })
             else:
                 for iz, _ in enumerate(vz):
                     ry['children'].append({
                         'type': 'axis',
-                        'score': statistic[str(ix)][str(iy)][str(iz)],
+                        'score': statistic.get(str(ix), {}).get(str(iy), {}).get(str(iz), 0),
                     })
             rx['children'].append(ry)
         stat_ret.append(rx)
