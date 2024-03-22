@@ -7,7 +7,6 @@
   import { db, getUser } from '$lib/db';
   import { v1 as uuid } from 'uuid';
   import { fakeUsername } from '$lib/random';
-
   /** @type {import('./$types').PageData} */
   export let data;
 
@@ -30,7 +29,7 @@
   let tableContainerRef;
 
   $: {
-    if (mounted && path !== null) {
+    if (mounted && path) {
       loading = true;
       fetch(path)
         .then((d) => d.json())
@@ -38,12 +37,18 @@
         .finally(() => {
           loading = false;
         });
-      fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
-        .then(async (d) => (scores = await d.json().then((d) => d.result)))
-        .catch((e) => {
-          console.log(e);
-        });
     }
+  }
+
+  $: {
+    if (mounted && path)
+      fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
+        .then(async (d) => {
+          if (d.ok) {
+            scores = await d.json().then((d) => d.result);
+          }
+        })
+        .catch(() => {});
   }
 
   onMount(async () => {
