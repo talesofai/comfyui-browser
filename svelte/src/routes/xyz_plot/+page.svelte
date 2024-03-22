@@ -38,7 +38,7 @@
         .finally(() => {
           loading = false;
         });
-      fetch(data.comfyUrl + '/browser/xyz_plot/score?path=' + data.path)
+      fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
         .then(async (d) => (scores = await d.json()))
         .catch((e) => {
           console.log(e);
