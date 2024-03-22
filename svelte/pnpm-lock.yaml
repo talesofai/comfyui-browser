@@ -31,6 +31,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.11.28
     version: 20.11.28
+  '@types/pubsub-js':
+    specifier: ^1.8.6
+    version: 1.8.6
   '@types/uuid':
     specifier: ^9.0.8
     version: 9.0.8
@@ -46,6 +49,9 @@ devDependencies:
   postcss:
     specifier: ^8.4.32
     version: 8.4.32
+  pubsub-js:
+    specifier: ^1.9.4
+    version: 1.9.4
   sass:
     specifier: ^1.72.0
     version: 1.72.0
@@ -557,6 +563,10 @@ packages:
     resolution: {integrity: sha512-M/GPWVS2wLkSkNHVeLkrF2fD5Lx5UC4PxA0uZcKc6QqbIQUJyW1jVjueJYi1z8n0I5PxYrtpnPnWglE+y9A0KA==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/pubsub-js@1.8.6:
+    resolution: {integrity: sha512-Kwug5cwV0paUDm/NfwDx1sp9xI0bGIvmWJjJWCU8NngkCCMt3EIC7oPDvb6fV7BR8kPpFyyBu4D11bda/2MdPA==}
     dev: true
 
   /@types/pug@2.0.10:
@@ -1344,6 +1354,10 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
+
+  /pubsub-js@1.9.4:
+    resolution: {integrity: sha512-hJYpaDvPH4w8ZX/0Fdf9ma1AwRgU353GfbaVfPjfJQf1KxZ2iHaHl3fAUw1qlJIR5dr4F3RzjGaWohYUEyoh7A==}
     dev: true
 
   /queue-microtask@1.2.3:

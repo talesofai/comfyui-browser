@@ -4,7 +4,8 @@
   import { db, getScore, getUser, updateScore, type User } from '$lib/db';
   export let value: ImgResult;
   export let width = 100;
-
+  import { createRefetchStatisticPublisher } from './store';
+  let refetch = createRefetchStatisticPublisher();
   let api = '';
   comfyUrl.subscribe((d) => (api = d));
 
@@ -51,8 +52,10 @@
     }
     return apiUpdateScore(1)
       .then(async (res) => {
-        if (res && res.ok) like = true;
-        else await updateSelfScore(0);
+        if (res && res.ok) {
+          like = true;
+          refetch();
+        } else await updateSelfScore(0);
       })
       .catch(() => {
         updateSelfScore(0);
@@ -69,6 +72,7 @@
       .then(async (res) => {
         if (res && res.ok) {
           like = false;
+          refetch();
         } else await updateSelfScore(1);
       })
       .catch(() => {

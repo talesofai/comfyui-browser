@@ -2,11 +2,16 @@
   import { onMount } from 'svelte';
   import MultiDimTableLayout from '$lib/multi-dim-table/layout.svelte';
   import AnalyzeTable from '$lib/multi-dim-table/table.svelte';
-  import { comfyUrl } from '$lib/multi-dim-table/store';
+  import {
+    comfyUrl,
+    createRefetchStatisticPublisher,
+  } from '$lib/multi-dim-table/store';
   import InfoIcon from '$lib/icons/info.svelte';
   import { db, getUser } from '$lib/db';
   import { v1 as uuid } from 'uuid';
   import { fakeUsername } from '$lib/random';
+  import { createRefetchStatisticSubscriber } from '$lib/multi-dim-table/store';
+
   /** @type {import('./$types').PageData} */
   export let data;
 
@@ -28,6 +33,17 @@
   /**@type {HTMLElement | undefined}*/
   let tableContainerRef;
 
+  createRefetchStatisticSubscriber(() => {
+    fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
+      .then(async (d) => {
+        if (d.ok) {
+          scores = await d.json().then((d) => d.result);
+        }
+      })
+      .catch(() => {});
+  });
+  const refetch = createRefetchStatisticPublisher();
+
   $: {
     if (mounted && path) {
       loading = true;
@@ -41,14 +57,9 @@
   }
 
   $: {
-    if (mounted && path)
-      fetch(data.comfyUrl + '/browser/xyz_plot/statistic?path=' + data.path)
-        .then(async (d) => {
-          if (d.ok) {
-            scores = await d.json().then((d) => d.result);
-          }
-        })
-        .catch(() => {});
+    if (mounted && path) {
+      refetch();
+    }
   }
 
   onMount(async () => {
