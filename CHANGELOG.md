@@ -1,5 +1,9 @@
 # ChangeLog
 
+## v1.8.1 - 2024-03-22
+
+- Update xyz_plot to support score mode
+
 ## v1.8.0 - 2024-03-19
 
 - Update xyz_plot to support Z axis
