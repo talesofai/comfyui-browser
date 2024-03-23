@@ -9,7 +9,7 @@
 
 <tr class="p-0 even:bg-stone-800 odd:bg-base-100">
   <!-- prompts -->
-  <th class="z-10 p-0 max-w-64 bg-inherit">
+  <th class="z-10 p-0 max-w-48 bg-inherit">
     {#if score}
       <Score score={score.score} />
     {/if}

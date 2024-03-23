@@ -57,8 +57,8 @@
               <div>
                 <input
                   type="range"
-                  min="30"
-                  max="400"
+                  min="50"
+                  max="500"
                   bind:value={_imageWidth}
                   class="range"
                 />
