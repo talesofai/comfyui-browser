@@ -31,22 +31,22 @@
   class="overflow-x-auto max-w-full inline-block"
   style={`max-height: ${height}px`}
 >
-  <table class="table table-xs table-pin-rows table-pin-cols table-zebra-grey">
+  <table class="table table-xs table-pin-rows table-pin-cols">
     <thead>
-      <tr>
+      <tr class="p-0">
         <th></th>
         {#if headScore}
           {#each zip(payload.result[0].children, headScore) as [axis, score]}
             {#if axis.type === 'axis'}
-              <td class="text-wrap">
-                {axis.value}<Score score={score.score} />
+              <td class="text-wrap p-0">
+                <Score score={score.score} />{axis.value}
               </td>
             {/if}
           {/each}
         {:else}
           {#each payload.result[0].children as axis}
             {#if axis.type === 'axis'}
-              <td class="text-wrap">{axis.value}</td>
+              <td class="text-wrap p-0">{axis.value}</td>
             {/if}
           {/each}
         {/if}

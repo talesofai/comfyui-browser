@@ -25,7 +25,7 @@
   <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
     <!-- Navbar -->
-    <div class="w-full navbar bg-base-300">
+    <div class="w-full navbar p-0 bg-base-300">
       <div class="flex-none">
         {#if sidebarItems}
           <label
@@ -58,20 +58,13 @@
                 <input
                   type="range"
                   min="30"
-                  max="300"
+                  max="400"
                   bind:value={_imageWidth}
                   class="range"
                 />
               </div>
             </li>
 
-            {#each extraItems as item}
-              <li>
-                <button on:click={item.onClick}>
-                  {item.label}
-                </button>
-              </li>
-            {/each}
             <li>
               <button
                 on:click={() => {
@@ -82,9 +75,17 @@
                   }
                 }}
               >
-                {_mode === TableMode.Score ? 'Score' : 'View'}
+                {_mode === TableMode.Score ? 'Score Mode' : 'View Mode'}
               </button>
             </li>
+
+            {#each extraItems as item}
+              <li>
+                <button on:click={item.onClick}>
+                  {item.label}
+                </button>
+              </li>
+            {/each}
           </ul>
         {/if}
       </div>

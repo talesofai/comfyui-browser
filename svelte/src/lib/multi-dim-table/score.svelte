@@ -2,6 +2,6 @@
   export let score: number;
 </script>
 
-<span>
+<span class="text-accent">
   ({score})
 </span>

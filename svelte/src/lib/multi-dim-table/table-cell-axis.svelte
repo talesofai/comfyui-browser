@@ -6,14 +6,14 @@
   export let score: AxisScore | undefined;
 </script>
 
-<div class="m-1 border box-border inline-block">
+<div class="border box-border inline-block">
   <div class="text-center font-bold">
-    {value.value}
     {#if score}
       <Score score={score.score} />
     {/if}
+    {value.value}
   </div>
-  <div class="flex justify-around my-1">
+  <div class="flex justify-around">
     {#each value.children as item}
       <TableHolder value={item} {score} />
     {/each}

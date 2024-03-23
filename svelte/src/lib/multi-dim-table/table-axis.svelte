@@ -2,24 +2,23 @@
   import Score from './score.svelte';
   import type { Axis, AxisScore } from './models';
   import TableHolder from './table-holder.svelte';
-  import { el } from '@faker-js/faker';
   import { zip } from './utils';
   export let axis: Axis;
   export let score: AxisScore | undefined;
 </script>
 
-<tr>
+<tr class="p-0 even:bg-neutral-content even:bg-opacity-10">
   <!-- prompts -->
-  <th style="max-width:30vw" class="z-10">
-    {axis.value}
+  <th style="--tw-bg-opacity: 0" class="z-10 p-0 max-w-xs">
     {#if score}
       <Score score={score.score} />
     {/if}
+    {axis.value}
   </th>
   {#if score && score.children}
     {#each zip(axis.children, score.children) as [dim2, score2]}
       {#if dim2.type === 'axis' && score2.children}
-        <td>
+        <td class="p-0">
           {#each zip(dim2.children, score2.children) as [dim3, score3]}
             <TableHolder value={dim3} score={score3}></TableHolder>
           {/each}
@@ -29,7 +28,7 @@
   {:else}
     {#each axis.children as dim2}
       {#if dim2.type === 'axis'}
-        <td>
+        <td class="p-0">
           {#each dim2.children as dim3}
             <TableHolder value={dim3} score={undefined}></TableHolder>
           {/each}
