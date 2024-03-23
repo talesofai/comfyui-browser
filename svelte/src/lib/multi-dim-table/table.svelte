@@ -31,7 +31,7 @@
   class="overflow-x-auto max-w-full inline-block"
   style={`max-height: ${height}px`}
 >
-  <table class="table table-xs table-pin-rows table-pin-cols">
+  <table class="table table-sm table-pin-rows table-pin-cols">
     <thead>
       <tr class="p-0">
         <th></th>

@@ -95,12 +95,14 @@
 </script>
 
 <div class="px-0.5 box-border inline-block relative" style={`width:${width}px`}>
-  <img
-    class="w-full"
-    src={value.src}
-    alt={value.uuid}
-    style={`width:${width}px`}
-  />
+  <a href={value.src} target="_blank">
+    <img
+      class="w-full"
+      src={value.src}
+      alt={value.uuid}
+      style={`width:${width}px`}
+    />
+  </a>
   {#if _mode === TableMode.Score}
     <button
       class="absolute w-full h-full top-0 left-0 flex justify-end items-end p-1"

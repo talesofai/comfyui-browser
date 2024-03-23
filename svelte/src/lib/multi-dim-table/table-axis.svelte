@@ -7,9 +7,9 @@
   export let score: AxisScore | undefined;
 </script>
 
-<tr class="p-0 even:bg-neutral-content even:bg-opacity-10">
+<tr class="p-0 even:bg-stone-800 odd:bg-base-100">
   <!-- prompts -->
-  <th style="--tw-bg-opacity: 0" class="z-10 p-0 max-w-xs">
+  <th class="z-10 p-0 max-w-64 bg-inherit">
     {#if score}
       <Score score={score.score} />
     {/if}
