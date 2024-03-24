@@ -31,9 +31,9 @@ https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be
 
 - Simple XYZ Plot by selecting inputs and filling in the values.
 
-<img width="256" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/23ce6a4d-3311-4058-9b46-ddb50d07e22a">
+<img width="512" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/23ce6a4d-3311-4058-9b46-ddb50d07e22a">
 
-<img width="256" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/347cad17-17c0-46f1-8df3-4b188b16a354">
+<img width="768" alt="image" src="https://github.com/talesofai/comfyui-browser/assets/828837/d46461ac-3fb3-4037-b1be-048a7ae5e89a">
 
 
 ## Preview
