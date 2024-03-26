@@ -22,6 +22,9 @@ class LoadImageByUrl:
             "required": {
                 "url": ["STRING", {}],
             },
+            "optional": {
+                "cache": ["BOOLEAN", {"default": True}],
+            },
         }
 
 
@@ -29,7 +32,7 @@ class LoadImageByUrl:
         self.url = ""
 
     def filename(self):
-        return hashlib.md5(self.url.encode()).hexdigest()[:24] + '.jpg'
+        return hashlib.md5(self.url.encode()).hexdigest()[:48] + '.jpg'
 
     def download_by_url(self):
         input_dir = folder_paths.get_input_directory()
@@ -41,11 +44,11 @@ class LoadImageByUrl:
         else:
             raise ValueError(f"Failed to load image from {self.url}: {res.status_code}")
 
-    def run(self, url):
+    def run(self, url, cache=True):
         self.url = url
         input_dir = folder_paths.get_input_directory()
         image_path = os.path.join(input_dir, self.filename())
-        if not os.path.isfile(image_path):
+        if cache == False or not os.path.isfile(image_path):
             self.download_by_url()
 
         img = Image.open(image_path)
