@@ -7,6 +7,7 @@ from PIL.PngImagePlugin import PngInfo
 import numpy as np
 import io
 import base64
+from ..utils import log
 
 class UploadToRemote:
     CATEGORY = "Browser"
@@ -87,7 +88,9 @@ class UploadToRemote:
                 "Content-Type": "application/json",
             }
             data = json.dumps(data).encode('utf-8')
+            log(f"uploading {track_id} to {remote_url}")
             res = requests.post(remote_url, data=data, headers=headers)
+            log(f"uploaded {track_id}: {res.status_code}")
             # TODO: check the response
 
 
