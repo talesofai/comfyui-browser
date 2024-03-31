@@ -97,7 +97,7 @@
       <div slot="title">
         XYZ Plot
         <div
-          class="tooltip tooltip-bottom z-40 before:whitespace-pre-wrap"
+          class="tooltip before:pl-20 before:text-left before:max-w-96 tooltip-bottom z-40 before:whitespace-pre-wrap"
           data-tip={payload.annotations
             .map((d) => `${d.axis}: ${d.key} - ${d.type}`)
             .join('\n')}

@@ -25,7 +25,7 @@
   <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
     <!-- Navbar -->
-    <div class="w-full navbar p-0 bg-base-300">
+    <div class="w-full navbar p-0 bg-base-300 min-h-0">
       <div class="flex-none">
         {#if sidebarItems}
           <label
