@@ -38,15 +38,19 @@
         {#if headScore}
           {#each zip(payload.result[0].children, headScore) as [axis, score]}
             {#if axis.type === 'axis'}
-              <td class="text-wrap p-0">
-                <Score score={score.score} />{axis.value}
+              <td class="p-0">
+                <p class="max-h-16 text-wrap overflow-auto hover:overflow-y-scroll">
+                  <Score score={score.score} />{axis.value}
+                </p>
               </td>
             {/if}
           {/each}
         {:else}
           {#each payload.result[0].children as axis}
             {#if axis.type === 'axis'}
-              <td class="text-wrap p-0">{axis.value}</td>
+              <td class="p-0">
+                <p class="max-h-12 text-wrap overflow-auto hover:overflow-y-scroll">{axis.value}</p>
+              </td>
             {/if}
           {/each}
         {/if}
