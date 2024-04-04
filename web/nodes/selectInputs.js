@@ -32,14 +32,21 @@ function refreshPreview(node) {
 
 function refreshInputs(node, app) {
   const inputs = getGraphInputs(app.graph);
-  node.widgets.forEach(w => {
+
+  let index = -1;
+  for (const w of node.widgets) {
+    index += 1;
     if (w.type != 'combo') {
       return;
     }
 
     w.options.values = inputs;
-    w.value = inputs[0];
-  });
+    if (node.widgets_values) {
+      w.value = node.widgets_values[index]
+    } else {
+      w.value = inputs[0];
+    }
+  }
   const size = node.computeSize();
   node.setSize([size[0] * 1.5, size[1]]);
 
