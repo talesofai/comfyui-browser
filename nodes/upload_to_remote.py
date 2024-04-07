@@ -62,9 +62,9 @@ class UploadToRemote:
 
                 output = io.BytesIO()
                 if extension in ["jpg", "jpeg"]:
-                    img.save(output, quality=quality, optimize=True, format="JPEG")
+                    img.convert('RGB').save(output, quality=quality, optimize=True, format="JPEG")
                 elif extension == 'webp':
-                    img.save(output, quality=quality, exif=exif_data, format="WEBP")
+                    img.convert('RGB').save(output, quality=quality, exif=exif_data, format="WEBP")
                 else:
                     img.save(output, pnginfo=exif_data, optimize=True, format="PNG")
                 image_bytes = output.getvalue()
