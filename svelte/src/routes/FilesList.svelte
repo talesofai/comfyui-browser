@@ -184,6 +184,14 @@
   {/each}
 </div>
 
+<div class="flex justify-center">
+  {#if files.length > showCursor}
+    <button on:click={() => showCursor += 10} class="btn btn-neutral btn-outline">Load more</button>
+  {:else}
+    <p class="text-neutral-content">No more content.</p>
+  {/if}
+</div>
+
 {#if files.length === 0}
   <div class="w-full h-full flex items-center justify-center">
     <span class="font-bold text-4xl">
