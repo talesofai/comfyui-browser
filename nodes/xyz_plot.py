@@ -191,7 +191,7 @@ class XyzPlot:
         if extra_pnginfo:
             workflow_filename = "workflow.json"
             with open(f"{self.output_folder_name}/{workflow_filename}", "w", encoding="utf-8") as f:
-                json.dump(extra_pnginfo, f)
+                json.dump(extra_pnginfo['workflow'], f)
             retData["workflow"] = {
                 "url": f'{browser_base_url}/{workflow_filename}',
             }
