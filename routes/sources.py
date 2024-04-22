@@ -1,4 +1,4 @@
-from os import path, scandir, mkdir
+from os import path, scandir, makedirs
 import json
 from aiohttp import web, ClientSession, ClientTimeout
 import re
@@ -58,8 +58,7 @@ async def api_create_source(request):
     if not repo_url:
         return web.Response(status=400)
 
-    if not path.exists(sources_path):
-        mkdir(sources_path)
+    makedirs(sources_path, exist_ok=True)
 
     pattern = r'[\:\/]([a-zA-Z0-9-_]+)\/([a-zA-Z0-9-_]+)(\.git)?'
     ret = re.search(pattern, repo_url)

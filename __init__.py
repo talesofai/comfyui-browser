@@ -37,9 +37,9 @@ browser_app.add_routes([
 
     web.static("/web", os.path.join(browser_path, 'web/build')),
 
-    web.static("/s/outputs", outputs_path),
-    web.static("/s/collections", collections_path),
-    web.static("/s/sources", sources_path),
+    web.static("/s/outputs", outputs_path()),
+    web.static("/s/collections", collections_path()),
+    web.static("/s/sources", sources_path()),
 ])
 server.PromptServer.instance.app.add_subapp("/browser/", browser_app)
 

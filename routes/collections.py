@@ -1,4 +1,4 @@
-from os import path, mkdir
+from os import path, makedirs
 from aiohttp import web
 import shutil
 import time
@@ -19,15 +19,14 @@ async def api_add_to_collections(request):
     folder_type = json_data.get("folder_type", "outputs")
     parent_path = get_parent_path(folder_type)
 
-    if not path.exists(collections_path):
-        mkdir(collections_path)
+    makedirs(collections_path(), exist_ok=True)
 
     source_file_path = path.join(parent_path, folder_path, filename)
     if not path.exists(source_file_path):
         return web.Response(status=404)
 
     new_filepath = path.join(
-        collections_path,
+        collections_path(),
         add_uuid_to_filename(filename)
     )
 
@@ -48,7 +47,7 @@ async def api_create_new_workflow(request):
         return web.Response(status=404)
 
     new_filepath = path.join(
-        collections_path,
+        collections_path(),
         add_uuid_to_filename(filename)
     )
     with open(new_filepath, 'w', encoding='utf-8') as f:
@@ -68,10 +67,10 @@ async def api_sync_my_collections(_):
     git_init()
 
     cmd = 'git status -s'
-    ret = run_cmd(cmd, collections_path)
+    ret = run_cmd(cmd, collections_path())
     if len(ret.stdout) > 0:
         cmd = f'git add . && git commit -m "sync by comfyui-browser at {int(time.time())}"'
-        ret = run_cmd(cmd, collections_path)
+        ret = run_cmd(cmd, collections_path())
         if not ret.returncode == 0:
             return web.json_response(
                 { 'message': "\n".join([ret.stdout, ret.stderr]) },
@@ -79,7 +78,7 @@ async def api_sync_my_collections(_):
             )
 
     cmd = f'git fetch {git_remote_name} -v'
-    ret = run_cmd(cmd, collections_path)
+    ret = run_cmd(cmd, collections_path())
     if not ret.returncode == 0:
         return web.json_response(
             { 'message': "\n".join([ret.stdout, ret.stderr]) },
@@ -87,14 +86,14 @@ async def api_sync_my_collections(_):
         )
 
     cmd = 'git branch --show-current'
-    ret = run_cmd(cmd, collections_path)
+    ret = run_cmd(cmd, collections_path())
     branch = ret.stdout.replace('\n', '')
 
     cmd = f'git merge {git_remote_name}/{branch}'
-    ret = run_cmd(cmd, collections_path, log_code=False)
+    ret = run_cmd(cmd, collections_path(), log_code=False)
 
     cmd = f'git push {git_remote_name} {branch}'
-    ret = run_cmd(cmd, collections_path)
+    ret = run_cmd(cmd, collections_path())
     if not ret.returncode == 0:
         return web.json_response(
             { 'message': "\n".join([ret.stdout, ret.stderr]) },

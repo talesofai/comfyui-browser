@@ -18,7 +18,7 @@ async def api_update_browser_config(request):
     git_init()
 
     if git_repo == '':
-        ret = run_cmd(f'git remote remove {git_remote_name}', collections_path)
+        ret = run_cmd(f'git remote remove {git_remote_name}', collections_path())
         if not ret.returncode == 0:
             return web.json_response(
                 { 'message': ret.stderr },
@@ -42,7 +42,7 @@ def set_config(config):
     with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(config, f)
 
-def git_set_remote_url(remote_url, run_path = collections_path):
+def git_set_remote_url(remote_url, run_path = collections_path()):
     ret = run_cmd('git remote', run_path)
 
     if git_remote_name in ret.stdout.split('\n'):

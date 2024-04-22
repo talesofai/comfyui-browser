@@ -71,8 +71,7 @@ class XyzPlot:
         return f"/browser/files/view?folder_type=outputs&filename={filename}&folder_path={folder_name}"
 
     def save_images(self, images):
-        if not os.path.exists(self.output_folder_name):
-            os.mkdir(self.output_folder_name)
+        os.makedirs(self.output_folder_name, exist_ok=True)
 
         for index, image in enumerate(images):
             i = 255. * image.cpu().numpy()
@@ -178,11 +177,10 @@ class XyzPlot:
             })
 
         # Check if the directory exists
-        if not os.path.exists(self.output_folder_name):
-            try:
-                os.makedirs(self.output_folder_name)
-            except Exception as e:
-                raise Exception(f"Failed to create directory: {e}")
+        try:
+            os.makedirs(self.output_folder_name, exist_ok=True)
+        except Exception as e:
+            raise Exception(f"Failed to create directory: {e}")
 
         browser_base_url = f"/browser/s/outputs/{output_folder_name}"
         retData = {

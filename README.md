@@ -61,6 +61,37 @@ https://github.com/talesofai/comfyui-browser/assets/828837/803ce57a-1cf2-4e1c-be
 
 Install [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager), search `comfyui-browser` in Install Custom Node and install it.
 
+#### Configuring
+
+In your `comfyui-browser` directory, you can add a `config.json` to override
+the directories that `comfyui-browser` uses.  Ex:
+
+``` json
+{
+  "collections": "/var/lib/comfyui/comfyui-browser-collections",
+  "download_logs": "/var/lib/comfyui/comfyui-browser-download-logs",
+  "outputs": "/var/lib/comfyui/outputs",
+  "sources": "/var/lib/comfyui/comfyui-browser-sources"
+}
+```
+
+The default configuration values are:
+
+``` json
+{
+  "collections": "[comfyui-browser]/collections",
+  "download_logs": "[comfyui-browser]/download-logs",
+  "outputs": "[comfyui]/outputs",
+  "sources": "[comfyui-browser]/sources"
+}
+```
+
+Where `[comfyui-browser]` is the automatically determined path of your
+`comfyui-browser` installation, and `[comfyui]` is the automatically determined
+path of your `comfyui` server.  Notably, the `outputs` directory defaults to the
+`--output-directory` argument to `comfyui` itself, or the default path that
+`comfyui` wishes to use for the `--output-directory` argument.
+
 ### Manually
 
 Clone this repo into the `custom_nodes` folder and restart the ComfyUI.
@@ -71,7 +102,9 @@ cd custom_nodes && git clone https://github.com/tzwm/comfyui-browser.git
 
 ## Notes
 
-- Your 'Saves' are stored in the `ComfyUI/custom_nodes/comfyui-browser/collections`.
+- Your 'Saves' are stored in the `collections` configuration value.  See <a
+  href="#Configuring">Configuring</a> for its default, and how to set the path
+  to something different.
 - Press 'B' to toggle the Browser dialog in the ComfyUI.
 
 
