@@ -163,9 +163,9 @@ def add_uuid_to_filename(filename):
 
 def output_directory_from_comfyui():
    if args.output_directory:
-       path.abspath(args.output_directory)
+       return path.abspath(args.output_directory)
    else:
-       folder_paths.get_output_directory()
+       return folder_paths.get_output_directory()
 
 def git_init():
     if not path.exists(path.join(collections_path(), '.git')):
@@ -188,9 +188,9 @@ def git_init():
         run_cmd(f'git config user.email "{hostname}"', collections_path())
 
 for dir in [
-        collections_path(),
-        sources_path(),
-        download_logs_path(),
-        outputs_path(),
+    collections_path(),
+    sources_path(),
+    download_logs_path(),
+    outputs_path(),
 ]:
     makedirs(dir, exist_ok=True)
