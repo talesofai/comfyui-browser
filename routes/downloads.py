@@ -34,7 +34,7 @@ def parse_options_header(content_disposition):
 
 # credit: https://gist.github.com/phineas-pta/d73f9a035b05f8e923af8c01df057175
 async def download_by_requests(uuid:str, download_url:str, save_in:str, filename:str="", overwrite:bool=False, chunk_size:int=1):
-    log_file_path = path.join(download_logs_path, uuid + '.json')
+    log_file_path = path.join(download_logs_path(), uuid + '.json')
     base_info = {
         'uuid': uuid,
         'download_url': download_url,
@@ -129,7 +129,7 @@ async def api_create_new_download(request):
 
 async def api_list_downloads(_):
     download_logs = []
-    folder_listing = os.scandir(download_logs_path)
+    folder_listing = os.scandir(download_logs_path())
     folder_listing = sorted(folder_listing, key=lambda f: (f.is_file(), -f.stat().st_ctime))
     for item in folder_listing:
         if not path.exists(item.path):
@@ -162,7 +162,7 @@ async def api_show_download(request):
     if uuid == '':
         return web.Response(status=400)
 
-    target_path = path.join(download_logs_path, uuid + '.json')
+    target_path = path.join(download_logs_path(), uuid + '.json')
     if not path.exists(target_path):
         return web.Response(status=404)
 
