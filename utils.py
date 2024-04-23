@@ -1,5 +1,6 @@
+import functools
 import json
-from os import path, scandir, mkdir
+from os import path, scandir, makedirs
 import subprocess
 import time
 from typing import TypedDict, List
@@ -13,18 +14,7 @@ if ':' in args.listen:
     SERVER_BASE_URL = f'http://[{args.listen}]:{args.port}'
 
 browser_path = path.dirname(__file__)
-collections_path = path.join(browser_path, 'collections')
 config_path = path.join(browser_path, 'config.json')
-sources_path = path.join(browser_path, 'sources')
-download_logs_path = path.join(browser_path, 'download_logs')
-outputs_path = folder_paths.get_output_directory()
-if args.output_directory:
-    outputs_path = path.abspath(args.output_directory)
-
-for dir in [collections_path, sources_path, download_logs_path, outputs_path]:
-    if not path.exists(dir):
-        mkdir(dir)
-
 
 image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
 video_extensions = ['.mp4', '.mov', '.avi', '.webm', '.mkv']
@@ -33,6 +23,39 @@ white_extensions = ['.json', '.html'] + image_extensions + video_extensions
 info_file_suffix = '.info'
 
 git_remote_name = 'origin'
+
+@functools.cache
+def get_config():
+    return {
+        "collections": path.join(browser_path, 'collections'),
+        "download_logs": path.join(browser_path, 'download_logs'),
+        "outputs": output_directory_from_comfyui(),
+        "sources": path.join(browser_path, 'sources'),
+    } | load_config()
+
+def load_config():
+    if not path.exists(config_path):
+        return {}
+    else:
+        with open(config_path, 'r') as f:
+            return json.load(f)
+
+@functools.cache
+def collections_path():
+    return get_config()['collections']
+
+@functools.cache
+def download_logs_path():
+    return get_config()['download_logs']
+
+@functools.cache
+def outputs_path():
+    return get_config()['outputs']
+
+@functools.cache
+def sources_path():
+    return get_config()['sources']
+
 
 class FileInfoDict(TypedDict):
     type: str
@@ -70,12 +93,12 @@ def run_cmd(cmd, run_path, log_cmd=True, log_code=True, log_message=True):
 # folder_type = 'outputs', 'collections', 'sources'
 def get_parent_path(folder_type: str):
     if folder_type == 'collections':
-        return collections_path
+        return collections_path()
     if folder_type == 'sources':
-        return sources_path
+        return sources_path()
 
     # outputs
-    return outputs_path
+    return outputs_path()
 
 # folder_type = 'outputs', 'collections', 'sources'
 def get_target_folder_files(folder_path: str, folder_type: str = 'outputs'):
@@ -138,29 +161,36 @@ def add_uuid_to_filename(filename):
     name, ext = path.splitext(filename)
     return f'{name}_{int(time.time())}{ext}'
 
-def get_config():
-    if not path.exists(config_path):
-        return {}
+def output_directory_from_comfyui():
+   if args.output_directory:
+       path.abspath(args.output_directory)
+   else:
+       folder_paths.get_output_directory()
 
-    with open(config_path, 'r') as f:
-        return json.load(f)
+def git_init():
+    if not path.exists(path.join(collections_path(), '.git')):
+        run_cmd('git init', collections_path())
 
-def git_init(run_path = collections_path):
-    if not path.exists(path.join(run_path, '.git')):
-        run_cmd('git init', collections_path)
-
-    ret = run_cmd('git config user.name', collections_path,
+    ret = run_cmd('git config user.name', collections_path(),
                   log_cmd=False, log_code=False, log_message=False)
     if len(ret.stdout) == 0:
-        ret = run_cmd('whoami', collections_path,
+        ret = run_cmd('whoami', collections_path(),
                       log_cmd=False, log_code=False, log_message=False)
         username = ret.stdout.rstrip("\n")
-        run_cmd(f'git config user.name "{username}"', collections_path)
+        run_cmd(f'git config user.name "{username}"', collections_path())
 
-    ret = run_cmd('git config user.email', collections_path,
+    ret = run_cmd('git config user.email', collections_path(),
                   log_cmd=False, log_code=False, log_message=False)
     if len(ret.stdout) == 0:
-        ret = run_cmd('hostname', collections_path,
+        ret = run_cmd('hostname', collections_path(),
                       log_cmd=False, log_code=False, log_message=False)
         hostname = ret.stdout.rstrip("\n")
-        run_cmd(f'git config user.email "{hostname}"', collections_path)
+        run_cmd(f'git config user.email "{hostname}"', collections_path())
+
+for dir in [
+        collections_path(),
+        sources_path(),
+        download_logs_path(),
+        outputs_path(),
+]:
+    makedirs(dir, exist_ok=True)
