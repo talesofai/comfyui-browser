@@ -42,7 +42,7 @@ class LoadImageByUrl:
             with open(download_path, 'wb') as file:
                 file.write(res.content)
         else:
-            raise ValueError(f"Failed to load image from {self.url}: {res.status_code}")
+            raise ValueError(f"Failed to load image from {self.url}: {res.status_code} {res.text}")
 
     def run(self, url, cache=True):
         self.url = url

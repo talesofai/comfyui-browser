@@ -90,7 +90,7 @@ class UploadToRemote:
             data = json.dumps(data).encode('utf-8')
             log(f"uploading {track_id} to {remote_url}")
             res = requests.post(remote_url, data=data, headers=headers)
-            log(f"uploaded {track_id}: {res.status_code}")
+            log(f"uploaded {track_id}: {res.status_code} {res.text}")
             # TODO: check the response
 
 
