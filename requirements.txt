@@ -1,3 +1,5 @@
 tqdm
 pandas
 numpy
+requests
+urllib3

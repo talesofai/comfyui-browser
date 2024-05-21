@@ -4,6 +4,8 @@ from os import path, scandir, makedirs
 import subprocess
 import time
 from typing import TypedDict, List
+import requests
+from requests.adapters import HTTPAdapter, Retry
 
 import folder_paths
 from comfy.cli_args import args
@@ -23,6 +25,15 @@ white_extensions = ['.json', '.html'] + image_extensions + video_extensions
 info_file_suffix = '.info'
 
 git_remote_name = 'origin'
+
+def http_client():
+    adapter = HTTPAdapter(max_retries=Retry(3, backoff_factor=0.1))
+    http = requests.session()
+    http.mount('http://', adapter)
+    http.mount('https://', adapter)
+
+    return http
+
 
 @functools.cache
 def get_config():

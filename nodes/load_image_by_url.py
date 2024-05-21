@@ -1,9 +1,9 @@
 import hashlib
-import requests
 import os
 from PIL import Image, ImageSequence, ImageOps
 import numpy as np
 import torch
+from ..utils import http_client
 
 
 import folder_paths
@@ -36,7 +36,7 @@ class LoadImageByUrl:
 
     def download_by_url(self):
         input_dir = folder_paths.get_input_directory()
-        res = requests.get(self.url)
+        res = http_client().get(self.url)
         if res.status_code == 200:
             download_path = os.path.join(input_dir, self.filename())
             with open(download_path, 'wb') as file:
