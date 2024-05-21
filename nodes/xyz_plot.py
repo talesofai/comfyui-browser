@@ -1,6 +1,5 @@
 import shutil
 import time
-import requests
 import json
 from PIL import Image
 import numpy as np
@@ -9,7 +8,7 @@ import copy
 
 import folder_paths
 
-from ..utils import SERVER_BASE_URL
+from ..utils import SERVER_BASE_URL, http_client
 
 class XyzPlot:
     CATEGORY = "Browser"
@@ -107,7 +106,7 @@ class XyzPlot:
 
             # for some special network environments like AutoDL
             proxies = {"http": "", "https": ""}
-            return requests.post(SERVER_BASE_URL + '/prompt', data=data, proxies=proxies)
+            return http_client().post(SERVER_BASE_URL + '/prompt', data=data, proxies=proxies)
 
 
         batch_size = len(images)

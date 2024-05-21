@@ -1,5 +1,5 @@
-import requests
 import json
+from ..utils import http_client
 
 class DifyTextGenerator:
     CATEGORY = "Browser"
@@ -39,7 +39,7 @@ class DifyTextGenerator:
             # something weird, I have to add '{' and '}' manually
             data["inputs"] = json.loads("{" + inputs_json_str + "}")
 
-        r = requests.post(
+        r = http_client().post(
             dify_api_endpoint,
             headers=header,
             data=json.dumps(data),

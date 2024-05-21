@@ -1,7 +1,6 @@
 from os import path
 import os
 import shutil
-import requests
 import time
 import asyncio
 import json
@@ -11,7 +10,7 @@ from tqdm import tqdm
 
 import folder_paths
 
-from ..utils import download_logs_path, log
+from ..utils import download_logs_path, log, http_client
 
 def parse_options_header(content_disposition):
     param, options = '', {}
@@ -53,7 +52,7 @@ async def download_by_requests(uuid:str, download_url:str, save_in:str, filename
 
     HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"}
 
-    with requests.get(download_url, headers=HEADERS, stream=True) as resp:
+    with http_client().get(download_url, headers=HEADERS, stream=True) as resp:
         MISSING_FILENAME = f"unkwown_{uuid}"
         # get file name
         if filename == "":
