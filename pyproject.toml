@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-browser"
+description = "This is an image/video/workflow browser and manager for ComfyUI. You could add image/video/workflow to collections and load it to ComfyUI. You will be able to use your collections everywhere."
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["tqdm", "pandas", "numpy", "requests", "urllib3"]
+
+[project.urls]
+Repository = "https://github.com/talesofai/comfyui-browser"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "comfyui-browser"
+Icon = ""
