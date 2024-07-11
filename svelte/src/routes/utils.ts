@@ -18,9 +18,9 @@ function getFileUrl(comfyUrl: string, folderType: string, file: any) {
   }
 }
 
-function findFile(filename: string, exts: Array<string>, files: Array<any>) {
-  if (files.hasOwnProperty(filename)) {
-    return files[filename];
+function findFile(filename: string, exts: Array<string>, filesMap: Array<any>) {
+  if (filesMap.allFiles.hasOwnProperty(filename)) {
+      return filesMap.allFiles[filename];
   }
   return false;
 }
@@ -57,7 +57,10 @@ function processFile(
   file['url'] = url;
   if (['image', 'video'].includes(file['fileType'])) {
     file['previewUrl'] = url;
-    let jsonFile = findFile(file.fullPath, JSON_EXTS, files);
+    var path = file.fullPath;
+    var jsonFileName = path.substring(0, path.lastIndexOf('.')) || path;
+    var jsonFileName = jsonFileName + ".json";
+    let jsonFile = findFile(jsonFileName, JSON_EXTS, files);
     if (jsonFile) {
       file['url'] = getFileUrl(comfyUrl, folderType, jsonFile);
     }
@@ -98,15 +101,24 @@ export async function fetchFiles(
 
   let files = ret.files;
 
+ 
+
+  let newFiles: Array<any> = [];
+  var map = {
+    "directories": {},
+    "allFiles": {}
+  };
+
   var filesMap = files.reduce(function(map, obj) {
     var dir = (obj.type == 'dir') ? "" : obj.folder_path;
     var filePath = "/" + dir + obj.name;
     obj.fullPath = filePath;
-    map[filePath] = obj;
+    map.allFiles[filePath] = obj;
+    if (obj.type == 'dir') {
+      map.directories[filePath] = obj;
+    }
     return map;
-  }, {});
-
-  let newFiles: Array<any> = [];
+  }, map);
 
   files.forEach((f: any) => {
     let newFile;
@@ -120,7 +132,6 @@ export async function fetchFiles(
       newFiles.push(newFile);
     }
   });
-
 
   return newFiles;
 }
