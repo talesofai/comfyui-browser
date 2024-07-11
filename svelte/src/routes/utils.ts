@@ -30,8 +30,7 @@ function processFile(
   folderType: FOLDER_TYPES,
   comfyUrl: string,
   files: Array<any>,
-) 
-{
+) {
   const extname = file.name.split('.').pop().toLowerCase();
   if (WHITE_EXTS.includes(extname)) {
     file['fileType'] = extname;
@@ -98,11 +97,7 @@ export async function fetchFiles(
 
   const res = await fetch(url);
   const ret = await res.json();
-
   let files = ret.files;
-
- 
-
   let newFiles: Array<any> = [];
   var map = {
     "directories": {},
