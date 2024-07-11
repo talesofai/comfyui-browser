@@ -1,0 +1,1307 @@
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:37:16.809456
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+
+
+███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗███████╗               
+████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔════╝               
+██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║█████╗                 
+██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══╝                 
+██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║███████╗               
+╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝               
+                                                                       
+██████╗ ███████╗██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+██║  ██║█████╗  ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║███████╗
+██║  ██║██╔══╝  ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+██████╔╝███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║███████║
+╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                       
+
+
+### Loading: ComfyUI-Impact-Pack (V5.18.13)
+### Loading: ComfyUI-Impact-Pack (Subpack: V0.6)
+[Impact Pack] Wildcards loading done.
+(pysssss:WD14Tagger) [DEBUG] Available ORT providers: TensorrtExecutionProvider, CUDAExecutionProvider, AzureExecutionProvider, CPUExecutionProvider
+(pysssss:WD14Tagger) [DEBUG] Using ORT providers: CUDAExecutionProvider, CPUExecutionProvider
+### Loading: ComfyUI-Manager (V2.46)
+### ComfyUI Revision: 2341 [628f0b8e] | Released on '2024-07-07'
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+/media/comfyui/venv/lib/python3.12/site-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/github-stats.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+[0m[1;34m[SD Prompt Reader] [36mNode version: 1.3.3[0m
+[0m[1;34m[SD Prompt Reader] [36mCore version: 1.3.5[0m
+Plush - Running on python installation: /media/comfyui/venv/bin/python3, ver: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+Plush - Current Openai Version:  1.12.0
+Plush - Version: 1.21.11
+Traceback (most recent call last):
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/__init__.py", line 1, in <module>
+    from .ait_load import AIT_Unet_Loader #, AIT_VAE_Encode_Loader
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/ait_load.py", line 35, in <module>
+    from aitemplate.compiler import Model
+ModuleNotFoundError: No module named 'aitemplate'
+
+Cannot import /media/comfyui/custom_nodes/ComfyUI-AIT module for custom nodes: No module named 'aitemplate'
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ckpts path: /media/comfyui/custom_nodes/comfyui_controlnet_aux/ckpts[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using symlinks: False[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ort providers: ['CUDAExecutionProvider', 'DirectMLExecutionProvider', 'OpenVINOExecutionProvider', 'ROCMExecutionProvider', 'CPUExecutionProvider', 'CoreMLExecutionProvider'][0m
+DWPose: Onnxruntime with acceleration providers detected
+### Loading: ComfyUI-Inspire-Pack (V0.81)
+[36;20m[comfy_mtb] | INFO -> loaded [96m78[0m nodes successfuly[0m
+[36;20m[comfy_mtb] | INFO -> Some nodes (2) could not be loaded. This can be ignored, but go to http://127.0.0.1:8188/mtb if you want more information.[0m
+rmmod: ERROR: Module nvidia_uvm is in use
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:37:25.305425
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.6 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+--------------
+*ComfyUI_Jags_Audiotools- nodes_loaded*
+--------------
+[92m[Allor][0m: 0 nodes were overridden.
+[92m[Allor][0m: 12 modules were enabled.
+[92m[Allor][0m: 98 nodes were loaded.
+[0;33m[ReActor][0m - [38;5;173mSTATUS[0m - [0;32mRunning v0.5.1-a6 in ComfyUI[0m
+Torch version: 2.3.1+cu121
+[95m[ComfyUI-0️⃣ 2️⃣ 4️⃣ 6️⃣ ] Loaded all nodes and apis.[0m
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mWAS Node Suite: [0mOpenCV Python FFMPEG support is enabled[0m
+[34mWAS Node Suite [93mWarning: [0m`ffmpeg_bin_path` is not set in `/media/comfyui/custom_nodes/was-node-suite-comfyui/was_suite_config.json` config file. Will attempt to use system ffmpeg binaries if available.[0m
+[34mWAS Node Suite: [0mFinished.[0m [32mLoaded[0m [0m217[0m [32mnodes successfully.[0m
+
+	[3m[93m"Art enables us to find ourselves and lose ourselves at the same time."[0m[3m - Thomas Merton[0m
+
+[36mEfficiency Nodes:[0m Attempting to add Control Net options to the 'HiRes-Fix Script' Node (comfyui_controlnet_aux add-on)...[92mSuccess![0m
+------------------------------------------
+[34mComfyroll Studio v1.76 : [92m 175 Nodes Loaded[0m
+------------------------------------------
+** For changes, please see patch notes at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/blob/main/Patch_Notes.md
+** For help, please see the wiki at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki
+------------------------------------------
+[Crystools [0;32mINFO[0m] Crystools version: 1.13.1
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+
+
+███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗███████╗               
+████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔════╝               
+██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║█████╗                 
+██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══╝                 
+██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║███████╗               
+╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝               
+                                                                       
+██████╗ ███████╗██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+██║  ██║█████╗  ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║███████╗
+██║  ██║██╔══╝  ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+██████╔╝███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║███████║
+╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                       
+
+
+### Loading: ComfyUI-Impact-Pack (V5.18.13)
+### Loading: ComfyUI-Impact-Pack (Subpack: V0.6)
+[Impact Pack] Wildcards loading done.
+(pysssss:WD14Tagger) [DEBUG] Available ORT providers: TensorrtExecutionProvider, CUDAExecutionProvider, AzureExecutionProvider, CPUExecutionProvider
+(pysssss:WD14Tagger) [DEBUG] Using ORT providers: CUDAExecutionProvider, CPUExecutionProvider
+### Loading: ComfyUI-Manager (V2.46)
+### ComfyUI Revision: 2341 [628f0b8e] | Released on '2024-07-07'
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+/media/comfyui/venv/lib/python3.12/site-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/github-stats.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+[Crystools [0;32mINFO[0m] CPU: AMD Ryzen 9 3900X 12-Core Processor - Arch: x86_64 - OS: Linux 6.9.7-arch1-1
+[Crystools [0;32mINFO[0m] GPU/s:
+[Crystools [0;32mINFO[0m] 0) NVIDIA GeForce RTX 3070
+[Crystools [0;32mINFO[0m] NVIDIA Driver: 555.58
+
+[92m[rgthree] Loaded 41 fantastic nodes.[0m
+[92m[rgthree] Will use rgthree's optimized recursive execution.[0m
+
+[92m[tinyterraNodes] [32mLoaded[0m
+ASTERR config loaded successfully
+
+Import times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rembg-comfyui-node
+   0.0 seconds: /media/comfyui/custom_nodes/image-resize-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Logic
+   0.0 seconds: /media/comfyui/custom_nodes/cg-use-everywhere
+   0.0 seconds: /media/comfyui/custom_nodes/websocket_image_save.py
+   0.0 seconds: /media/comfyui/custom_nodes/lora-info
+   0.0 seconds: /media/comfyui/custom_nodes/sd-perturbed-attention
+   0.0 seconds: /media/comfyui/custom_nodes/ASTERR
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-selector
+   0.0 seconds: /media/comfyui/custom_nodes/cg-image-picker
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_TiledKSampler
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-OpenPose-Editor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Cutoff
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Notifications
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_fabric
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-post-processing-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/masquerade-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_InstantID
+   0.0 seconds: /media/comfyui/custom_nodes/DTAIComfyVariables
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_experiments
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_SeeCoder
+   0.0 seconds (IMPORT FAILED): /media/comfyui/custom_nodes/ComfyUI-AIT
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-inpaint-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-WD14-Tagger
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_IPAdapter_plus
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-DDColor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-AutomaticCFG
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Custom-Scripts
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_JPS-Nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_UltimateSDUpscale
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Frame-Interpolation
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-browser
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Florence2
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Advanced-ControlNet
+   0.0 seconds: /media/comfyui/custom_nodes/OneButtonPrompt
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Allor
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.0 seconds: /media/comfyui/custom_nodes/efficiency-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Comfyroll_CustomNodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-TiledDiffusion
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-KJNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-prompt-reader-node
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui_controlnet_aux
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-0246
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_tinyterraNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-reactor-node
+   0.0 seconds: /media/comfyui/custom_nodes/Conditioning-token-experiments-for-ComfyUI
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Inspire-Pack
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-VideoHelperSuite
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-SUPIR
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Fill-Nodes
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Inpaint
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI-MagickWand
+   0.3 seconds: /media/comfyui/custom_nodes/Plush-for-ComfyUI
+   0.3 seconds: /media/comfyui/custom_nodes/ComfyUI-DynamiCrafterWrapper
+   0.4 seconds: /media/comfyui/custom_nodes/comfy_mtb
+   0.4 seconds: /media/comfyui/custom_nodes/ComfyUI-CCSR
+   0.4 seconds: /media/comfyui/custom_nodes/comfyui_segment_anything
+   0.4 seconds: /media/comfyui/custom_nodes/ComfyUI-Impact-Pack
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI_FaceAnalysis
+   1.1 seconds: /media/comfyui/custom_nodes/was-node-suite-comfyui
+   1.7 seconds: /media/comfyui/custom_nodes/ComfyUI_Jags_Audiotools
+   1.8 seconds: /media/comfyui/custom_nodes/DTAIImageToTextNode
+   2.3 seconds: /media/comfyui/custom_nodes/ComfyUI-Crystools
+
+Starting server
+
+To see the GUI go to: http://127.0.0.1:8188
+[0m[1;34m[SD Prompt Reader] [36mNode version: 1.3.3[0m
+[0m[1;34m[SD Prompt Reader] [36mCore version: 1.3.5[0m
+Plush - Running on python installation: /media/comfyui/venv/bin/python3, ver: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+Plush - Current Openai Version:  1.12.0
+Plush - Version: 1.21.11
+Traceback (most recent call last):
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/__init__.py", line 1, in <module>
+    from .ait_load import AIT_Unet_Loader #, AIT_VAE_Encode_Loader
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/ait_load.py", line 35, in <module>
+    from aitemplate.compiler import Model
+ModuleNotFoundError: No module named 'aitemplate'
+
+Cannot import /media/comfyui/custom_nodes/ComfyUI-AIT module for custom nodes: No module named 'aitemplate'
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ckpts path: /media/comfyui/custom_nodes/comfyui_controlnet_aux/ckpts[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using symlinks: False[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ort providers: ['CUDAExecutionProvider', 'DirectMLExecutionProvider', 'OpenVINOExecutionProvider', 'ROCMExecutionProvider', 'CPUExecutionProvider', 'CoreMLExecutionProvider'][0m
+DWPose: Onnxruntime with acceleration providers detected
+### Loading: ComfyUI-Inspire-Pack (V0.81)
+[36;20m[comfy_mtb] | INFO -> loaded [96m78[0m nodes successfuly[0m
+[36;20m[comfy_mtb] | INFO -> Some nodes (2) could not be loaded. This can be ignored, but go to http://127.0.0.1:8188/mtb if you want more information.[0m
+FETCH DATA from: /media/comfyui/custom_nodes/ComfyUI-Manager/extension-node-map.json [DONE]
+Retrying request to /models in 0.954356 seconds
+--------------
+*ComfyUI_Jags_Audiotools- nodes_loaded*
+--------------
+[92m[Allor][0m: 0 nodes were overridden.
+[92m[Allor][0m: 12 modules were enabled.
+[92m[Allor][0m: 98 nodes were loaded.
+[0;33m[ReActor][0m - [38;5;173mSTATUS[0m - [0;32mRunning v0.5.1-a6 in ComfyUI[0m
+Torch version: 2.3.1+cu121
+[95m[ComfyUI-0️⃣ 2️⃣ 4️⃣ 6️⃣ ] Loaded all nodes and apis.[0m
+Retrying request to /models in 1.753870 seconds
+[34mWAS Node Suite: [0mOpenCV Python FFMPEG support is enabled[0m
+[34mWAS Node Suite [93mWarning: [0m`ffmpeg_bin_path` is not set in `/media/comfyui/custom_nodes/was-node-suite-comfyui/was_suite_config.json` config file. Will attempt to use system ffmpeg binaries if available.[0m
+[34mWAS Node Suite: [0mFinished.[0m [32mLoaded[0m [0m217[0m [32mnodes successfully.[0m
+
+	[3m[93m"Art is the most intense mode of individualism that the world has known."[0m[3m - Oscar Wilde[0m
+
+[36mEfficiency Nodes:[0m Attempting to add Control Net options to the 'HiRes-Fix Script' Node (comfyui_controlnet_aux add-on)...[92mSuccess![0m
+------------------------------------------
+[34mComfyroll Studio v1.76 : [92m 175 Nodes Loaded[0m
+------------------------------------------
+** For changes, please see patch notes at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/blob/main/Patch_Notes.md
+** For help, please see the wiki at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki
+------------------------------------------
+[Crystools [0;32mINFO[0m] Crystools version: 1.13.1
+Retrying request to /openai/v1/models in 0.856325 seconds
+Retrying request to /openai/v1/models in 1.671224 seconds
+[Crystools [0;32mINFO[0m] CPU: AMD Ryzen 9 3900X 12-Core Processor - Arch: x86_64 - OS: Linux 6.9.7-arch1-1
+[Crystools [0;32mINFO[0m] GPU/s:
+[Crystools [0;32mINFO[0m] 0) NVIDIA GeForce RTX 3070
+[Crystools [0;32mINFO[0m] NVIDIA Driver: 555.58
+
+[92m[rgthree] Loaded 41 epic nodes.[0m
+[92m[rgthree] Will use rgthree's optimized recursive execution.[0m
+
+[92m[tinyterraNodes] [32mLoaded[0m
+ASTERR config loaded successfully
+
+Import times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rembg-comfyui-node
+   0.0 seconds: /media/comfyui/custom_nodes/websocket_image_save.py
+   0.0 seconds: /media/comfyui/custom_nodes/image-resize-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Logic
+   0.0 seconds: /media/comfyui/custom_nodes/cg-use-everywhere
+   0.0 seconds: /media/comfyui/custom_nodes/ASTERR
+   0.0 seconds: /media/comfyui/custom_nodes/sd-perturbed-attention
+   0.0 seconds: /media/comfyui/custom_nodes/lora-info
+   0.0 seconds: /media/comfyui/custom_nodes/cg-image-picker
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-selector
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-OpenPose-Editor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_TiledKSampler
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Notifications
+   0.0 seconds: /media/comfyui/custom_nodes/masquerade-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_fabric
+   0.0 seconds: /media/comfyui/custom_nodes/DTAIComfyVariables
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_InstantID
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-post-processing-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Cutoff
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_SeeCoder
+   0.0 seconds (IMPORT FAILED): /media/comfyui/custom_nodes/ComfyUI-AIT
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_experiments
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_IPAdapter_plus
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-inpaint-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-WD14-Tagger
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_JPS-Nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-DDColor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Custom-Scripts
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-AutomaticCFG
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-browser
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_UltimateSDUpscale
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Frame-Interpolation
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Advanced-ControlNet
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Florence2
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.0 seconds: /media/comfyui/custom_nodes/OneButtonPrompt
+   0.0 seconds: /media/comfyui/custom_nodes/efficiency-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Allor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-KJNodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-TiledDiffusion
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Comfyroll_CustomNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-prompt-reader-node
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui_controlnet_aux
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-0246
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_tinyterraNodes
+   0.0 seconds: /media/comfyui/custom_nodes/Conditioning-token-experiments-for-ComfyUI
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Inspire-Pack
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-reactor-node
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-VideoHelperSuite
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-SUPIR
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Inpaint
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Fill-Nodes
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI-MagickWand
+   0.3 seconds: /media/comfyui/custom_nodes/ComfyUI-DynamiCrafterWrapper
+   0.3 seconds: /media/comfyui/custom_nodes/Plush-for-ComfyUI
+   0.4 seconds: /media/comfyui/custom_nodes/comfy_mtb
+   0.4 seconds: /media/comfyui/custom_nodes/ComfyUI-Impact-Pack
+   0.5 seconds: /media/comfyui/custom_nodes/comfyui_segment_anything
+   0.5 seconds: /media/comfyui/custom_nodes/ComfyUI-CCSR
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI_FaceAnalysis
+   1.1 seconds: /media/comfyui/custom_nodes/was-node-suite-comfyui
+   1.7 seconds: /media/comfyui/custom_nodes/ComfyUI_Jags_Audiotools
+   1.8 seconds: /media/comfyui/custom_nodes/DTAIImageToTextNode
+   2.3 seconds: /media/comfyui/custom_nodes/ComfyUI-Crystools
+
+Traceback (most recent call last):
+  File "/media/comfyui/./main.py", line 258, in <module>
+    loop.run_until_complete(run(server, address=args.listen, port=args.port, verbose=not args.dont_print_server, call_on_start=call_on_start))
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/media/comfyui/./main.py", line 153, in run
+    await asyncio.gather(server.start(address, port, verbose, call_on_start), server.publish_loop())
+  File "/media/comfyui/server.py", line 668, in start
+    await site.start()
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_runner.py", line 119, in start
+    self._server = await loop.create_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 1572, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 8188): address already in use
+rmmod: ERROR: Module nvidia_uvm is in use
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:37:42.351082
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+
+
+███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗███████╗               
+████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔════╝               
+██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║█████╗                 
+██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══╝                 
+██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║███████╗               
+╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝               
+                                                                       
+██████╗ ███████╗██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+██║  ██║█████╗  ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║███████╗
+██║  ██║██╔══╝  ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+██████╔╝███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║███████║
+╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                       
+
+
+### Loading: ComfyUI-Impact-Pack (V5.18.13)
+Error handling request
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_protocol.py", line 452, in _handle_request
+    resp = await request_handler(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_app.py", line 543, in _handle
+    resp = await handler(request)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_middlewares.py", line 114, in impl
+    return await handler(request)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/server.py", line 43, in cache_control
+    response: web.Response = await handler(request)
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/server.py", line 55, in cors_middleware
+    response = await handler(request)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_middlewares.py", line 114, in impl
+    return await handler(request)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/comfyui-browser/routes/files.py", line 16, in api_get_files
+    if files == None:
+       ^^^^^
+NameError: name 'files' is not defined. Did you mean: 'filter'?
+### Loading: ComfyUI-Impact-Pack (Subpack: V0.6)
+[Impact Pack] Wildcards loading done.
+(pysssss:WD14Tagger) [DEBUG] Available ORT providers: TensorrtExecutionProvider, CUDAExecutionProvider, AzureExecutionProvider, CPUExecutionProvider
+(pysssss:WD14Tagger) [DEBUG] Using ORT providers: CUDAExecutionProvider, CPUExecutionProvider
+### Loading: ComfyUI-Manager (V2.46)
+### ComfyUI Revision: 2341 [628f0b8e] | Released on '2024-07-07'
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+/media/comfyui/venv/lib/python3.12/site-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/github-stats.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+[0m[1;34m[SD Prompt Reader] [36mNode version: 1.3.3[0m
+[0m[1;34m[SD Prompt Reader] [36mCore version: 1.3.5[0m
+Plush - Running on python installation: /media/comfyui/venv/bin/python3, ver: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+Plush - Current Openai Version:  1.12.0
+Plush - Version: 1.21.11
+Traceback (most recent call last):
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/__init__.py", line 1, in <module>
+    from .ait_load import AIT_Unet_Loader #, AIT_VAE_Encode_Loader
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/ait_load.py", line 35, in <module>
+    from aitemplate.compiler import Model
+ModuleNotFoundError: No module named 'aitemplate'
+
+Cannot import /media/comfyui/custom_nodes/ComfyUI-AIT module for custom nodes: No module named 'aitemplate'
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ckpts path: /media/comfyui/custom_nodes/comfyui_controlnet_aux/ckpts[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using symlinks: False[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ort providers: ['CUDAExecutionProvider', 'DirectMLExecutionProvider', 'OpenVINOExecutionProvider', 'ROCMExecutionProvider', 'CPUExecutionProvider', 'CoreMLExecutionProvider'][0m
+DWPose: Onnxruntime with acceleration providers detected
+### Loading: ComfyUI-Inspire-Pack (V0.81)
+[36;20m[comfy_mtb] | INFO -> loaded [96m78[0m nodes successfuly[0m
+[36;20m[comfy_mtb] | INFO -> Some nodes (2) could not be loaded. This can be ignored, but go to http://127.0.0.1:8188/mtb if you want more information.[0m
+--------------
+*ComfyUI_Jags_Audiotools- nodes_loaded*
+--------------
+[92m[Allor][0m: 0 nodes were overridden.
+[92m[Allor][0m: 12 modules were enabled.
+[92m[Allor][0m: 98 nodes were loaded.
+[0;33m[ReActor][0m - [38;5;173mSTATUS[0m - [0;32mRunning v0.5.1-a6 in ComfyUI[0m
+Torch version: 2.3.1+cu121
+[95m[ComfyUI-0️⃣ 2️⃣ 4️⃣ 6️⃣ ] Loaded all nodes and apis.[0m
+[34mWAS Node Suite: [0mOpenCV Python FFMPEG support is enabled[0m
+[34mWAS Node Suite [93mWarning: [0m`ffmpeg_bin_path` is not set in `/media/comfyui/custom_nodes/was-node-suite-comfyui/was_suite_config.json` config file. Will attempt to use system ffmpeg binaries if available.[0m
+[34mWAS Node Suite: [0mFinished.[0m [32mLoaded[0m [0m217[0m [32mnodes successfully.[0m
+
+	[3m[93m"Do not wait for the opportunity. Create it."[0m[3m - George Bernard Shaw[0m
+
+[36mEfficiency Nodes:[0m Attempting to add Control Net options to the 'HiRes-Fix Script' Node (comfyui_controlnet_aux add-on)...[92mSuccess![0m
+------------------------------------------
+[34mComfyroll Studio v1.76 : [92m 175 Nodes Loaded[0m
+------------------------------------------
+** For changes, please see patch notes at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/blob/main/Patch_Notes.md
+** For help, please see the wiki at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki
+------------------------------------------
+[Crystools [0;32mINFO[0m] Crystools version: 1.13.1
+[Crystools [0;32mINFO[0m] CPU: AMD Ryzen 9 3900X 12-Core Processor - Arch: x86_64 - OS: Linux 6.9.7-arch1-1
+[Crystools [0;32mINFO[0m] GPU/s:
+[Crystools [0;32mINFO[0m] 0) NVIDIA GeForce RTX 3070
+[Crystools [0;32mINFO[0m] NVIDIA Driver: 555.58
+
+[92m[rgthree] Loaded 41 extraordinary nodes.[0m
+[92m[rgthree] Will use rgthree's optimized recursive execution.[0m
+
+[92m[tinyterraNodes] [32mLoaded[0m
+ASTERR config loaded successfully
+
+Import times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rembg-comfyui-node
+   0.0 seconds: /media/comfyui/custom_nodes/image-resize-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Logic
+   0.0 seconds: /media/comfyui/custom_nodes/cg-use-everywhere
+   0.0 seconds: /media/comfyui/custom_nodes/sd-perturbed-attention
+   0.0 seconds: /media/comfyui/custom_nodes/lora-info
+   0.0 seconds: /media/comfyui/custom_nodes/ASTERR
+   0.0 seconds: /media/comfyui/custom_nodes/cg-image-picker
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-selector
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-OpenPose-Editor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_TiledKSampler
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Cutoff
+   0.0 seconds: /media/comfyui/custom_nodes/websocket_image_save.py
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Notifications
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_fabric
+   0.0 seconds: /media/comfyui/custom_nodes/masquerade-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-post-processing-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_InstantID
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_experiments
+   0.0 seconds: /media/comfyui/custom_nodes/DTAIComfyVariables
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_SeeCoder
+   0.0 seconds (IMPORT FAILED): /media/comfyui/custom_nodes/ComfyUI-AIT
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_IPAdapter_plus
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-inpaint-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-DDColor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-WD14-Tagger
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Custom-Scripts
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-AutomaticCFG
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-browser
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_UltimateSDUpscale
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Frame-Interpolation
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_JPS-Nodes
+   0.0 seconds: /media/comfyui/custom_nodes/OneButtonPrompt
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Advanced-ControlNet
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Allor
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.0 seconds: /media/comfyui/custom_nodes/efficiency-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Florence2
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-KJNodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-TiledDiffusion
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui_controlnet_aux
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Comfyroll_CustomNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-prompt-reader-node
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-0246
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_tinyterraNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-reactor-node
+   0.0 seconds: /media/comfyui/custom_nodes/Conditioning-token-experiments-for-ComfyUI
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Inspire-Pack
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-VideoHelperSuite
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-SUPIR
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI-MagickWand
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Fill-Nodes
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Inpaint
+   0.3 seconds: /media/comfyui/custom_nodes/Plush-for-ComfyUI
+   0.3 seconds: /media/comfyui/custom_nodes/ComfyUI-DynamiCrafterWrapper
+   0.4 seconds: /media/comfyui/custom_nodes/comfy_mtb
+   0.4 seconds: /media/comfyui/custom_nodes/ComfyUI-CCSR
+   0.5 seconds: /media/comfyui/custom_nodes/ComfyUI-Impact-Pack
+   0.5 seconds: /media/comfyui/custom_nodes/comfyui_segment_anything
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI_FaceAnalysis
+   1.2 seconds: /media/comfyui/custom_nodes/was-node-suite-comfyui
+   1.8 seconds: /media/comfyui/custom_nodes/ComfyUI_Jags_Audiotools
+   2.3 seconds: /media/comfyui/custom_nodes/ComfyUI-Crystools
+   2.5 seconds: /media/comfyui/custom_nodes/DTAIImageToTextNode
+
+Traceback (most recent call last):
+  File "/media/comfyui/./main.py", line 258, in <module>
+    loop.run_until_complete(run(server, address=args.listen, port=args.port, verbose=not args.dont_print_server, call_on_start=call_on_start))
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/media/comfyui/./main.py", line 153, in run
+    await asyncio.gather(server.start(address, port, verbose, call_on_start), server.publish_loop())
+  File "/media/comfyui/server.py", line 668, in start
+    await site.start()
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_runner.py", line 119, in start
+    self._server = await loop.create_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 1572, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 8188): address already in use
+rmmod: ERROR: Module nvidia_uvm is in use
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:38:00.148858
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+
+
+███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗███████╗               
+████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔════╝               
+██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║█████╗                 
+██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══╝                 
+██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║███████╗               
+╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝               
+                                                                       
+██████╗ ███████╗██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+██║  ██║█████╗  ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║███████╗
+██║  ██║██╔══╝  ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+██████╔╝███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║███████║
+╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                       
+
+
+### Loading: ComfyUI-Impact-Pack (V5.18.13)
+### Loading: ComfyUI-Impact-Pack (Subpack: V0.6)
+(pysssss:WD14Tagger) [DEBUG] Available ORT providers: TensorrtExecutionProvider, CUDAExecutionProvider, AzureExecutionProvider, CPUExecutionProvider[Impact Pack] Wildcards loading done.
+
+(pysssss:WD14Tagger) [DEBUG] Using ORT providers: CUDAExecutionProvider, CPUExecutionProvider
+### Loading: ComfyUI-Manager (V2.46)
+### ComfyUI Revision: 2341 [628f0b8e] | Released on '2024-07-07'
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+/media/comfyui/venv/lib/python3.12/site-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/github-stats.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+[0m[1;34m[SD Prompt Reader] [36mNode version: 1.3.3[0m
+[0m[1;34m[SD Prompt Reader] [36mCore version: 1.3.5[0m
+Plush - Running on python installation: /media/comfyui/venv/bin/python3, ver: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+Plush - Current Openai Version:  1.12.0
+Plush - Version: 1.21.11
+Traceback (most recent call last):
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/__init__.py", line 1, in <module>
+    from .ait_load import AIT_Unet_Loader #, AIT_VAE_Encode_Loader
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/ait_load.py", line 35, in <module>
+    from aitemplate.compiler import Model
+ModuleNotFoundError: No module named 'aitemplate'
+
+Cannot import /media/comfyui/custom_nodes/ComfyUI-AIT module for custom nodes: No module named 'aitemplate'
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ckpts path: /media/comfyui/custom_nodes/comfyui_controlnet_aux/ckpts[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using symlinks: False[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ort providers: ['CUDAExecutionProvider', 'DirectMLExecutionProvider', 'OpenVINOExecutionProvider', 'ROCMExecutionProvider', 'CPUExecutionProvider', 'CoreMLExecutionProvider'][0m
+DWPose: Onnxruntime with acceleration providers detected
+### Loading: ComfyUI-Inspire-Pack (V0.81)
+[36;20m[comfy_mtb] | INFO -> loaded [96m78[0m nodes successfuly[0m
+[36;20m[comfy_mtb] | INFO -> Some nodes (2) could not be loaded. This can be ignored, but go to http://127.0.0.1:8188/mtb if you want more information.[0m
+--------------
+*ComfyUI_Jags_Audiotools- nodes_loaded*
+--------------
+[92m[Allor][0m: 0 nodes were overridden.
+[92m[Allor][0m: 12 modules were enabled.
+[92m[Allor][0m: 98 nodes were loaded.
+[0;33m[ReActor][0m - [38;5;173mSTATUS[0m - [0;32mRunning v0.5.1-a6 in ComfyUI[0m
+Torch version: 2.3.1+cu121
+[95m[ComfyUI-0️⃣ 2️⃣ 4️⃣ 6️⃣ ] Loaded all nodes and apis.[0m
+[34mWAS Node Suite: [0mOpenCV Python FFMPEG support is enabled[0m
+[34mWAS Node Suite [93mWarning: [0m`ffmpeg_bin_path` is not set in `/media/comfyui/custom_nodes/was-node-suite-comfyui/was_suite_config.json` config file. Will attempt to use system ffmpeg binaries if available.[0m
+[34mWAS Node Suite: [0mFinished.[0m [32mLoaded[0m [0m217[0m [32mnodes successfully.[0m
+
+	[3m[93m"Art is the lie that enables us to realize the truth."[0m[3m - Pablo Picasso[0m
+
+[36mEfficiency Nodes:[0m Attempting to add Control Net options to the 'HiRes-Fix Script' Node (comfyui_controlnet_aux add-on)...[92mSuccess![0m
+------------------------------------------
+[34mComfyroll Studio v1.76 : [92m 175 Nodes Loaded[0m
+------------------------------------------
+** For changes, please see patch notes at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/blob/main/Patch_Notes.md
+** For help, please see the wiki at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki
+------------------------------------------
+[Crystools [0;32mINFO[0m] Crystools version: 1.13.1
+[Crystools [0;32mINFO[0m] CPU: AMD Ryzen 9 3900X 12-Core Processor - Arch: x86_64 - OS: Linux 6.9.7-arch1-1
+[Crystools [0;32mINFO[0m] GPU/s:
+[Crystools [0;32mINFO[0m] 0) NVIDIA GeForce RTX 3070
+[Crystools [0;32mINFO[0m] NVIDIA Driver: 555.58
+
+[92m[rgthree] Loaded 41 exciting nodes.[0m
+[92m[rgthree] Will use rgthree's optimized recursive execution.[0m
+
+[92m[tinyterraNodes] [32mLoaded[0m
+ASTERR config loaded successfully
+
+Import times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rembg-comfyui-node
+   0.0 seconds: /media/comfyui/custom_nodes/websocket_image_save.py
+   0.0 seconds: /media/comfyui/custom_nodes/image-resize-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Logic
+   0.0 seconds: /media/comfyui/custom_nodes/sd-perturbed-attention
+   0.0 seconds: /media/comfyui/custom_nodes/cg-use-everywhere
+   0.0 seconds: /media/comfyui/custom_nodes/ASTERR
+   0.0 seconds: /media/comfyui/custom_nodes/cg-image-picker
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-selector
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_TiledKSampler
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Cutoff
+   0.0 seconds: /media/comfyui/custom_nodes/lora-info
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-OpenPose-Editor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Notifications
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_fabric
+   0.0 seconds: /media/comfyui/custom_nodes/masquerade-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_InstantID
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-post-processing-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/DTAIComfyVariables
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_experiments
+   0.0 seconds (IMPORT FAILED): /media/comfyui/custom_nodes/ComfyUI-AIT
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_SeeCoder
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-WD14-Tagger
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_IPAdapter_plus
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_JPS-Nodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-inpaint-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Custom-Scripts
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-AutomaticCFG
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-DDColor
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-browser
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_UltimateSDUpscale
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Frame-Interpolation
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Advanced-ControlNet
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Florence2
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Allor
+   0.0 seconds: /media/comfyui/custom_nodes/efficiency-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/OneButtonPrompt
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Comfyroll_CustomNodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-TiledDiffusion
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-KJNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-prompt-reader-node
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui_controlnet_aux
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-0246
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_tinyterraNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-reactor-node
+   0.0 seconds: /media/comfyui/custom_nodes/Conditioning-token-experiments-for-ComfyUI
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Inspire-Pack
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-VideoHelperSuite
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-SUPIR
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI-MagickWand
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Inpaint
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Fill-Nodes
+   0.3 seconds: /media/comfyui/custom_nodes/ComfyUI-DynamiCrafterWrapper
+   0.3 seconds: /media/comfyui/custom_nodes/Plush-for-ComfyUI
+   0.4 seconds: /media/comfyui/custom_nodes/comfy_mtb
+   0.4 seconds: /media/comfyui/custom_nodes/ComfyUI-CCSR
+   0.4 seconds: /media/comfyui/custom_nodes/ComfyUI-Impact-Pack
+   0.5 seconds: /media/comfyui/custom_nodes/comfyui_segment_anything
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI_FaceAnalysis
+   1.1 seconds: /media/comfyui/custom_nodes/was-node-suite-comfyui
+   1.8 seconds: /media/comfyui/custom_nodes/ComfyUI_Jags_Audiotools
+   2.1 seconds: /media/comfyui/custom_nodes/DTAIImageToTextNode
+   2.3 seconds: /media/comfyui/custom_nodes/ComfyUI-Crystools
+
+Traceback (most recent call last):
+  File "/media/comfyui/./main.py", line 258, in <module>
+    loop.run_until_complete(run(server, address=args.listen, port=args.port, verbose=not args.dont_print_server, call_on_start=call_on_start))
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/media/comfyui/./main.py", line 153, in run
+    await asyncio.gather(server.start(address, port, verbose, call_on_start), server.publish_loop())
+  File "/media/comfyui/server.py", line 668, in start
+    await site.start()
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_runner.py", line 119, in start
+    self._server = await loop.create_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 1572, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 8188): address already in use
+rmmod: ERROR: Module nvidia_uvm is in use
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:38:17.186310
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+
+
+███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗███████╗               
+████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔════╝               
+██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║█████╗                 
+██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══╝                 
+██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║███████╗               
+╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝               
+                                                                       
+██████╗ ███████╗██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+██║  ██║█████╗  ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║███████╗
+██║  ██║██╔══╝  ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+██████╔╝███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║███████║
+╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                       
+
+
+### Loading: ComfyUI-Impact-Pack (V5.18.13)
+### Loading: ComfyUI-Impact-Pack (Subpack: V0.6)
+[Impact Pack] Wildcards loading done.
+(pysssss:WD14Tagger) [DEBUG] Available ORT providers: TensorrtExecutionProvider, CUDAExecutionProvider, AzureExecutionProvider, CPUExecutionProvider
+(pysssss:WD14Tagger) [DEBUG] Using ORT providers: CUDAExecutionProvider, CPUExecutionProvider
+### Loading: ComfyUI-Manager (V2.46)
+### ComfyUI Revision: 2341 [628f0b8e] | Released on '2024-07-07'
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+/media/comfyui/venv/lib/python3.12/site-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/github-stats.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+[0m[1;34m[SD Prompt Reader] [36mNode version: 1.3.3[0m
+[0m[1;34m[SD Prompt Reader] [36mCore version: 1.3.5[0m
+Plush - Running on python installation: /media/comfyui/venv/bin/python3, ver: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+Plush - Current Openai Version:  1.12.0
+Plush - Version: 1.21.11
+Traceback (most recent call last):
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/__init__.py", line 1, in <module>
+    from .ait_load import AIT_Unet_Loader #, AIT_VAE_Encode_Loader
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/ait_load.py", line 35, in <module>
+    from aitemplate.compiler import Model
+ModuleNotFoundError: No module named 'aitemplate'
+
+Cannot import /media/comfyui/custom_nodes/ComfyUI-AIT module for custom nodes: No module named 'aitemplate'
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ckpts path: /media/comfyui/custom_nodes/comfyui_controlnet_aux/ckpts[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using symlinks: False[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ort providers: ['CUDAExecutionProvider', 'DirectMLExecutionProvider', 'OpenVINOExecutionProvider', 'ROCMExecutionProvider', 'CPUExecutionProvider', 'CoreMLExecutionProvider'][0m
+DWPose: Onnxruntime with acceleration providers detected
+### Loading: ComfyUI-Inspire-Pack (V0.81)
+[36;20m[comfy_mtb] | INFO -> loaded [96m78[0m nodes successfuly[0m
+[36;20m[comfy_mtb] | INFO -> Some nodes (2) could not be loaded. This can be ignored, but go to http://127.0.0.1:8188/mtb if you want more information.[0m
+--------------
+*ComfyUI_Jags_Audiotools- nodes_loaded*
+--------------
+[92m[Allor][0m: 0 nodes were overridden.
+[92m[Allor][0m: 12 modules were enabled.
+[92m[Allor][0m: 98 nodes were loaded.
+[0;33m[ReActor][0m - [38;5;173mSTATUS[0m - [0;32mRunning v0.5.1-a6 in ComfyUI[0m
+Torch version: 2.3.1+cu121
+[95m[ComfyUI-0️⃣ 2️⃣ 4️⃣ 6️⃣ ] Loaded all nodes and apis.[0m
+[34mWAS Node Suite: [0mOpenCV Python FFMPEG support is enabled[0m
+[34mWAS Node Suite [93mWarning: [0m`ffmpeg_bin_path` is not set in `/media/comfyui/custom_nodes/was-node-suite-comfyui/was_suite_config.json` config file. Will attempt to use system ffmpeg binaries if available.[0m
+[34mWAS Node Suite: [0mFinished.[0m [32mLoaded[0m [0m217[0m [32mnodes successfully.[0m
+
+	[3m[93m"Art is the magic that brings beauty into the world."[0m[3m - Unknown[0m
+
+[36mEfficiency Nodes:[0m Attempting to add Control Net options to the 'HiRes-Fix Script' Node (comfyui_controlnet_aux add-on)...[92mSuccess![0m
+------------------------------------------
+[34mComfyroll Studio v1.76 : [92m 175 Nodes Loaded[0m
+------------------------------------------
+** For changes, please see patch notes at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/blob/main/Patch_Notes.md
+** For help, please see the wiki at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki
+------------------------------------------
+[Crystools [0;32mINFO[0m] Crystools version: 1.13.1
+[Crystools [0;32mINFO[0m] CPU: AMD Ryzen 9 3900X 12-Core Processor - Arch: x86_64 - OS: Linux 6.9.7-arch1-1
+[Crystools [0;32mINFO[0m] GPU/s:
+[Crystools [0;32mINFO[0m] 0) NVIDIA GeForce RTX 3070
+[Crystools [0;32mINFO[0m] NVIDIA Driver: 555.58
+
+[92m[rgthree] Loaded 41 fantastic nodes.[0m
+[92m[rgthree] Will use rgthree's optimized recursive execution.[0m
+
+[92m[tinyterraNodes] [32mLoaded[0m
+ASTERR config loaded successfully
+
+Import times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rembg-comfyui-node
+   0.0 seconds: /media/comfyui/custom_nodes/image-resize-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Logic
+   0.0 seconds: /media/comfyui/custom_nodes/cg-use-everywhere
+   0.0 seconds: /media/comfyui/custom_nodes/sd-perturbed-attention
+   0.0 seconds: /media/comfyui/custom_nodes/lora-info
+   0.0 seconds: /media/comfyui/custom_nodes/ASTERR
+   0.0 seconds: /media/comfyui/custom_nodes/cg-image-picker
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-selector
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_TiledKSampler
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Cutoff
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-OpenPose-Editor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Notifications
+   0.0 seconds: /media/comfyui/custom_nodes/websocket_image_save.py
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-post-processing-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_fabric
+   0.0 seconds: /media/comfyui/custom_nodes/masquerade-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_InstantID
+   0.0 seconds: /media/comfyui/custom_nodes/DTAIComfyVariables
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_experiments
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_SeeCoder
+   0.0 seconds (IMPORT FAILED): /media/comfyui/custom_nodes/ComfyUI-AIT
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_IPAdapter_plus
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-DDColor
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-WD14-Tagger
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Custom-Scripts
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-inpaint-nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_JPS-Nodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-AutomaticCFG
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-browser
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_UltimateSDUpscale
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Frame-Interpolation
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Florence2
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Advanced-ControlNet
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Allor
+   0.0 seconds: /media/comfyui/custom_nodes/OneButtonPrompt
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.0 seconds: /media/comfyui/custom_nodes/efficiency-nodes-comfyui
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-KJNodes
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-TiledDiffusion
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_Comfyroll_CustomNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-prompt-reader-node
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-0246
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui_controlnet_aux
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI_tinyterraNodes
+   0.0 seconds: /media/comfyui/custom_nodes/comfyui-reactor-node
+   0.0 seconds: /media/comfyui/custom_nodes/Conditioning-token-experiments-for-ComfyUI
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+   0.0 seconds: /media/comfyui/custom_nodes/ComfyUI-Inspire-Pack
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-VideoHelperSuite
+   0.1 seconds: /media/comfyui/custom_nodes/ComfyUI-SUPIR
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI-MagickWand
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Fill-Nodes
+   0.2 seconds: /media/comfyui/custom_nodes/ComfyUI_Inpaint
+   0.3 seconds: /media/comfyui/custom_nodes/ComfyUI-DynamiCrafterWrapper
+   0.3 seconds: /media/comfyui/custom_nodes/Plush-for-ComfyUI
+   0.4 seconds: /media/comfyui/custom_nodes/comfy_mtb
+   0.5 seconds: /media/comfyui/custom_nodes/ComfyUI-Impact-Pack
+   0.5 seconds: /media/comfyui/custom_nodes/comfyui_segment_anything
+   0.5 seconds: /media/comfyui/custom_nodes/ComfyUI-CCSR
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI_FaceAnalysis
+   1.1 seconds: /media/comfyui/custom_nodes/was-node-suite-comfyui
+   1.8 seconds: /media/comfyui/custom_nodes/DTAIImageToTextNode
+   1.9 seconds: /media/comfyui/custom_nodes/ComfyUI_Jags_Audiotools
+   2.3 seconds: /media/comfyui/custom_nodes/ComfyUI-Crystools
+
+Traceback (most recent call last):
+  File "/media/comfyui/./main.py", line 258, in <module>
+    loop.run_until_complete(run(server, address=args.listen, port=args.port, verbose=not args.dont_print_server, call_on_start=call_on_start))
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/media/comfyui/./main.py", line 153, in run
+    await asyncio.gather(server.start(address, port, verbose, call_on_start), server.publish_loop())
+  File "/media/comfyui/server.py", line 668, in start
+    await site.start()
+  File "/media/comfyui/venv/lib/python3.12/site-packages/aiohttp/web_runner.py", line 119, in start
+    self._server = await loop.create_server(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 1572, in create_server
+    raise OSError(err.errno, msg) from None
+OSError: [Errno 98] error while attempting to bind on address ('127.0.0.1', 8188): address already in use
+rmmod: ERROR: Module nvidia_uvm is in use
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:38:34.325094
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+
+
+███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗███████╗               
+████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔════╝               
+██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║█████╗                 
+██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══╝                 
+██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║███████╗               
+╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝               
+                                                                       
+██████╗ ███████╗██╗     ██╗   ██╗███████╗██╗ ██████╗ ███╗   ██╗███████╗
+██╔══██╗██╔════╝██║     ██║   ██║██╔════╝██║██╔═══██╗████╗  ██║██╔════╝
+██║  ██║█████╗  ██║     ██║   ██║███████╗██║██║   ██║██╔██╗ ██║███████╗
+██║  ██║██╔══╝  ██║     ██║   ██║╚════██║██║██║   ██║██║╚██╗██║╚════██║
+██████╔╝███████╗███████╗╚██████╔╝███████║██║╚██████╔╝██║ ╚████║███████║
+╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
+                                                                       
+
+
+### Loading: ComfyUI-Impact-Pack (V5.18.13)
+### Loading: ComfyUI-Impact-Pack (Subpack: V0.6)
+(pysssss:WD14Tagger) [DEBUG] Available ORT providers: TensorrtExecutionProvider, CUDAExecutionProvider, AzureExecutionProvider, CPUExecutionProvider
+[Impact Pack] Wildcards loading done.(pysssss:WD14Tagger) [DEBUG] Using ORT providers: CUDAExecutionProvider, CPUExecutionProvider
+
+### Loading: ComfyUI-Manager (V2.46)
+### ComfyUI Revision: 2341 [628f0b8e] | Released on '2024-07-07'
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+/media/comfyui/venv/lib/python3.12/site-packages/huggingface_hub/file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/alter-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/github-stats.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/model-list.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/extension-node-map.json
+[ComfyUI-Manager] default cache updated: https://raw.githubusercontent.com/ltdrdata/ComfyUI-Manager/main/custom-node-list.json
+[0m[1;34m[SD Prompt Reader] [36mNode version: 1.3.3[0m
+[0m[1;34m[SD Prompt Reader] [36mCore version: 1.3.5[0m
+Plush - Running on python installation: /media/comfyui/venv/bin/python3, ver: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+Plush - Current Openai Version:  1.12.0
+Plush - Version: 1.21.11
+Traceback (most recent call last):
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/__init__.py", line 1, in <module>
+    from .ait_load import AIT_Unet_Loader #, AIT_VAE_Encode_Loader
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-AIT/ait_load.py", line 35, in <module>
+    from aitemplate.compiler import Model
+ModuleNotFoundError: No module named 'aitemplate'
+
+Cannot import /media/comfyui/custom_nodes/ComfyUI-AIT module for custom nodes: No module named 'aitemplate'
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ckpts path: /media/comfyui/custom_nodes/comfyui_controlnet_aux/ckpts[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using symlinks: False[0m
+[36;20m[comfyui_controlnet_aux] | INFO -> Using ort providers: ['CUDAExecutionProvider', 'DirectMLExecutionProvider', 'OpenVINOExecutionProvider', 'ROCMExecutionProvider', 'CPUExecutionProvider', 'CoreMLExecutionProvider'][0m
+DWPose: Onnxruntime with acceleration providers detected
+### Loading: ComfyUI-Inspire-Pack (V0.81)
+[36;20m[comfy_mtb] | INFO -> loaded [96m78[0m nodes successfuly[0m
+[36;20m[comfy_mtb] | INFO -> Some nodes (2) could not be loaded. This can be ignored, but go to http://127.0.0.1:8188/mtb if you want more information.[0m
+rmmod: ERROR: Module nvidia_uvm is in use
+
+[START] Security scan
+[DONE] Security scan
+## ComfyUI-Manager: installing dependencies done.
+** ComfyUI startup time: 2024-07-10 20:38:44.366798
+** Platform: Linux
+** Python version: 3.12.4 (main, Jun  7 2024, 06:33:07) [GCC 14.1.1 20240522]
+** Python executable: /media/comfyui/venv/bin/python3
+** ComfyUI Path: /media/comfyui
+** Log path: /media/comfyui/comfyui.log
+
+Prestartup times for custom nodes:
+   0.0 seconds: /media/comfyui/custom_nodes/rgthree-comfy
+   0.7 seconds: /media/comfyui/custom_nodes/ComfyUI-Manager
+
+--------------
+*ComfyUI_Jags_Audiotools- nodes_loaded*
+--------------
+[92m[Allor][0m: 0 nodes were overridden.
+[92m[Allor][0m: 12 modules were enabled.
+[92m[Allor][0m: 98 nodes were loaded.
+[0;33m[ReActor][0m - [38;5;173mSTATUS[0m - [0;32mRunning v0.5.1-a6 in ComfyUI[0m
+Torch version: 2.3.1+cu121
+[95m[ComfyUI-0️⃣ 2️⃣ 4️⃣ 6️⃣ ] Loaded all nodes and apis.[0m
+[34mWAS Node Suite: [0mOpenCV Python FFMPEG support is enabled[0m
+[34mWAS Node Suite [93mWarning: [0m`ffmpeg_bin_path` is not set in `/media/comfyui/custom_nodes/was-node-suite-comfyui/was_suite_config.json` config file. Will attempt to use system ffmpeg binaries if available.[0m
+Total VRAM 7875 MB, total RAM 32038 MB
+pytorch version: 2.3.1+cu121
+[34mWAS Node Suite: [0mFinished.[0m [32mLoaded[0m [0m217[0m [32mnodes successfully.[0m
+
+	[3m[93m"Don't wait. The time will never be just right."[0m[3m - Napoleon Hill[0m
+
+[36mEfficiency Nodes:[0m Attempting to add Control Net options to the 'HiRes-Fix Script' Node (comfyui_controlnet_aux add-on)...[92mSuccess![0m
+------------------------------------------
+[34mComfyroll Studio v1.76 : [92m 175 Nodes Loaded[0m
+------------------------------------------
+** For changes, please see patch notes at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/blob/main/Patch_Notes.md
+** For help, please see the wiki at https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes/wiki
+------------------------------------------
+[Crystools [0;32mINFO[0m] Crystools version: 1.13.1
+A matching Triton is not available, some optimizations will not be enabled
+Traceback (most recent call last):
+  File "/media/comfyui/venv/lib/python3.12/site-packages/xformers/__init__.py", line 57, in _is_triton_available
+    import triton  # noqa
+    ^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'triton'
+xformers version: 0.0.27
+Set vram state to: NORMAL_VRAM
+Device: cuda:0 NVIDIA GeForce RTX 3070 : cudaMallocAsync
+Using xformers cross attention
+[34mOpenPose Editor: [92mLoaded[0m
+LOADED 5 FONTS
+No OpenGL_accelerate module loaded: No module named 'OpenGL_accelerate'
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+  File "/usr/lib/python3.12/ctypes/__init__.py", line 4, in <module>
+    import types as _types
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 991, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1087, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1187, in get_data
+KeyboardInterrupt
+
+Stopped server
+Traceback (most recent call last):
+  File "/media/comfyui/./main.py", line 221, in <module>
+    nodes.init_extra_nodes(init_custom_nodes=not args.disable_all_custom_nodes)
+  File "/media/comfyui/nodes.py", line 2028, in init_extra_nodes
+    init_external_custom_nodes()
+  File "/media/comfyui/nodes.py", line 1952, in init_external_custom_nodes
+    success = load_custom_node(module_path, base_node_names)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI_Fill-Nodes/__init__.py", line 20, in <module>
+    from .nodes.fl_shader import FL_Shadertoy
+  File "/media/comfyui/custom_nodes/ComfyUI_Fill-Nodes/nodes/fl_shader.py", line 4, in <module>
+    import glfw
+  File "/media/comfyui/venv/lib/python3.12/site-packages/glfw/__init__.py", line 40, in <module>
+    from .library import glfw as _glfw
+  File "/media/comfyui/venv/lib/python3.12/site-packages/glfw/library.py", line 254, in <module>
+    glfw = _load_library(['glfw', 'glfw3'], ['.so', '.dylib'],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/glfw/library.py", line 61, in _load_library
+    version = version_check_callback(filename)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/glfw/library.py", line 150, in _glfw_get_version
+    out = process.communicate(filename)[0]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2115, in _communicate
+    ready = selector.select(timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/media/comfyui/./main.py", line 221, in <module>
+    nodes.init_extra_nodes(init_custom_nodes=not args.disable_all_custom_nodes)
+  File "/media/comfyui/nodes.py", line 2028, in init_extra_nodes
+    init_external_custom_nodes()
+  File "/media/comfyui/nodes.py", line 1952, in init_external_custom_nodes
+    success = load_custom_node(module_path, base_node_names)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/nodes.py", line 1907, in load_custom_node
+    module_spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/__init__.py", line 24, in <module>
+    from .server import *
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/server/__init__.py", line 1, in <module>
+    from .monitor import *
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/server/monitor.py", line 4, in <module>
+    from ..general import cmonitor
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/general/__init__.py", line 1, in <module>
+    from .monitor import *
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/general/monitor.py", line 66, in <module>
+    cmonitor = CMonitor(1, True, True, True, True, True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/general/monitor.py", line 20, in __init__
+    self.hardwareInfo = CHardwareInfo(switchCPU, switchGPU, switchHDD, switchRAM, switchVRAM)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/custom_nodes/ComfyUI-Crystools/general/hardware.py", line 40, in __init__
+    specArch = 'Arch: ' + cpuinfo.get_cpu_info().get('arch_string_raw', "Unknown")
+                          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/cpuinfo/cpuinfo.py", line 2759, in get_cpu_info
+    output = get_cpu_info_json()
+             ^^^^^^^^^^^^^^^^^^^
+  File "/media/comfyui/venv/lib/python3.12/site-packages/cpuinfo/cpuinfo.py", line 2742, in get_cpu_info_json
+    output = p1.communicate()[0]
+             ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 2115, in _communicate
+    ready = selector.select(timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

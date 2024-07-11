@@ -19,16 +19,10 @@ function getFileUrl(comfyUrl: string, folderType: string, file: any) {
 }
 
 function findFile(filename: string, exts: Array<string>, files: Array<any>) {
-  let fn: any = filename.split('.');
-  fn.pop();
-  fn = fn.join('.');
-  return files.find((f: any) => {
-    const fa = f.name.split('.');
-    const extname = fa.pop().toLowerCase();
-    const name = fa.join('.');
-
-    return name === fn && exts.includes(extname);
-  });
+  if (files.hasOwnProperty(filename)) {
+    return files[filename];
+  }
+  return false;
 }
 
 function processFile(
@@ -36,16 +30,18 @@ function processFile(
   folderType: FOLDER_TYPES,
   comfyUrl: string,
   files: Array<any>,
-) {
+) 
+{
   const extname = file.name.split('.').pop().toLowerCase();
   if (WHITE_EXTS.includes(extname)) {
     file['fileType'] = extname;
     if (extname === 'json') {
-      if (findFile(file.name, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
+      if (findFile(file.fullPath, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
         return;
       }
     }
   }
+
   if (IMAGE_EXTS.includes(extname)) {
     file['fileType'] = 'image';
   }
@@ -56,11 +52,12 @@ function processFile(
     return;
   }
 
-  file['url'] = getFileUrl(comfyUrl, folderType, file);
-  if (['image', 'video'].includes(file['fileType'])) {
-    file['previewUrl'] = getFileUrl(comfyUrl, folderType, file);
 
-    let jsonFile = findFile(file.name, JSON_EXTS, files);
+  var url = getFileUrl(comfyUrl, folderType, file);
+  file['url'] = url;
+  if (['image', 'video'].includes(file['fileType'])) {
+    file['previewUrl'] = url;
+    let jsonFile = findFile(file.fullPath, JSON_EXTS, files);
     if (jsonFile) {
       file['url'] = getFileUrl(comfyUrl, folderType, jsonFile);
     }
@@ -100,19 +97,30 @@ export async function fetchFiles(
   const ret = await res.json();
 
   let files = ret.files;
+
+  var filesMap = files.reduce(function(map, obj) {
+    var dir = (obj.type == 'dir') ? "" : obj.folder_path;
+    var filePath = "/" + dir + obj.name;
+    obj.fullPath = filePath;
+    map[filePath] = obj;
+    return map;
+  }, {});
+
   let newFiles: Array<any> = [];
+
   files.forEach((f: any) => {
     let newFile;
     if (f.type === 'dir') {
       newFile = processDir(f);
     } else {
-      newFile = processFile(f, folderType, comfyUrl, files);
+      newFile = processFile(f, folderType, comfyUrl, filesMap);
     }
 
     if (newFile) {
       newFiles.push(newFile);
     }
   });
+
 
   return newFiles;
 }
