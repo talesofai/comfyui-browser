@@ -19,7 +19,6 @@ function getFileUrl(comfyUrl: string, folderType: string, file: any) {
 }
 
 function findFile(filename: string, exts: Array<string>, filesMap: Array<any>) {
-  return false;
   if (filesMap.allFiles.hasOwnProperty(filename)) {
       return filesMap.allFiles[filename];
   }
@@ -37,9 +36,9 @@ function processFile(
   if (WHITE_EXTS.includes(extname)) {
     file['fileType'] = extname;
     if (extname === 'json') {
-      //if (findFile(file.fullPath, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
-        //return;
-      //}
+      if (findFile(file.fullPath, IMAGE_EXTS.concat(VIDEO_EXTS), files)) {
+        return;
+      }
     }
   }
 
@@ -61,10 +60,10 @@ function processFile(
     var path = file.fullPath;
     var jsonFileName = path.substring(0, path.lastIndexOf('.')) || path;
     var jsonFileName = jsonFileName + ".json";
-    //let jsonFile = findFile(jsonFileName, JSON_EXTS, files);
-    //if (jsonFile) {
-    //  file['url'] = getFileUrl(comfyUrl, folderType, jsonFile);
-    //}
+    let jsonFile = findFile(jsonFileName, JSON_EXTS, files);
+    if (jsonFile) {
+      file['url'] = getFileUrl(comfyUrl, folderType, jsonFile);
+    }
   }
 
   const d = dayjs.unix(file.created_at);
