@@ -1,41 +1,66 @@
 from os import path, makedirs
 from aiohttp import web
 import shutil
+import filecmp 
 import time
+import os
 
 from ..utils import collections_path, get_parent_path, add_uuid_to_filename, \
     config_path, get_config, git_init, run_cmd, git_remote_name
 
 
-# filename, folder_path, folder_type = 'outputs' | 'sources'
+
+def copy_if_different(source_file, destination_file):
+    """
+    Copia un archivo solo si no existe en el destino o si es diferente.
+    """
+    # Crear las carpetas necesarias en la carpeta de destino
+    makedirs(path.dirname(destination_file), exist_ok=True)
+
+    # Solo copiar si el archivo no existe o si es diferente
+    if not path.exists(destination_file) or not filecmp.cmp(source_file, destination_file, shallow=False):
+        shutil.copy2(source_file, destination_file)
+
 async def api_add_to_collections(request):
     json_data = await request.json()
     filename = json_data.get('filename')
-    if not filename:
-        return web.Response(status=404)
-
     folder_path = json_data.get('folder_path', '')
-
     folder_type = json_data.get("folder_type", "outputs")
+    
+    if not filename:
+        return web.Response(status=404, text="Filename not provided")
+    
     parent_path = get_parent_path(folder_type)
-
-    makedirs(collections_path(), exist_ok=True)
-
     source_file_path = path.join(parent_path, folder_path, filename)
+    new_filepath = path.join(collections_path(), filename)
+
     if not path.exists(source_file_path):
-        return web.Response(status=404)
+        return web.Response(status=404, text="Source file or directory not found")
 
-    new_filepath = path.join(
-        collections_path(),
-        add_uuid_to_filename(filename)
-    )
+    try:
+        if path.isdir(source_file_path):
+            # Asegurarnos de que la carpeta destino exista
+            makedirs(new_filepath, exist_ok=True)
 
-    if path.isdir(source_file_path):
-        shutil.copytree(source_file_path, new_filepath)
-    else:
-        shutil.copy(source_file_path, new_filepath)
+            # Recorrer todos los archivos en el directorio de origen
+            for root, dirs, files in os.walk(source_file_path):
+                for file in files:
+                    source_file = path.join(root, file)
+                    relative_path = path.relpath(source_file, source_file_path)  # Obtener la ruta relativa
+                    destination_file = path.join(new_filepath, relative_path)
 
-    return web.Response(status=201)
+                    # Copiar solo si es necesario
+                    copy_if_different(source_file, destination_file)
+
+        else:
+            # Es un archivo, copiar solo si es diferente
+            copy_if_different(source_file_path, new_filepath)
+
+        return web.Response(status=201, text="Files copied successfully")
+
+    except Exception as e:
+        # Manejar cualquier excepción y devolver una respuesta de error
+        return web.Response(status=500, text=f"Error: {str(e)}")
 
 # filename, content
 async def api_create_new_workflow(request):
