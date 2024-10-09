@@ -169,8 +169,8 @@ def get_info_filename(filename):
     return path.splitext(filename)[0] + info_file_suffix
 
 def add_uuid_to_filename(filename):
-    name, ext = path.splitext(filename)
-    return f'{name}_{int(time.time())}{ext}'
+    # Simplemente devolver el nombre original del archivo
+    return filename
 
 def output_directory_from_comfyui():
    if args.output_directory:
