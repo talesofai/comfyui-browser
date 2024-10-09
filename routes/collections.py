@@ -110,9 +110,8 @@ async def api_sync_my_collections(_):
             status=500,
         )
 
-    cmd = 'git branch --show-current'
-    ret = run_cmd(cmd, collections_path())
-    branch = ret.stdout.replace('\n', '')
+    # Asegurarnos de que la rama main es la que se usa
+    branch = "main"
 
     cmd = f'git merge {git_remote_name}/{branch}'
     ret = run_cmd(cmd, collections_path(), log_code=False)
