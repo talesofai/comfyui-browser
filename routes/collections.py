@@ -82,8 +82,6 @@ async def api_create_new_workflow(request):
 
 async def api_sync_my_collections(_):
     
-    git_init()
-    
     if not path.exists(config_path):
         return web.Response(status=404)
 
@@ -91,6 +89,8 @@ async def api_sync_my_collections(_):
     git_repo = config.get('git_repo')
     if not git_repo:
         return web.Response(status=404)
+
+    git_init()
 
     cmd = 'git status -s'
     ret = run_cmd(cmd, collections_path())
