@@ -53,8 +53,6 @@ class LoadImageByUrl:
         if cache == False or not os.path.isfile(image_path):
             img = Image.open(io.BytesIO(self.download_by_url())) 
         else:
-            if not os.path.isfile(image_path):
-                raise FileNotFoundError(f"Image file not found: {image_path}")
             img = Image.open(image_path)
         output_images = []
         for i in ImageSequence.Iterator(img):
