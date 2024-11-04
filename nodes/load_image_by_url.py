@@ -1,5 +1,6 @@
 import hashlib
 import os
+import io
 from PIL import Image, ImageSequence, ImageOps
 import numpy as np
 import torch
@@ -41,6 +42,7 @@ class LoadImageByUrl:
             download_path = os.path.join(input_dir, self.filename())
             with open(download_path, 'wb') as file:
                 file.write(res.content)
+            return res.content
         else:
             raise ValueError(f"Failed to load image from {self.url}: {res.status_code} {res.text}")
 
@@ -49,9 +51,9 @@ class LoadImageByUrl:
         input_dir = folder_paths.get_input_directory()
         image_path = os.path.join(input_dir, self.filename())
         if cache == False or not os.path.isfile(image_path):
-            self.download_by_url()
-
-        img = Image.open(image_path)
+            img = Image.open(io.BytesIO(self.download_by_url())) 
+        else:
+            img = Image.open(image_path)
         output_images = []
         for i in ImageSequence.Iterator(img):
             i = ImageOps.exif_transpose(i)
