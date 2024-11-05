@@ -169,8 +169,8 @@ def get_info_filename(filename):
     return path.splitext(filename)[0] + info_file_suffix
 
 def add_uuid_to_filename(filename):
-    name, ext = path.splitext(filename)
-    return f'{name}_{int(time.time())}{ext}'
+    # Simplemente devolver el nombre original del archivo
+    return filename
 
 def output_directory_from_comfyui():
    if args.output_directory:
@@ -179,24 +179,29 @@ def output_directory_from_comfyui():
        return folder_paths.get_output_directory()
 
 def git_init():
+    # Inicializa el repositorio si no existe
     if not path.exists(path.join(collections_path(), '.git')):
         run_cmd('git init', collections_path())
 
-    ret = run_cmd('git config user.name', collections_path(),
-                  log_cmd=False, log_code=False, log_message=False)
+    # Configurar el nombre de usuario si no está configurado
+    ret = run_cmd('git config user.name', collections_path(), log_cmd=False, log_code=False, log_message=False)
     if len(ret.stdout) == 0:
-        ret = run_cmd('whoami', collections_path(),
-                      log_cmd=False, log_code=False, log_message=False)
+        ret = run_cmd('whoami', collections_path(), log_cmd=False, log_code=False, log_message=False)
         username = ret.stdout.rstrip("\n")
         run_cmd(f'git config user.name "{username}"', collections_path())
 
-    ret = run_cmd('git config user.email', collections_path(),
-                  log_cmd=False, log_code=False, log_message=False)
+    # Configurar el correo electrónico si no está configurado
+    ret = run_cmd('git config user.email', collections_path(), log_cmd=False, log_code=False, log_message=False)
     if len(ret.stdout) == 0:
-        ret = run_cmd('hostname', collections_path(),
-                      log_cmd=False, log_code=False, log_message=False)
+        ret = run_cmd('hostname', collections_path(), log_cmd=False, log_code=False, log_message=False)
         hostname = ret.stdout.rstrip("\n")
         run_cmd(f'git config user.email "{hostname}"', collections_path())
+
+    # Cambiar a la rama main si no estamos en ella
+    ret = run_cmd('git branch --show-current', collections_path(), log_cmd=False, log_code=False, log_message=False)
+    current_branch = ret.stdout.strip()
+    if current_branch != 'main':
+        run_cmd('git checkout -b main', collections_path())
 
 for dir in [
     collections_path(),
