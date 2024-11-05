@@ -271,8 +271,9 @@ app.registerExtension({
             }
             app.graphToPrompt().then(async p => {
               const json = JSON.stringify(p.workflow, null, 2); // convert the data to a JSON string
-              const res = await api.fetchApi("/browser/collections/workflows", {
+              const res = await fetch("/browser/collections/workflows", {
                 method: "POST",
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                   filename: filename,
                   content: json,
