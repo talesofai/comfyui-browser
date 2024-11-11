@@ -224,7 +224,13 @@ app.registerExtension({
         event.preventDefault();
       }
     });
-
+ //  add event listener for ctrl+i
+    document.addEventListener('keydown', (event) => {
+      if (event.ctrlKey && event.key === 'i') {
+        browserDialog.toggle();
+        event.preventDefault();
+      }
+    })
     app.ui.menuContainer.appendChild(
       $el("div.comfy-list", {
         style: {
@@ -295,5 +301,73 @@ app.registerExtension({
         }),
       ])
     );
+
+    try{
+      // new menu based features
+      // browser and save to collection button into new style menu
+      let cbGroup = new (await import("../../scripts/ui/components/buttonGroup.js")).ComfyButtonGroup(
+        new(await import("../../scripts/ui/components/button.js")).ComfyButton({
+          action: () => {
+            if(browserDialog)
+              browserDialog.show();
+          },
+          tooltip: "Browse and manage your outputs and collections",
+          content: "📚",
+          // content: "🪟",
+          // content: "Browser",
+          // icon: "table",// cloud, folder, folder-open, table, database, server
+					// classList: "comfyui-button comfyui-menu-mobile-collapse primary"
+					classList: "comfyui-button comfyui-menu-mobile-collapse "
+        }).element,
+        new(await import("../../scripts/ui/components/button.js")).ComfyButton({
+          action: (e) => {
+            const saveBtn = e.target;
+            const originBtnStyle = saveBtn.style.cssText;
+
+            let filename = "workflow.json";
+            const promptFilename = app.ui.settings.getSettingValue(
+              "Comfy.PromptFilename",
+              true,
+            );
+            if (promptFilename) {
+              filename = prompt("Collect workflow as:", filename);
+              if (!filename) return;
+              if (!filename.toLowerCase().endsWith(".json")) {
+                filename += ".json";
+              }
+            }
+            app.graphToPrompt().then(async p => {
+              const json = JSON.stringify(p.workflow, null, 2); // convert the data to a JSON string
+              const res = await api.fetchApi("/browser/collections/workflows", {
+                method: "POST",
+                body: JSON.stringify({
+                  filename: filename,
+                  content: json,
+                }),
+              });
+              if (res.ok) {
+                saveBtn.style = originBtnStyle + "border-color: green;";
+                showToast(
+                  'Saved. Click me to open.',
+                  () => { browserDialog.show() },
+                );
+              } else {
+                saveBtn.style = originBtnStyle + "border-color: red;";
+              }
+              setTimeout(() => {
+                saveBtn.style = originBtnStyle;
+              }, 1000);
+            });
+          },
+          tooltip: "Save workflow to collections",
+          content: "💾",
+          classList: "comfyui-button comfyui-menu-mobile-collapse "
+        }).element
+      );
+      app.menu?.settingsGroup.element.before(cbGroup.element);
+
+    }catch(exception){
+      console.log('ComfyUI-Browser could not load new menu based features.');
+    }
   },
 });
