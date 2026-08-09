@@ -1,5 +1,7 @@
 # ComfyUI Browser
 
+### For user-friendly agentic solution, please try [neta.art](https://neta.art) from the team :)
+
 [中文说明](README_CN.md)
 
 This is an image/video/workflow browser and manager for ComfyUI.
