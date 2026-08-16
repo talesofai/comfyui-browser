@@ -38,6 +38,7 @@
       {#if file.fileType === 'image'}
         <img
           class="h-full w-full object-contain"
+          style="border-radius: 0.5rem;"
           loading="lazy"
           src={file.previewUrl}
           alt={file.name} />
@@ -45,6 +46,7 @@
       {#if file.fileType === 'video'}
         <video
           class="h-full w-full object-contain pb-0.5 border-0.5 border-black"
+          style="border-radius: 0.5rem;"
           src={file.previewUrl}
           loop={true}
           autoplay={true}
