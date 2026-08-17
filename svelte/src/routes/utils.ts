@@ -137,14 +137,23 @@ export async function onLoadWorkflow(file: any, comfyApp: any, toast: Toast) {
   const fileObj = new File([blob], file.name, {
     type: res.headers.get('Content-Type') || '',
   });
-  const f = comfyApp.loadGraphData.bind(comfyApp);
-  comfyApp.loadGraphData = async function(graphData: any) {
+  const original = comfyApp.loadGraphData.bind(comfyApp);
+  // One-shot transparent wrapper: hide the modal when the workflow is loaded,
+  // then restore the original implementation.
+  //
+  // All arguments must be forwarded. Modern ComfyUI frontends call
+  // `loadGraphData(graphData, clean, restore_view, workflow, options)`; the
+  // `workflow` argument tells the frontend to activate an existing workflow
+  // tab instead of creating a new one. Dropping it (as the old patch did)
+  // made every tab click create a duplicate tab after loading from the Browser.
+  comfyApp.loadGraphData = async function(graphData: any, ...args: any[]) {
     const modal = window.top?.document.getElementById('comfy-browser-dialog');
     if (modal) {
       modal.style.display = 'none';
     }
-    await f(graphData);
-  }
+    comfyApp.loadGraphData = original;
+    return original(graphData, ...args);
+  };
   await comfyApp.handleFile(fileObj);
 
   toast.show(false, 'Loaded', 'No workflow found here');

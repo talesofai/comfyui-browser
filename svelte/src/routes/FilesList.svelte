@@ -43,6 +43,10 @@
     comfyApp = window.top.app;
 
     //@ts-ignore
+    window.addEventListener("comfyuiBrowserShow", () => {
+      refresh();
+    });
+    //@ts-ignore
     window.top.addEventListener("comfyuiBrowserShow", () => {
       refresh();
     });
